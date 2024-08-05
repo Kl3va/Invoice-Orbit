@@ -27,6 +27,7 @@ interface InvoiceOrbit {
   clientAddress: Address
   items: Item[]
   total: number
+  _id?: string
 }
 
 const addressSchema = new mongoose.Schema(
@@ -57,7 +58,11 @@ const invoiceOrbitSchema = new mongoose.Schema<InvoiceOrbit>({
   paymentTerms: { type: Number, required: true },
   clientName: { type: String, required: true },
   clientEmail: { type: String, required: true },
-  status: { type: String, enum: ['paid', 'pending', 'draft'], required: true },
+  status: {
+    type: String,
+    enum: ['paid', 'pending', 'draft'],
+    default: 'pending',
+  },
   senderAddress: { type: addressSchema, required: true },
   clientAddress: { type: addressSchema, required: true },
   items: { type: [itemSchema], required: true },

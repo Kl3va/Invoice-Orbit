@@ -4,11 +4,15 @@ import {
   SignUpButton,
   UserButton,
   SignInButton,
+  useUser,
 } from '@clerk/clerk-react'
 
 //type Props = {}
 
 const Auth = () => {
+  const { user } = useUser()
+  console.log(user)
+
   return (
     <div>
       <SignedOut>

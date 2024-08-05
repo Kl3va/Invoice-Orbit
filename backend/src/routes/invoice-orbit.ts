@@ -1,83 +1,93 @@
-import express, { Response, Request } from 'express'
-import { InvoiceOrbitModel } from '../schema/invoice-orbit'
-
+import express from 'express'
+// import { InvoiceOrbitModel } from '../schema/invoice-orbit'
 const router = express.Router()
+import {
+  getAllInvoices,
+  // getInvoice,
+  // createInvoice,
+  // updateInvoice,
+  // deleteInvoice,
+} from '../controllers/invoice-orbit'
 
-//Get all the Invoices for a particular User(userId)
-router.get(
-  '/getAllInvoicesByUserID/:userId',
-  async (req: Request, res: Response) => {
-    try {
-      const { userId } = req.params
-      const { status } = req.query
+router.route('/').get(getAllInvoices) //.post(createInvoice)
 
-      // Initialize filter with userId
-      let filter: any = { userId: userId }
+//router.route('/:id').get(getInvoice).patch(updateInvoice).delete(deleteInvoice)
 
-      // Add status to filter if provided
-      if (status && ['paid', 'pending', 'draft'].includes(status as string)) {
-        filter.status = status
-      } else if (status) {
-        return res.status(400).send('Invalid status value')
-      }
+// //Get all the Invoices for a particular User(userId)
+// router.get(
+//   '/getAllInvoicesByUserID/:userId',
+//   async (req: Request, res: Response) => {
+//     try {
+//       const { userId } = req.params
+//       const { status } = req.query
 
-      const invoices = await InvoiceOrbitModel.find(filter)
+//       // Initialize filter with userId
+//       let filter: any = { userId: userId }
 
-      if (invoices.length === 0) {
-        return res.status(404).send('No records found for the user.')
-      }
+//       // Add status to filter if provided
+//       if (status && ['paid', 'pending', 'draft'].includes(status as string)) {
+//         filter.status = status
+//       } else if (status) {
+//         return res.status(400).send('Invalid status value')
+//       }
 
-      res.status(200).send(invoices)
-    } catch (error) {
-      res.status(500).send(error)
-    }
-  }
-)
+//       const invoices = await InvoiceOrbitModel.find(filter)
 
-//Post a new created Invoice to the database
-router.post('/', async (req: Request, res: Response) => {
-  try {
-    const newInvoiceBody = req.body
-    const newInvoice = new InvoiceOrbitModel(newInvoiceBody)
-    const generatedInvoice = await newInvoice.save()
+//       if (invoices.length === 0) {
+//         return res.status(404).send('No records found for the user.')
+//       }
 
-    res.status(200).send(generatedInvoice)
-  } catch (error) {
-    res.status(500).send(error)
-  }
-})
+//       res.status(200).send(invoices)
+//     } catch (error) {
+//       res.status(500).send(error)
+//     }
+//   }
+// )
 
-//Update specific Invoice in the database
-router.put('/:id', async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params
-    const newInvoiceBody = req.body
-    const invoice = await InvoiceOrbitModel.findByIdAndUpdate(
-      id,
-      newInvoiceBody,
-      { new: true }
-    )
+// //Post a new created Invoice to the database
+// router.post('/', async (req: Request, res: Response) => {
+//   try {
+//     const newInvoiceBody = req.body
+//     const newInvoice = new InvoiceOrbitModel(newInvoiceBody)
+//     const generatedInvoice = await newInvoice.save()
 
-    if (!invoice) return res.status(404).send()
+//     res.status(200).send(generatedInvoice)
+//   } catch (error) {
+//     res.status(500).send(error)
+//   }
+// })
 
-    res.status(200).send(invoice)
-  } catch (error) {
-    res.status(500).send(error)
-  }
-})
+// //Update specific Invoice in the database
+// router.put('/:id', async (req: Request, res: Response) => {
+//   try {
+//     const { id } = req.params
+//     const newInvoiceBody = req.body
+//     const invoice = await InvoiceOrbitModel.findByIdAndUpdate(
+//       id,
+//       newInvoiceBody,
+//       { new: true }
+//     )
 
-//Delete specific Invoice in the database
-router.delete('/:id', async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params
-    const invoice = await InvoiceOrbitModel.findByIdAndDelete(id)
+//     if (!invoice) return res.status(404).send()
 
-    if (!invoice) return res.status(404).send()
+//     res.status(200).send(invoice)
+//   } catch (error) {
+//     res.status(500).send(error)
+//   }
+// })
 
-    res.status(200).send(invoice)
-  } catch (error) {
-    res.status(500).send(error)
-  }
-})
+// //Delete specific Invoice in the database
+// router.delete('/:id', async (req: Request, res: Response) => {
+//   try {
+//     const { id } = req.params
+//     const invoice = await InvoiceOrbitModel.findByIdAndDelete(id)
+
+//     if (!invoice) return res.status(404).send()
+
+//     res.status(200).send(invoice)
+//   } catch (error) {
+//     res.status(500).send(error)
+//   }
+// })
 
 export default router
