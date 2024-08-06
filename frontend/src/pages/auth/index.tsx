@@ -4,14 +4,22 @@ import {
   SignUpButton,
   UserButton,
   SignInButton,
-  useUser,
+  useAuth,
 } from '@clerk/clerk-react'
 
 //type Props = {}
 
 const Auth = () => {
-  const { user } = useUser()
-  console.log(user)
+  //const { user } = useUser()
+  // console.log(user)
+  const { getToken } = useAuth()
+  //const { session } = useSession()
+  //console.log(session?.id)
+
+  const displayToken = async () => {
+    const token = await getToken()
+    console.log('Your token:', token)
+  }
 
   return (
     <div>
@@ -22,6 +30,7 @@ const Auth = () => {
 
       <SignedIn>
         <UserButton />
+        <button onClick={displayToken}>Get Token</button>
       </SignedIn>
     </div>
   )

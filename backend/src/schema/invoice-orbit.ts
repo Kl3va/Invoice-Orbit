@@ -74,4 +74,4 @@ const InvoiceOrbitModel = mongoose.model<InvoiceOrbit>(
   invoiceOrbitSchema
 )
 
-export { InvoiceOrbit, InvoiceOrbitModel }
+export { InvoiceOrbit, InvoiceOrbitModel, Item }

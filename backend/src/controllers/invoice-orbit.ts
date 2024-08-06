@@ -1,7 +1,7 @@
-import { Response, Request } from 'express'
+import { Response, Request, NextFunction } from 'express'
 import { RequireAuthProp } from '@clerk/clerk-sdk-node'
 import { StatusCodes } from 'http-status-codes'
-import { InvoiceOrbitModel } from '../schema/invoice-orbit'
+import { InvoiceOrbitModel, Item } from '../schema/invoice-orbit'
 
 //Get All Invoices for user
 const getAllInvoices = async (req: Request, res: Response) => {
@@ -53,18 +53,28 @@ const getAllInvoices = async (req: Request, res: Response) => {
 //   }
 // }
 
-// //Create An Invoice
-// const createInvoice = async (res: Response, req: Request) => {
-//   try {
-//     req.body.userId = req.auth?.userId
-//     const invoice = await InvoiceOrbitModel.create(req.body)
-//     res.status(StatusCodes.OK).json({ invoice })
-//   } catch (error) {
-//     res
-//       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-//       .json({ msg: 'Something went wrong, try again later!!' })
-//   }
-// }
+//Create An Invoice
+const createInvoice = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    req.body.userId = (req as RequireAuthProp<Request>).auth.userId
+
+    //calculate the total
+    const total = req.body.items.reduce(
+      (acc: number, item: Item) => acc + item.quantity * item.price,
+      0
+    )
+
+    const invoice = new InvoiceOrbitModel({ ...req.body, total: total })
+    await invoice.save()
+    res.status(StatusCodes.OK).json({ invoice })
+  } catch (err) {
+    next(err)
+  }
+}
 
 // //Update Invoice by Id
 // const updateInvoice = async (req: Request, res: Response) => {
@@ -120,7 +130,7 @@ const getAllInvoices = async (req: Request, res: Response) => {
 export {
   getAllInvoices,
   // getInvoice,
-  // createInvoice,
+  createInvoice,
   // updateInvoice,
   // deleteInvoice,
 }

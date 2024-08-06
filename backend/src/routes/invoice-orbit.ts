@@ -4,12 +4,12 @@ const router = express.Router()
 import {
   getAllInvoices,
   // getInvoice,
-  // createInvoice,
+  createInvoice,
   // updateInvoice,
   // deleteInvoice,
 } from '../controllers/invoice-orbit'
 
-router.route('/').get(getAllInvoices) //.post(createInvoice)
+router.route('/').get(getAllInvoices).post(createInvoice)
 
 //router.route('/:id').get(getInvoice).patch(updateInvoice).delete(deleteInvoice)
 
