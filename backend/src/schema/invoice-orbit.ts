@@ -11,13 +11,13 @@ interface Item {
   name: string
   quantity: number
   price: number
-  total: number
+  total?: number
 }
 
 interface InvoiceOrbit {
   userId: string
   createdAt: Date
-  paymentDue: Date
+  paymentDue?: Date
   description: string
   paymentTerms: number
   clientName: string
@@ -26,7 +26,7 @@ interface InvoiceOrbit {
   senderAddress: Address
   clientAddress: Address
   items: Item[]
-  total: number
+  total?: number
   _id?: string
 }
 
