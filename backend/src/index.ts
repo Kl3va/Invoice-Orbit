@@ -3,8 +3,8 @@ import express, { Express } from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import helmet from 'helmet'
-const xssSanitizer = require('express-xss-sanitizer')
 import rateLimit from 'express-rate-limit'
+
 import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node'
 
 //Database Connection
@@ -35,8 +35,6 @@ app.use(
 app.use(express.json())
 app.use(helmet())
 app.use(cors())
-app.use(xssSanitizer())
-
 app.use('/api/v1/invoices', ClerkExpressRequireAuth(), invoiceOrbitRouter)
 
 app.use(errorHandlerMiddleware)
