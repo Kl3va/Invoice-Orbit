@@ -13,8 +13,7 @@ import connectDB from './db/connect'
 //ROUTES
 import invoiceOrbitRouter from './routes/invoice-orbit'
 
-//Middleware
-//import errorHandler from './middleware/error-handler'
+//Error handler Middleware
 import errorHandlerMiddleware from './middleware/error-handler'
 
 dotenv.config()

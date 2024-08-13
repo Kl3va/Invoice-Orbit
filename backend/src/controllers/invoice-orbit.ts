@@ -1,5 +1,4 @@
 import { Response, Request, NextFunction } from 'express'
-import mongoose from 'mongoose'
 import { RequireAuthProp } from '@clerk/clerk-sdk-node'
 import { StatusCodes } from 'http-status-codes'
 import { InvoiceOrbitModel, Item, InvoiceOrbit } from '../schema/invoice-orbit'
@@ -53,7 +52,7 @@ const getInvoice = async (req: Request, res: Response, next: NextFunction) => {
     if (!invoice) {
       res
         .status(StatusCodes.NOT_FOUND)
-        .json({ message: `No invoice with id ${invoiceId}` })
+        .json({ message: `No invoice with id: ${invoiceId}` })
     }
 
     res.status(StatusCodes.OK).json({ invoice })
@@ -148,7 +147,7 @@ const updateInvoice = async (
     if (!existingInvoice) {
       return res
         .status(StatusCodes.NOT_FOUND)
-        .json({ message: `No invoice with id ${invoiceId}` })
+        .json({ message: `No invoice with id: ${invoiceId}` })
     }
 
     // Function for partial update of Invoice
