@@ -151,7 +151,7 @@ const updateInvoice = async (
         .json({ message: `No invoice with id ${invoiceId}` })
     }
 
-    // Type-safe update function
+    // Function for partial update of Invoice
     const updateField = (key: keyof InvoiceOrbit, value: any) => {
       if (key === 'items') {
         const itemsWithTotals = (value as Item[]).map((item: Item) => ({
