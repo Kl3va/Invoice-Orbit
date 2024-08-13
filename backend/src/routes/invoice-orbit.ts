@@ -3,15 +3,15 @@ import express from 'express'
 const router = express.Router()
 import {
   getAllInvoices,
-  // getInvoice,
+  getInvoice,
   createInvoice,
-  // updateInvoice,
-  // deleteInvoice,
+  deleteInvoice,
+  updateInvoice,
 } from '../controllers/invoice-orbit'
 
 router.route('/').get(getAllInvoices).post(createInvoice)
 
-//router.route('/:id').get(getInvoice).patch(updateInvoice).delete(deleteInvoice)
+router.route('/:id').get(getInvoice).patch(updateInvoice).delete(deleteInvoice)
 
 // //Get all the Invoices for a particular User(userId)
 // router.get(

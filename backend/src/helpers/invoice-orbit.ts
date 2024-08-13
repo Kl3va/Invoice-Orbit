@@ -6,46 +6,20 @@ const addDays = (date: Date, days: number) => {
   return result
 }
 
-const calculateItemTotal = (item: Item): number => {
+const calculateItemTotal = (item: Item) => {
   return item.quantity * item.price
 }
 
-const calculateTotal = (items: Item[]): number => {
-  return items.reduce((acc, item) => acc + calculateItemTotal(item), 0)
+const calculateTotal = (items: Item[]) => {
+  const total = items.reduce(
+    (sum, item) => sum + (item.total || calculateItemTotal(item)),
+    0
+  )
+  return total
 }
 
 const calculateDueDate = (createdAt: Date, paymentTerms: number): Date => {
   return addDays(createdAt, paymentTerms)
 }
 
-const updateInvoiceFields = (
-  invoice: InvoiceOrbit,
-  updates: Partial<InvoiceOrbit>
-): void => {
-  Object.assign(invoice, updates)
-
-  if (updates.items) {
-    // Update total for each item
-    invoice.items = updates.items.map((item) => ({
-      ...item,
-      total: calculateItemTotal(item),
-    }))
-
-    // Update total for the entire invoice
-    invoice.total = calculateTotal(invoice.items)
-  }
-
-  if (updates.createdAt || updates.paymentTerms) {
-    invoice.paymentDue = calculateDueDate(
-      updates.createdAt || invoice.createdAt,
-      updates.paymentTerms || invoice.paymentTerms
-    )
-  }
-}
-
-export {
-  calculateTotal,
-  calculateDueDate,
-  calculateItemTotal,
-  updateInvoiceFields,
-}
+export { calculateTotal, calculateDueDate, calculateItemTotal }

@@ -21,9 +21,10 @@ const port = process.env.PORT || 3001
 
 app.use(express.json())
 app.use(cors())
-app.use(errorHandlerMiddleware)
 //app.use(ClerkExpressWithAuth())
 app.use('/api/v1/invoices', ClerkExpressRequireAuth(), invoiceOrbitRouter)
+
+app.use(errorHandlerMiddleware)
 
 const mongoURI = process.env.MONGO_URI || 'default mongodb uri'
 
