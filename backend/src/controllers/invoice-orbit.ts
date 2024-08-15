@@ -22,9 +22,8 @@ const getAllInvoices = async (
     let filter: any = { userId: userId }
 
     // Check if status query parameter is provided
-    if (status) {
-      const statusValues = Array.isArray(status) ? status : [status]
-      const validStatuses = statusValues.filter((s) =>
+    if (status && Array.isArray(status) && status.length > 0) {
+      const validStatuses = status.filter((s) =>
         ['pending', 'paid', 'draft'].includes(s as string)
       )
 
