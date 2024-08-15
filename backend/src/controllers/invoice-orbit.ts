@@ -23,12 +23,17 @@ const getAllInvoices = async (
 
     // Check if status query parameter is provided
     if (status) {
-      if (['pending', 'paid', 'draft'].includes(status as string)) {
-        filter.status = status
+      const statusValues = Array.isArray(status) ? status : [status]
+      const validStatuses = statusValues.filter((s) =>
+        ['pending', 'paid', 'draft'].includes(s as string)
+      )
+
+      if (validStatuses.length > 0) {
+        filter.status = { $in: validStatuses }
       } else {
         return res
           .status(StatusCodes.BAD_REQUEST)
-          .json({ message: 'Invalid status value!' })
+          .json({ message: 'Invalid status value(s)!' })
       }
     }
 
