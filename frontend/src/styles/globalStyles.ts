@@ -1,15 +1,16 @@
 import { createGlobalStyle } from 'styled-components'
-import { QUERIES } from 'styles/mediaQueries'
-import { ThemeTypes } from 'styles/theme'
+//import { QUERIES } from 'styles/mediaQueries'
+//import { ThemeTypes } from 'styles/theme'
 
-export const GlobalStyles = createGlobalStyle<{ theme: ThemeTypes }>`
+export const GlobalStyles = createGlobalStyle`
     :root {
-        --color-bg-100: ${(props) => props.theme.bg100};
-        --color-bg-200: ${(props) => props.theme.bg200};
-        --color-bg-300: ${(props) => props.theme.bg300};
-        --color-bg-400: ${(props) => props.theme.bg400};
-        --color-bg-500: ${(props) => props.theme.bg500};
-        --color-bg-600: ${(props) => props.theme.bg600};
+        --color-bg-100: ${({ theme }) => theme.bg100};
+        --color-bg-200: ${({ theme }) => theme.bg200};
+        --color-bg-300: ${({ theme }) => theme.bg300};
+        --color-bg-400: ${({ theme }) => theme.bg400};
+        --color-bg-400: ${({ theme }) => theme.bg400};
+        --color-bg-500: ${({ theme }) => theme.bg500};
+        --color-bg-600: ${({ theme }) => theme.bg600};
         --color-bg-draft: #1E2139;
         --color-bg-delete: #EC5757;
         --color-accent-100: #7C5DFA;
@@ -17,12 +18,13 @@ export const GlobalStyles = createGlobalStyle<{ theme: ThemeTypes }>`
         --color-accent-300: #33D69F;
         --color-accent-400: #FF8F00
         --color-accent-500: #DFE3FA;
-        --color-font-100: ${(props) => props.theme.font100};
-        --color-font-200: ${(props) => props.theme.font200};
-        --color-font-300: ${(props) => props.theme.font300};
-        --color-border-100: ${(props) => props.theme.border100};
+        --color-font-100: ${({ theme }) => theme.font100};
+        --color-font-200: ${({ theme }) => theme.font200};
+        --color-font-300: ${({ theme }) => theme.font300};
+        --color-font-400: ${({ theme }) => theme.font400};
+        --color-border-100: ${({ theme }) => theme.border100};
         --font-pry-100: 'League Spartan', sans-serif;
-        --max-container: 76rem;
+        --max-container: 45.625rem;
         --center-container: 0 auto;
         --border-radius: 0.5rem;
         --transition: all 0.5s;
@@ -43,7 +45,7 @@ export const GlobalStyles = createGlobalStyle<{ theme: ThemeTypes }>`
     textarea,
     select {
         font: inherit;
-}
+    }
 
     img {
         display: block;
@@ -65,15 +67,15 @@ export const GlobalStyles = createGlobalStyle<{ theme: ThemeTypes }>`
     }
 
     ::-webkit-scrollbar-thumb {
-      background: var(--color-scroll-bar);
+      background: var(--color-bg-600);
       box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
       border-radius: 100vw;
       margin: 1px;
     }
 
-    @supports (scrollbar-color: var(--color-scroll-bar) var(--color-scroll-bar)) {
+    @supports (scrollbar-color: var(--color-bg-600) var(--color-bg-600))) {
       * {
-        scrollbar-color: var(--color-scroll-bar) transparent;
+        scrollbar-color: var(--color-bg-600) transparent;
         scrollbar-width: thin;
       }
     }
@@ -97,60 +99,22 @@ export const GlobalStyles = createGlobalStyle<{ theme: ThemeTypes }>`
         font-optical-sizing: auto;
         background-color: var(--color-bg-100);
         color: var(--color-font-100);
-        // overflow-y: auto;
-        // overflow-x: hidden;
-        // min-height: 100vh;
-        // max-width: 100vw;
-    }
-
-    p {
-      color: var(--color-font-100);
-      font-size: 1.25rem;
-      line-height: 1.5rem;
-      font-weight: 400;
     }
 
     label {
-    font-size: 0.875rem;
+    font-size: 0.81rem;
     color: var(--color-font-400);
     font-weight: 500;
+    letter-spacing: -0.1px;
   }
 
    textarea {
     resize: none;
   }
 
-    h1, h2, h3 {
+    h1, h2, h3, h4 {
        text-transform: capitalize;
-       color: var(--color-font-200);
-    }
-
-    h1 {
-      font-size: clamp(2rem, calc(2.5vw + .5rem), 3rem);
-     //font-size: 3rem;
-      line-height: 2.3rem;
-      font-weight: 500;
-
-      @media ${QUERIES.tabletMini} {
-        line-height: 3rem;
-      }
-
-      @media ${QUERIES.desktop} {
-        line-height: 3.75rem;
-      }
-    }
-
-    h2 {
-
-      font-size: 1.7rem;
-      font-weight: 600;
-      line-height: 2rem;
-      letter-spacing: -0.045rem;
-
-      @media ${QUERIES.tablet} {
-        line-height: 2.25rem;
-        font-size: 2.25rem;
-      }
+       color: var(--color-font-100);
     }
 
     i {
@@ -173,10 +137,10 @@ input[type=number] {
 }
 
 input {
-padding: 0.625rem 0.875rem;
-border-radius: 0.5rem;
-border: 2px solid var(--color-accent-200);
-background: var(--color-bg-100);
+padding: 1.125rem 0 0.94rem 1.25rem;
+border-radius: var(--border-radius);
+border: 1px solid var(--color-border-100);
+background: var(--color-bg-300);
 }
 
 `

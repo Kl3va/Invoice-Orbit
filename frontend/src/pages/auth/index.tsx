@@ -30,6 +30,7 @@ const Auth = () => {
 
       <SignedIn>
         <UserButton />
+
         <button onClick={displayToken}>Get Token</button>
       </SignedIn>
     </div>
