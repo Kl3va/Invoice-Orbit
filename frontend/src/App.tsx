@@ -1,7 +1,7 @@
-import './App.css'
-//import { useState } from 'react'
+//import './App.css'
+import { useState } from 'react'
 import { GlobalStyles } from 'styles/globalStyles'
-import { lightTheme } from 'styles/theme'
+import { darkTheme, lightTheme } from 'styles/theme'
 import { ThemeProvider } from 'styled-components'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
@@ -9,19 +9,21 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Homepage from 'pages/home'
 import Auth from 'pages/auth'
 
-function App() {
-  // const [themeSwitch, setThemeSwitch] = useState(true)
+//COMPONENTS
+import Navbar from 'components/Navbar/Navbar'
 
-  // const toggleTheme = () => {
-  //   setThemeSwitch((themeSwitch) => !themeSwitch)
-  //themeSwitch ? lightTheme : darkTheme
-  // }
+function App() {
+  const [themeSwitch, setThemeSwitch] = useState(false)
+
+  const toggleTheme = () => {
+    setThemeSwitch((themeSwitch) => !themeSwitch)
+  }
 
   return (
-    <ThemeProvider theme={lightTheme}>
+    <ThemeProvider theme={themeSwitch ? darkTheme : lightTheme}>
       <GlobalStyles />
       <Router>
-        {/* <Navbar toggleTheme={toggleTheme} /> */}
+        <Navbar toggleTheme={toggleTheme} themeSwitch={themeSwitch} />
         <Routes>
           <Route path='/' element={<Homepage />} />
           <Route path='/auth' element={<Auth />} />
