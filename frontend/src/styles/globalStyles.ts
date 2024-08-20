@@ -16,13 +16,15 @@ export const GlobalStyles = createGlobalStyle`
         --color-accent-100: #7C5DFA;
         --color-accent-200: #9277FF;
         --color-accent-300: #33D69F;
-        --color-accent-400: #FF8F00
+        --color-accent-400: #FF8F00;
         --color-accent-500: #DFE3FA;
         --color-font-100: ${({ theme }) => theme.font100};
         --color-font-200: ${({ theme }) => theme.font200};
         --color-font-300: ${({ theme }) => theme.font300};
         --color-font-400: ${({ theme }) => theme.font400};
+        --color-font-500: ${({ theme }) => theme.font500};
         --color-border-100: ${({ theme }) => theme.border100};
+        --color-border-200: #494E6E;
         --font-pry-100: 'League Spartan', sans-serif;
         --max-container: 45.625rem;
         --center-container: 0 auto;
@@ -99,6 +101,10 @@ export const GlobalStyles = createGlobalStyle`
         font-optical-sizing: auto;
         background-color: var(--color-bg-100);
         color: var(--color-font-100);
+        
+        > * {
+        // min-height: 100vh;
+        }
     }
 
     label {
@@ -115,6 +121,7 @@ export const GlobalStyles = createGlobalStyle`
     h1, h2, h3, h4 {
        text-transform: capitalize;
        color: var(--color-font-100);
+        font-weight: 700;
     }
 
     i {
