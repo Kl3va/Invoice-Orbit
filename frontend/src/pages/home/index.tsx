@@ -64,7 +64,7 @@ const Homepage = () => {
           <img src={IllustrationEmpty} alt='illustration for no invoice' />
           <h2>There is nothing here</h2>
           <p>
-            Create an invoice by clicking the <b>New</b> button and get started
+            Create an invoice by clicking the <b>New <span>Invoice</span></b> button and get started
           </p>
         </IllustrationWrapper>
       </section>

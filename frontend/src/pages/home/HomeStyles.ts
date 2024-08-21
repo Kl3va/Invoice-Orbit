@@ -40,9 +40,10 @@ export const HomeSecondaryContainer = styled.div`
 `
 export const InvoiceHeading = styled.div`
   flex-grow: 1;
+  display: grid;
 
   p {
-    color: var(--color-bg-500);
+    color: var(--color-font-500);
   }
 `
 export const FilterContainer = styled.div`
@@ -111,5 +112,13 @@ export const IllustrationWrapper = styled.div`
 
   p {
     color: var(--color-font-500);
+
+    span {
+      display: none;
+
+      @media (min-width: 48em) {
+        display: inline;
+      }
+    }
   }
 `
