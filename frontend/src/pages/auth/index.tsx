@@ -6,6 +6,11 @@ import {
   SignInButton,
   useAuth,
 } from '@clerk/clerk-react'
+import {
+  AuthMain,
+  TypeWritingContainer,
+  TypeWritingText,
+} from 'pages/auth/AuthStyles'
 
 //type Props = {}
 
@@ -22,18 +27,30 @@ const Auth = () => {
   }
 
   return (
-    <div>
-      <SignedOut>
-        <SignUpButton mode='modal' />
-        <SignInButton mode='modal' />
-      </SignedOut>
+    <AuthMain>
+      <section>
+        <TypeWritingContainer>
+          <p> Effortlessly</p>
+          <TypeWritingText>
+            track, manage, and organize your invoices in one place...
+          </TypeWritingText>
+        </TypeWritingContainer>
+      </section>
+      <section>
+        <div>
+          <SignedOut>
+            <SignUpButton mode='modal' />
+            <SignInButton mode='modal' />
+          </SignedOut>
+        </div>
+      </section>
 
       <SignedIn>
         <UserButton />
 
         <button onClick={displayToken}>Get Token</button>
       </SignedIn>
-    </div>
+    </AuthMain>
   )
 }
 
