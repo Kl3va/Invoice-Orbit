@@ -1,4 +1,5 @@
 import { useUser } from '@clerk/clerk-react'
+import InvoiceBar from 'components/Invoice-bar/InvoiceBar'
 import {
   HomePageMain,
   MainHeaderContainer,
@@ -63,7 +64,7 @@ const Homepage = () => {
       </section>
 
       <section>
-        <IllustrationWrapper>
+        {/* <IllustrationWrapper>
           <img src={IllustrationEmpty} alt='illustration for no invoice' />
           <h2>There is nothing here</h2>
           <p>
@@ -73,7 +74,9 @@ const Homepage = () => {
             </b>{' '}
             button and get started
           </p>
-        </IllustrationWrapper>
+        </IllustrationWrapper> */}
+
+        <InvoiceBar />
       </section>
     </HomePageMain>
   )

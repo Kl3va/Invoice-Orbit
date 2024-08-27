@@ -118,6 +118,12 @@ export const GlobalStyles = createGlobalStyle`
     resize: none;
   }
 
+  a {
+      text-decoration: none;
+      transition: var(--transition);
+      font-family: inherit;
+    }
+
     h1, h2, h3, h4 {
        text-transform: capitalize;
        color: var(--color-font-100);
