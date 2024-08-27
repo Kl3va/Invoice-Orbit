@@ -2,9 +2,19 @@
 import styled, { keyframes } from 'styled-components'
 import { QUERIES } from 'styles/mediaQueries'
 
+// const typing = keyframes`
+//   from { width: 0; }
+//   to { width: 100%; }
+// `
 const typing = keyframes`
-  from { width: 0; }
-  to { width: 100%; }
+0 { width: 0; }
+  50% { width: 100%; }
+  100% { width: 0; }
+`
+
+const hide = keyframes`
+  from { opacity: 0;}
+  to { opacity: 1; }
 `
 
 const blink = keyframes`
@@ -12,24 +22,95 @@ const blink = keyframes`
 `
 
 export const AuthMain = styled.main`
-  margin-top: 4.5rem;
-  padding-block: 1.5rem 1rem;
+  height: 100vh;
+  padding-block: 1rem;
 
-  @media ${QUERIES.tablet} {
-    margin: 1rem 0 0 6.44rem;
+  & > :first-child {
+    display: none;
+
+    @media ${QUERIES.desktop} {
+      display: grid;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+
+  & > :last-child {
+    height: 100%;
+    display: grid;
+    align-items: end;
+
+    @media ${QUERIES.desktop} {
+      height: calc(100vh - 10.15rem);
+    }
+  }
+
+  @media ${QUERIES.desktop} {
+    margin-left: 6.44rem;
+    padding-block: 2.5rem;
   }
 `
 
 export const TypeWritingContainer = styled.div`
-  width: 25rem;
+  font-size: 2.5rem;
+  font-weight: 600;
+  animation: ${hide} 5.5s ease 0.5s infinite;
 `
 export const TypeWritingText = styled.p`
   white-space: nowrap;
+  font-size: 2.4rem;
   overflow: hidden;
+  display: inline-block;
   border-right: 0.15em solid var(--color-font-100);
   width: 0;
-  animation: ${typing} 2.5s steps(30) 1s forwards,
+  animation: ${typing} 5.5s steps(30) 0.5s infinite,
     ${blink} 0.75s step-end infinite;
+`
+
+//
+export const AuthContainer = styled.div`
+  display: flex;
+  gap: 1.5rem;
+  flex-direction: column;
+  height: 70%;
+
+  h1 {
+    font-size: clamp(1.5rem, calc(2vw + 1rem), 2.25rem);
+    font-weight: 500;
+    text-align: center;
+  }
+`
+
+export const AuthBtnGroup = styled.div`
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+
+  button {
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    border: none;
+    height: 3rem;
+    width: min(45%, 10rem);
+    font-weight: 400;
+    color: var(--color-bg-100);
+    background-color: var(--color-font-100);
+    border-radius: 6.25rem;
+  }
+`
+
+export const LogoMinContainer = styled.span`
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  margin-top: auto;
+  align-self: center;
+
+  p {
+    font-size: 1.2rem;
+    margin-top: 4px;
+  }
 `
 
 //5s steps(30) 1s forwards
