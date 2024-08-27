@@ -2,10 +2,10 @@ import {
   SignedIn,
   SignedOut,
   SignUpButton,
-  UserButton,
   SignInButton,
-  useAuth,
+  // useAuth,
 } from '@clerk/clerk-react'
+import { Navigate } from 'react-router-dom'
 import {
   AuthBtnGroup,
   AuthContainer,
@@ -16,16 +16,12 @@ import {
 } from 'pages/auth/AuthStyles'
 
 const Auth = () => {
-  //const { user } = useUser()
-  // console.log(user)
-  const { getToken } = useAuth()
-  //const { session } = useSession()
-  //console.log(session?.id)
+  // const { getToken } = useAuth()
 
-  const displayToken = async () => {
-    const token = await getToken()
-    console.log('Your token:', token)
-  }
+  // const displayToken = async () => {
+  //   const token = await getToken()
+  //   console.log('Your token:', token)
+  // }
 
   return (
     <AuthMain>
@@ -61,9 +57,9 @@ const Auth = () => {
       </SignedOut>
 
       <SignedIn>
-        <UserButton />
+        <Navigate to='/' />
 
-        <button onClick={displayToken}>Get Token</button>
+        {/* <button onClick={displayToken}>Get Token</button> */}
       </SignedIn>
     </AuthMain>
   )

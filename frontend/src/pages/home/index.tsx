@@ -1,3 +1,4 @@
+import { useUser } from '@clerk/clerk-react'
 import {
   HomePageMain,
   MainHeaderContainer,
@@ -10,11 +11,13 @@ import {
 import IllustrationEmpty from 'assets/illustration-empty.svg'
 
 const Homepage = () => {
+  const { user } = useUser()
+
   return (
     <HomePageMain>
       <section>
         <MainHeaderContainer>
-          <h1>Hello, Kelvin.</h1>
+          <h1>{`Hi, ${user?.firstName}`}</h1>
         </MainHeaderContainer>
       </section>
 
@@ -64,7 +67,11 @@ const Homepage = () => {
           <img src={IllustrationEmpty} alt='illustration for no invoice' />
           <h2>There is nothing here</h2>
           <p>
-            Create an invoice by clicking the <b>New <span>Invoice</span></b> button and get started
+            Create an invoice by clicking the{' '}
+            <b>
+              New <span>Invoice</span>
+            </b>{' '}
+            button and get started
           </p>
         </IllustrationWrapper>
       </section>

@@ -1,5 +1,6 @@
 //PACKAGES
 import { UserButton, useUser } from '@clerk/clerk-react'
+import { dark, neobrutalism } from '@clerk/themes'
 import { Link } from 'react-router-dom'
 
 //ASSETS
@@ -42,7 +43,13 @@ const Navbar = ({ themeSwitch, toggleTheme }: NavbarProps) => {
           </div>
         </ThemeWrapper>
         <ProfileContainer>
-          {user ? <UserButton /> : <img src={defaultImg} alt='logo' />}
+          {user ? (
+            <UserButton
+              appearance={{ baseTheme: themeSwitch ? dark : neobrutalism }}
+            />
+          ) : (
+            <img src={defaultImg} alt='logo' />
+          )}
         </ProfileContainer>
       </NavbarContainer>
     </NavbarAside>

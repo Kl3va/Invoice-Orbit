@@ -2,10 +2,6 @@
 import styled, { keyframes } from 'styled-components'
 import { QUERIES } from 'styles/mediaQueries'
 
-// const typing = keyframes`
-//   from { width: 0; }
-//   to { width: 100%; }
-// `
 const typing = keyframes`
 0 { width: 0; }
   50% { width: 100%; }
@@ -54,7 +50,7 @@ export const AuthMain = styled.main`
 export const TypeWritingContainer = styled.div`
   font-size: 2.5rem;
   font-weight: 600;
-  animation: ${hide} 5.5s ease 0.5s infinite;
+  animation: ${hide} 2s ease-in-out forwards;
 `
 export const TypeWritingText = styled.p`
   white-space: nowrap;
@@ -63,7 +59,7 @@ export const TypeWritingText = styled.p`
   display: inline-block;
   border-right: 0.15em solid var(--color-font-100);
   width: 0;
-  animation: ${typing} 5.5s steps(30) 0.5s infinite,
+  animation: ${typing} 7s steps(30) 2s infinite,
     ${blink} 0.75s step-end infinite;
 `
 
@@ -97,6 +93,11 @@ export const AuthBtnGroup = styled.div`
     color: var(--color-bg-100);
     background-color: var(--color-font-100);
     border-radius: 6.25rem;
+    transition: var(--transition);
+
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 `
 

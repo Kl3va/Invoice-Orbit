@@ -27,7 +27,6 @@ export const GlobalStyles = createGlobalStyle`
         --color-border-200: #494E6E;
         --font-pry-100: 'League Spartan', sans-serif;
         --max-container: 45.625rem;
-        --n: 57;
         --center-container: 0 auto;
         --border-radius: 0.5rem;
         --transition: all 0.5s;
