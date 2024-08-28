@@ -11,6 +11,7 @@ import Auth from 'pages/auth'
 
 //COMPONENTS
 import Navbar from 'components/Navbar/Navbar'
+import InvoiceDetailsPage from 'pages/invoice-details'
 
 function App() {
   const [themeSwitch, setThemeSwitch] = useState(false)
@@ -27,6 +28,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Homepage />} />
           <Route path='/auth' element={<Auth />} />
+          <Route path='/invoices/:id' element={<InvoiceDetailsPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

@@ -35,7 +35,7 @@ const Navbar = ({ themeSwitch, toggleTheme }: NavbarProps) => {
             </Link>
           </LogoContainer>
 
-          <div onClick={toggleTheme}>
+          <div onClick={toggleTheme} style={{ cursor: 'pointer' }}>
             <img
               src={themeSwitch ? sunIcon : moonIcon}
               alt='theme switch icon'

@@ -1,32 +1,41 @@
 import {
-  InvoiceRectangle,
-  InvoiceRectanglePri,
-  InvoiceRectangleSec,
   StatusContainer,
+  InvoiceRectangle,
+  InvoiceID,
+  InvoiceDueDate,
+  InvoiceName,
+  InvoicePrice,
 } from 'components/Invoice-bar/InvoiceBarStyles'
 import { Link } from 'react-router-dom'
 
 const InvoiceBar = () => {
   return (
-    <Link to={'/'}>
+    <Link to={'/invoices/4'}>
       <InvoiceRectangle>
-        <InvoiceRectanglePri>
-          <h3>
-            <span>#</span>RT3080
-          </h3>
-          <div>
-            <p>Due 19 Aug 2021</p>
-            <p>£ 1,800.90</p>
-          </div>
-        </InvoiceRectanglePri>
+        <InvoiceID>
+          <span>#</span>RT3080
+        </InvoiceID>
 
-        <InvoiceRectangleSec>
-          <p>Jensen Huang</p>
-          <StatusContainer>
-            <span></span>
-            <h4>Paid</h4>
-          </StatusContainer>
-        </InvoiceRectangleSec>
+        <InvoiceDueDate>Due 19 Aug 2021</InvoiceDueDate>
+
+        <InvoiceName>Jensen Huang</InvoiceName>
+
+        <InvoicePrice>£ 1,800.90</InvoicePrice>
+
+        <StatusContainer>
+          <span></span>
+          <h4>Paid</h4>
+        </StatusContainer>
+
+        <svg width='7' height='10' xmlns='http://www.w3.org/2000/svg'>
+          <path
+            d='M1 1l4 4-4 4'
+            stroke='#7C5DFA'
+            stroke-width='2'
+            fill='none'
+            fill-rule='evenodd'
+          />
+        </svg>
       </InvoiceRectangle>
     </Link>
   )

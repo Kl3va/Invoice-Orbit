@@ -23,6 +23,7 @@ export const GlobalStyles = createGlobalStyle`
         --color-font-300: ${({ theme }) => theme.font300};
         --color-font-400: ${({ theme }) => theme.font400};
         --color-font-500: ${({ theme }) => theme.font500};
+        --color-font-600: ${({ theme }) => theme.font600};
         --color-border-100: ${({ theme }) => theme.border100};
         --color-border-200: #494E6E;
         --font-pry-100: 'League Spartan', sans-serif;
@@ -36,7 +37,8 @@ export const GlobalStyles = createGlobalStyle`
         scrollbar-width: none;
         font-size: 100%;
     }
-    * {
+    *, *::after,
+*::before {
         margin: 0;
         padding: 0;
         box-sizing: border-box;
