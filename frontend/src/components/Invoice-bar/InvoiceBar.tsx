@@ -10,7 +10,7 @@ import { Link } from 'react-router-dom'
 
 const InvoiceBar = () => {
   return (
-    <Link to={'/invoices/4'}>
+    <Link to={'/invoices'}>
       <InvoiceRectangle>
         <InvoiceID>
           <span>#</span>RT3080

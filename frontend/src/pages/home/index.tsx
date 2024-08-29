@@ -7,9 +7,9 @@ import {
   InvoiceHeading,
   FilterContainer,
   NewInvoiceBtn,
-  IllustrationWrapper,
+  // IllustrationWrapper,
 } from 'pages/home/HomeStyles'
-import IllustrationEmpty from 'assets/illustration-empty.svg'
+//import IllustrationEmpty from 'assets/illustration-empty.svg'
 
 const Homepage = () => {
   const { user } = useUser()

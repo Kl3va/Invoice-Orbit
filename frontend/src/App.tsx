@@ -28,7 +28,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Homepage />} />
           <Route path='/auth' element={<Auth />} />
-          <Route path='/invoices/:id' element={<InvoiceDetailsPage />} />
+          <Route path='/invoices' element={<InvoiceDetailsPage />} />
         </Routes>
       </Router>
     </ThemeProvider>

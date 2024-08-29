@@ -1,46 +1,46 @@
+//COMPONENTS
+import GobackButton from 'components/GobackButton/GobackButton'
+
+//STYLES
 import { StatusContainer } from 'components/Invoice-bar/InvoiceBarStyles'
 import { HomePageMain } from 'pages/home/HomeStyles'
+import {
+  ButtonsGroup,
+  DetailsPrimary,
+  DetailsSecondary,
+  GobackWrapper,
+  StatusBar,
+} from 'pages/invoice-details/InvoiceDetailsPageStyles'
 
 const InvoiceDetailsPage = () => {
   return (
     <HomePageMain>
       <section>
-        <div>
-          <button aria-label='Go back to prev page'>
-            <svg width='7' height='10' xmlns='http://www.w3.org/2000/svg'>
-              <path
-                d='M6.342.886L2.114 5.114l4.228 4.228'
-                stroke='#9277FF'
-                stroke-width='2'
-                fill='none'
-                fill-rule='evenodd'
-              />
-            </svg>
-            Go back
-          </button>
-        </div>
+        <GobackWrapper>
+          <GobackButton />
+        </GobackWrapper>
       </section>
 
       <section>
-        <div>
-          <div>
+        <DetailsSecondary>
+          <StatusBar>
             <h2>Status</h2>
             <StatusContainer>
               <span></span>
               <h4>Pending</h4>
             </StatusContainer>
-          </div>
+          </StatusBar>
 
-          <div>
+          <ButtonsGroup>
             <button>Edit</button>
             <button>Delete</button>
             <button>Mark as paid</button>
-          </div>
-        </div>
+          </ButtonsGroup>
+        </DetailsSecondary>
       </section>
 
       <section>
-        <div>
+        <DetailsPrimary>
           <div>
             <div>
               <div>
@@ -108,7 +108,7 @@ const InvoiceDetailsPage = () => {
               <p>£ 556.00</p>
             </div>
           </div>
-        </div>
+        </DetailsPrimary>
       </section>
     </HomePageMain>
   )

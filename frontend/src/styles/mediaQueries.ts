@@ -1,5 +1,5 @@
 const BREAKPOINTS = {
-  xs: 300,
+  xs: 375,
   s: 576,
   md: 768,
   l: 992,

@@ -11,6 +11,7 @@ export const GlobalStyles = createGlobalStyle`
         --color-bg-400: ${({ theme }) => theme.bg400};
         --color-bg-500: ${({ theme }) => theme.bg500};
         --color-bg-600: ${({ theme }) => theme.bg600};
+        --color-bg-700: ${({ theme }) => theme.bg700};
         --color-bg-draft: #1E2139;
         --color-bg-delete: #EC5757;
         --color-accent-100: #7C5DFA;
@@ -18,12 +19,15 @@ export const GlobalStyles = createGlobalStyle`
         --color-accent-300: #33D69F;
         --color-accent-400: #FF8F00;
         --color-accent-500: #DFE3FA;
+        --color-font-normal: #FFFFFF;
         --color-font-100: ${({ theme }) => theme.font100};
         --color-font-200: ${({ theme }) => theme.font200};
         --color-font-300: ${({ theme }) => theme.font300};
         --color-font-400: ${({ theme }) => theme.font400};
         --color-font-500: ${({ theme }) => theme.font500};
         --color-font-600: ${({ theme }) => theme.font600};
+        --color-font-700: ${({ theme }) => theme.font700};
+        --color-font-800: #7E88C3;
         --color-border-100: ${({ theme }) => theme.border100};
         --color-border-200: #494E6E;
         --font-pry-100: 'League Spartan', sans-serif;
@@ -103,7 +107,7 @@ export const GlobalStyles = createGlobalStyle`
         font-optical-sizing: auto;
         background-color: var(--color-bg-100);
         color: var(--color-font-100);
-        
+       
         > * {
         // min-height: 100vh;
         }
