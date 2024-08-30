@@ -52,6 +52,12 @@ export const ButtonsGroup = styled.div`
     padding: 1.25rem 1.5rem;
   }
 
+  @media ${QUERIES.mobileLarge} {
+    position: relative;
+    padding: 0;
+    justify-content: flex-end;
+  }
+
   button {
     border: none;
     border-radius: 6.25rem;
@@ -60,7 +66,6 @@ export const ButtonsGroup = styled.div`
     height: 3rem;
     padding-inline: 1.1rem;
     cursor: pointer;
-    opacity: 1;
 
     @media ${QUERIES.mobileMini} {
       padding-inline: 1.5rem;
@@ -71,9 +76,9 @@ export const ButtonsGroup = styled.div`
   & > :first-child {
     background-color: var(--color-bg-400);
     color: var(--color-font-700);
-    transition: background-color color ease-in 0.2s;
+    transition: background-color ease-in 0.1s, color ease-in 0.1s;
 
-    :hover {
+    &:hover {
       background-color: var(--color-bg-700);
       color: var(--color-font-800);
     }
@@ -85,7 +90,7 @@ export const ButtonsGroup = styled.div`
     transition: opacity ease-in 0.2s;
 
     &:hover {
-      opacity: 0.5;
+      opacity: 0.8;
     }
   }
 
@@ -94,15 +99,15 @@ export const ButtonsGroup = styled.div`
     color: var(--color-font-normal);
     transition: opacity ease-in 0.2s;
 
-    :hover {
-      opacity: 0.5;
-      border: 3px solid red;
+    &:hover {
+      opacity: 0.8;
     }
   }
 `
 
 export const StatusBar = styled.div`
   display: flex;
+  gap: 1.25rem;
   justify-content: space-between;
   align-items: center;
   flex-grow: 1;
