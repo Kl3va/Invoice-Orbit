@@ -31,6 +31,8 @@ export const GlobalStyles = createGlobalStyle`
         --color-border-100: ${({ theme }) => theme.border100};
         --color-border-200: #494E6E;
         --font-pry-100: 'League Spartan', sans-serif;
+        --font-size-small: 0.94rem;
+        --font-size-mini: 0.81rem;
         --max-container: 45.625rem;
         --center-container: 0 auto;
         --border-radius: 0.5rem;

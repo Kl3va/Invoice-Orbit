@@ -1,18 +1,35 @@
 //COMPONENTS
 import GobackButton from 'components/GobackButton/GobackButton'
 
+//Custom Hook
+import useWindow from 'hooks/useWindow'
+
 //STYLES
 import { StatusContainer } from 'components/Invoice-bar/InvoiceBarStyles'
 import { HomePageMain } from 'pages/home/HomeStyles'
 import {
+  BasicInfoPrimary,
+  BasicInfoSecondary,
   ButtonsGroup,
+  UserAddressWrapper,
+  DescriptionWrapper,
   DetailsPrimary,
   DetailsSecondary,
   GobackWrapper,
   StatusBar,
+  BasicInfoWrapper,
+  BillToWrapper,
+  ItemsContainer,
+  ItemsDetailsContainer,
+  ItemsDetailsHeadingWrapper,
+  ItemsDetailsWrapper,
+  GrandTotalWrapper,
+  StickySection,
 } from 'pages/invoice-details/InvoiceDetailsPageStyles'
 
 const InvoiceDetailsPage = () => {
+  const windowWidth = useWindow()
+
   return (
     <HomePageMain>
       <section>
@@ -21,7 +38,7 @@ const InvoiceDetailsPage = () => {
         </GobackWrapper>
       </section>
 
-      <section>
+      <StickySection>
         <DetailsSecondary>
           <StatusBar>
             <h2>Status</h2>
@@ -37,40 +54,42 @@ const InvoiceDetailsPage = () => {
             <button>Mark as paid</button>
           </ButtonsGroup>
         </DetailsSecondary>
-      </section>
+      </StickySection>
 
       <section>
         <DetailsPrimary>
-          <div>
-            <div>
-              <div>
+          <BasicInfoWrapper>
+            <BasicInfoSecondary>
+              <DescriptionWrapper>
                 <p>
                   <span>#</span>XM9141
                 </p>
                 <p>Graphic design</p>
-              </div>
-              <div>
+              </DescriptionWrapper>
+              <UserAddressWrapper>
                 <p>19 Union Terrace</p>
                 <p>London</p>
                 <p>E1 3EZ</p>
                 <p>United Kingdom</p>
-              </div>
-            </div>
-            <div>
+              </UserAddressWrapper>
+            </BasicInfoSecondary>
+            <BasicInfoPrimary>
               <div>
                 <h2>Invoice Date</h2>
                 <p>21 Aug 2021</p>
               </div>
-              <div>
-                <h2>Bill To</h2>
+              <BillToWrapper>
                 <div>
+                  <h2>Bill To</h2>
                   <p>Alex Grin</p>
+                </div>
+                <div>
                   <p>84 Church Way</p>
                   <p>Bradford</p>
                   <p>BD1 9PB</p>
                   <p>United Kingdom</p>
                 </div>
-              </div>
+              </BillToWrapper>
               <div>
                 <h2>Payment Due</h2>
                 <p>20 Sep 2021</p>
@@ -79,35 +98,37 @@ const InvoiceDetailsPage = () => {
                 <h2>Sent to</h2>
                 <p>alexgrim@mail.com</p>
               </div>
-            </div>
-          </div>
-          <div>
-            <div>
-              <h2>Item Name</h2>
-              <h2>QTY.</h2>
-              <h2>Price</h2>
-              <h2>Total</h2>
-            </div>
-            <div>
-              <p>Banner Design</p>
-              <p>1 x £ 156.00</p>
-              <p>1</p>
-              <p>£ 156.00</p>
-              <p>£ 156.00</p>
-            </div>
-            <div>
-              <p>Email Design</p>
-              <p>2 x £ 200.00</p>
-              <p>2</p>
-              <p>£ 200.00</p>
-              <p>£ 400.00</p>
-            </div>
-            <div>
-              <h2>Grand Total</h2>
-              <h2>Amount Due</h2>
+            </BasicInfoPrimary>
+          </BasicInfoWrapper>
+
+          <ItemsContainer>
+            <ItemsDetailsContainer>
+              <ItemsDetailsHeadingWrapper>
+                <h2>Item Name</h2>
+                <h2>QTY.</h2>
+                <h2>Price</h2>
+                <h2>Total</h2>
+              </ItemsDetailsHeadingWrapper>
+              <ItemsDetailsWrapper>
+                <p>Banner Design</p>
+                <p>1 x £ 156.00</p>
+                <p>1</p>
+                <p>£ 156.00</p>
+                <p>£ 156.00</p>
+              </ItemsDetailsWrapper>
+              <ItemsDetailsWrapper>
+                <p>Email Design</p>
+                <p>2 x £ 200.00</p>
+                <p>2</p>
+                <p>£ 200.00</p>
+                <p>£ 400.00</p>
+              </ItemsDetailsWrapper>
+            </ItemsDetailsContainer>
+            <GrandTotalWrapper>
+              <h2>{windowWidth >= 400 ? 'Amount Due' : 'Grand Total'}</h2>
               <p>£ 556.00</p>
-            </div>
-          </div>
+            </GrandTotalWrapper>
+          </ItemsContainer>
         </DetailsPrimary>
       </section>
     </HomePageMain>
