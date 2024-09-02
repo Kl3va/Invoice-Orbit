@@ -7,6 +7,10 @@ export const StickySection = styled.section`
     top: 6rem;
     z-index: 1000;
   }
+
+  @media ${QUERIES.tablet} {
+    top: 1rem;
+  }
 `
 
 export const GobackWrapper = styled.div`
@@ -94,11 +98,10 @@ export const ButtonsGroup = styled.div`
   & > :first-child {
     background-color: var(--color-bg-400);
     color: var(--color-font-700);
-    transition: background-color ease-in 0.1s, color ease-in 0.1s;
+    transition: opacity ease-in 0.2s;
 
     &:hover {
-      background-color: var(--color-bg-700);
-      color: var(--color-font-800);
+      opacity: 0.5;
     }
   }
 
@@ -137,6 +140,12 @@ export const BasicInfoSecondary = styled.div`
   flex-direction: column;
   gap: 1.88rem;
   margin-bottom: 1.94rem;
+
+  @media ${QUERIES.tabletMini} {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 1.31rem;
+  }
 `
 
 export const DescriptionWrapper = styled.div`
@@ -172,6 +181,10 @@ export const BasicInfoPrimary = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.94rem;
+
+  @media ${QUERIES.tabletMini} {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
 
   & > div:not(:nth-child(2)) {
     display: grid;
@@ -209,6 +222,19 @@ export const BillToWrapper = styled.div`
   }
 `
 
+export const SentToWrapper = styled.div`
+  @media ${QUERIES.tabletMini} {
+    grid-row: 1 / 2;
+    grid-column: 3 / 4;
+  }
+`
+export const PaymentDueWrapper = styled.div`
+  @media ${QUERIES.tabletMini} {
+    grid-row: 2 / 3;
+    grid-column: 1 / 2;
+  }
+`
+
 //ITEMS
 export const ItemsContainer = styled.div`
   border-radius: 0.8rem;
@@ -224,12 +250,40 @@ export const ItemsDetailsContainer = styled.div`
 
 export const ItemsDetailsHeadingWrapper = styled.div`
   display: none;
+
+  @media ${QUERIES.tabletMini} {
+    display: grid;
+    grid-template-columns: 0.85fr 0.15fr 0.45fr 0.5fr;
+  }
+
+  & > :nth-child(2) {
+    @media ${QUERIES.tabletMini} {
+      justify-self: center;
+    }
+  }
+
+  & > :nth-child(3) {
+    @media ${QUERIES.tabletMini} {
+      justify-self: end;
+    }
+  }
+
+  & > :last-child {
+    @media ${QUERIES.tabletMini} {
+      justify-self: end;
+    }
+  }
 `
 export const ItemsDetailsWrapper = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr;
   grid-row-gap: 0.5rem;
   grid-auto-flow: column;
+
+  @media ${QUERIES.tabletMini} {
+    grid-template-columns: 0.75fr 0.25fr 0.25fr 0.25fr;
+    grid-auto-flow: row;
+  }
 
   p {
     font-size: var(--font-size-small);
@@ -238,20 +292,37 @@ export const ItemsDetailsWrapper = styled.div`
 
   & > :nth-child(2) {
     color: var(--color-font-400);
+
+    @media ${QUERIES.tabletMini} {
+      display: none;
+    }
   }
 
   & > :nth-child(3) {
     display: none;
+
+    @media ${QUERIES.tabletMini} {
+      display: block;
+    }
   }
 
   & > :nth-child(4) {
     display: none;
+
+    @media ${QUERIES.tabletMini} {
+      display: block;
+    }
   }
 
   & > :last-child {
     justify-self: end;
     align-self: center;
     grid-row: span 2;
+
+    @media ${QUERIES.tabletMini} {
+      align-self: start;
+      grid-row: span 1;
+    }
   }
 `
 

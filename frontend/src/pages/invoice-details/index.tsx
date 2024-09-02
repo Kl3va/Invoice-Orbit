@@ -25,6 +25,8 @@ import {
   ItemsDetailsWrapper,
   GrandTotalWrapper,
   StickySection,
+  PaymentDueWrapper,
+  SentToWrapper,
 } from 'pages/invoice-details/InvoiceDetailsPageStyles'
 
 const InvoiceDetailsPage = () => {
@@ -90,14 +92,14 @@ const InvoiceDetailsPage = () => {
                   <p>United Kingdom</p>
                 </div>
               </BillToWrapper>
-              <div>
+              <PaymentDueWrapper>
                 <h2>Payment Due</h2>
                 <p>20 Sep 2021</p>
-              </div>
-              <div>
+              </PaymentDueWrapper>
+              <SentToWrapper>
                 <h2>Sent to</h2>
                 <p>alexgrim@mail.com</p>
-              </div>
+              </SentToWrapper>
             </BasicInfoPrimary>
           </BasicInfoWrapper>
 
