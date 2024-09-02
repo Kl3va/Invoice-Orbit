@@ -29,8 +29,7 @@ const statusColors = {
 }
 
 export const InvoiceRectangle = styled.div`
-  width: min(87.2%, var(--max-container));
-  margin-inline: auto;
+  width: 100%;
   background-color: var(--color-bg-300);
   border-radius: 0.8rem;
   padding: 1.56rem 1.5rem 1.38rem 1.5rem;

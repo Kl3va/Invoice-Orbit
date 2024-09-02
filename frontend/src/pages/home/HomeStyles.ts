@@ -14,11 +14,22 @@ export const HomePageMain = styled.main`
   }
 `
 
+export const SecondarySectionSticky = styled.section`
+  position: sticky;
+  top: 6rem;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+
+  @media ${QUERIES.tablet} {
+    top: 1rem;
+  }
+`
+
 export const MainHeaderContainer = styled.div`
   width: min(87.2%, var(--max-container));
   margin-inline: auto;
 
-  h1 {
+  p {
     font-size: clamp(
       1.5rem,
       calc(2vw + 1rem),
@@ -34,7 +45,7 @@ export const HomeSecondaryContainer = styled.div`
   display: flex;
   gap: 1.16rem;
 
-  h2 {
+  h1 {
     font-size: clamp(1.25rem, calc(1.8vw + 1rem), 1.875rem);
   }
 `
@@ -78,6 +89,7 @@ export const NewInvoiceBtn = styled.button`
   color: #ffffff;
   background-color: var(--color-accent-100);
   border-radius: 6.25rem;
+  transition: scale ease-in 0.2s;
 
   & > span {
     width: 2rem;
@@ -97,13 +109,34 @@ export const NewInvoiceBtn = styled.button`
       }
     }
   }
+
+  &:hover {
+    scale: 1.03;
+  }
+`
+
+export const InvoiceBarsWrapper = styled.div`
+  min-height: calc(100vh - 17.2rem);
+
+  a {
+    width: min(87.2%, var(--max-container));
+    margin-inline: auto;
+  }
+
+  & > :not(:last-child) {
+    margin-bottom: 1rem;
+  }
+
+  @media ${QUERIES.tablet} {
+    min-height: calc(100vh - 12.4rem);
+  }
 `
 
 export const IllustrationWrapper = styled.div`
   width: min(87.2%, 15.1rem);
   margin-inline: auto;
-  padding-top: 6.37rem;
   text-align: center;
+  align-self: center;
 
   h2 {
     margin-block: 2.63rem 1.44rem;

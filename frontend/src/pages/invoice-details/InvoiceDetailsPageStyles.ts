@@ -3,13 +3,13 @@ import { QUERIES } from 'styles/mediaQueries'
 
 export const StickySection = styled.section`
   @media ${QUERIES.mobileLarge} {
-    position: sticky;
-    top: 6rem;
+    // position: sticky;
+    // top: 6rem;
     z-index: 1000;
   }
 
   @media ${QUERIES.tablet} {
-    top: 1rem;
+    // top: 1rem;
   }
 `
 
@@ -246,6 +246,10 @@ export const ItemsDetailsContainer = styled.div`
 
   display: grid;
   gap: 1.5rem;
+
+  @media ${QUERIES.tabletMini} {
+    gap: 2rem;
+  }
 `
 
 export const ItemsDetailsHeadingWrapper = styled.div`
@@ -253,7 +257,7 @@ export const ItemsDetailsHeadingWrapper = styled.div`
 
   @media ${QUERIES.tabletMini} {
     display: grid;
-    grid-template-columns: 0.85fr 0.15fr 0.45fr 0.5fr;
+    grid-template-columns: 0.9fr 0.1fr 0.45fr 0.5fr;
   }
 
   & > :nth-child(2) {
@@ -281,7 +285,8 @@ export const ItemsDetailsWrapper = styled.div`
   grid-auto-flow: column;
 
   @media ${QUERIES.tabletMini} {
-    grid-template-columns: 0.75fr 0.25fr 0.25fr 0.25fr;
+    grid-template-columns: 0.9fr 0.1fr 0.45fr 0.5fr;
+    grid-template-rows: auto;
     grid-auto-flow: row;
   }
 
@@ -303,6 +308,7 @@ export const ItemsDetailsWrapper = styled.div`
 
     @media ${QUERIES.tabletMini} {
       display: block;
+      justify-self: center;
     }
   }
 
@@ -311,6 +317,7 @@ export const ItemsDetailsWrapper = styled.div`
 
     @media ${QUERIES.tabletMini} {
       display: block;
+      justify-self: end;
     }
   }
 

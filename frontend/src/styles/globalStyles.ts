@@ -109,9 +109,10 @@ export const GlobalStyles = createGlobalStyle`
         font-optical-sizing: auto;
         background-color: var(--color-bg-100);
         color: var(--color-font-100);
-       
+        
         > * {
-        // min-height: 100vh;
+         
+        //min-height: 100vh;
         }
     }
 
@@ -127,6 +128,7 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   a {
+      display: block;
       text-decoration: none;
       transition: var(--transition);
       font-family: inherit;

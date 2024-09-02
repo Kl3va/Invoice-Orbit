@@ -7,9 +7,11 @@ import {
   InvoiceHeading,
   FilterContainer,
   NewInvoiceBtn,
-  // IllustrationWrapper,
+  InvoiceBarsWrapper,
+  SecondarySectionSticky,
+  IllustrationWrapper,
 } from 'pages/home/HomeStyles'
-//import IllustrationEmpty from 'assets/illustration-empty.svg'
+import IllustrationEmpty from 'assets/illustration-empty.svg'
 
 const Homepage = () => {
   const { user } = useUser()
@@ -18,14 +20,14 @@ const Homepage = () => {
     <HomePageMain>
       <section>
         <MainHeaderContainer>
-          <h1>{`Hi, ${user?.firstName}`}</h1>
+          <p>{`Hi, ${user?.firstName}`}</p>
         </MainHeaderContainer>
       </section>
 
-      <section>
+      <SecondarySectionSticky>
         <HomeSecondaryContainer>
           <InvoiceHeading>
-            <h2>Invoices</h2>
+            <h1>Invoices</h1>
             <p>No Invoices</p>
           </InvoiceHeading>
 
@@ -61,22 +63,29 @@ const Homepage = () => {
             </p>
           </NewInvoiceBtn>
         </HomeSecondaryContainer>
-      </section>
+      </SecondarySectionSticky>
 
       <section>
-        {/* <IllustrationWrapper>
-          <img src={IllustrationEmpty} alt='illustration for no invoice' />
-          <h2>There is nothing here</h2>
-          <p>
-            Create an invoice by clicking the{' '}
-            <b>
-              New <span>Invoice</span>
-            </b>{' '}
-            button and get started
-          </p>
-        </IllustrationWrapper> */}
+        <InvoiceBarsWrapper>
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
 
-        <InvoiceBar />
+          {/* <IllustrationWrapper>
+            <img src={IllustrationEmpty} alt='illustration for no invoice' />
+            <h2>There is nothing here</h2>
+            <p>
+              Create an invoice by clicking the{' '}
+              <b>
+                New <span>Invoice</span>
+              </b>{' '}
+              button and get started
+            </p>
+          </IllustrationWrapper> */}
+        </InvoiceBarsWrapper>
       </section>
     </HomePageMain>
   )
