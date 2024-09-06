@@ -1,9 +1,11 @@
 import GobackButton from 'components/GobackButton/GobackButton'
 import {
+  DateAndTermsContainer,
   FormButtonsContainer,
   FormInvoiceContainer,
   GobackFormBtnWrapper,
   InvoiceFormContainer,
+  LocationContainer,
 } from 'components/Main-Form/MainFormTemplateStyles'
 
 const MainFormTemplate = () => {
@@ -23,68 +25,74 @@ const MainFormTemplate = () => {
               name='senderAddress.street'
               id='senderAddress.street'
               placeholder='19 Union Terrace'
-              value={''}
+              // value={''}
               // onChange={}
               required
             />
           </div>
-          <div>
+          <LocationContainer>
             <div>
               <label>City</label>
-              <input type='text' />
+              <input type='text' placeholder='London' required />
             </div>
             <div>
               <label htmlFor=''>Post Code</label>
-              <input type='text' />
+              <input type='text' placeholder='E1 AFB' required />
             </div>
             <div>
               <label htmlFor=''>Country</label>
-              <input type='text' />
+              <input type='text' placeholder='UK' required />
             </div>
-          </div>
+          </LocationContainer>
         </fieldset>
 
         <fieldset>
           <legend>Bill To</legend>
           <div>
             <label>Client's Name</label>
-            <input type='text' />
+            <input type='text' placeholder='Michael Scott' required />
           </div>
           <div>
             <label>Client's Email</label>
-            <input type='text' />
+            <input type='email' placeholder='mscott@gmail.com' required />
           </div>
           <div>
             <label>Street Address</label>
-            <input type='text' />
+            <input type='text' placeholder='10 Church Way' required />
           </div>
-          <div>
+          <LocationContainer>
             <div>
               <label>City</label>
-              <input type='text' />
+              <input type='text' placeholder='Bradford' required />
             </div>
             <div>
-              <label htmlFor=''>Post Code</label>
-              <input type='text' />
+              <label>Post Code</label>
+              <input type='text' placeholder='BD1 9BB' required />
             </div>
             <div>
-              <label htmlFor=''>Country</label>
-              <input type='text' />
+              <label>Country</label>
+              <input type='text' placeholder='UK' required />
             </div>
-          </div>
+          </LocationContainer>
         </fieldset>
 
         <fieldset>
-          <div>
+          <DateAndTermsContainer>
             <div>
-              <label htmlFor=''>Country</label>
-              <input type='text' />
+              <label>Invoice Date</label>
+              <input type='date' />
             </div>
             <div>
-              <label htmlFor=''>Country</label>
-              <input type='text' />
+              <label>Payment Terms</label>
+              <select name='terms' id='terms'>
+                <option value='select'>Select Payment Terms</option>
+                <option value='1'>Net 1 day</option>
+                <option value='7'>Net 7 day</option>
+                <option value='14'>Net 1 day</option>
+                <option value='30'>Net 1 day</option>
+              </select>
             </div>
-          </div>
+          </DateAndTermsContainer>
 
           <div>
             <label htmlFor=''>Country</label>
