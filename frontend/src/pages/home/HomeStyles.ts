@@ -19,6 +19,7 @@ export const SecondarySectionSticky = styled.section`
   top: 6rem;
   z-index: 1000;
   backdrop-filter: blur(10px);
+  z-index: 90;
 
   @media ${QUERIES.tablet} {
     top: 1rem;

@@ -12,6 +12,7 @@ export const GlobalStyles = createGlobalStyle`
         --color-bg-500: ${({ theme }) => theme.bg500};
         --color-bg-600: ${({ theme }) => theme.bg600};
         --color-bg-700: ${({ theme }) => theme.bg700};
+        --color-bg-800: ${({ theme }) => theme.bg800};
         --color-bg-draft: #1E2139;
         --color-bg-delete: #EC5757;
         --color-accent-100: #7C5DFA;
@@ -40,7 +41,7 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     html {
-        scrollbar-width: none;
+       // scrollbar-width: none;
         font-size: 100%;
     }
     *, *::after,
@@ -68,16 +69,18 @@ export const GlobalStyles = createGlobalStyle`
     }
 
     ::-webkit-scrollbar {
-      width: 8px;
+      width: 4px;
       height: 4px;
     }
 
     ::-webkit-scrollbar-track {
       background: transparent;
+     
     }
 
     ::-webkit-scrollbar-thumb {
       background: var(--color-bg-600);
+     
       box-shadow: inset 2px 2px 5px 0 rgba(#fff, 0.5);
       border-radius: 100vw;
       margin: 1px;

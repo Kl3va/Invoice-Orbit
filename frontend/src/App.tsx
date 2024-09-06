@@ -10,6 +10,8 @@ import Homepage from 'pages/home'
 import Auth from 'pages/auth'
 
 //COMPONENTS
+import PrivateRoute from 'components/PrivateRoutes'
+import Layout from 'components/Layout'
 import Navbar from 'components/Navbar/Navbar'
 import InvoiceDetailsPage from 'pages/invoice-details'
 
@@ -26,9 +28,16 @@ function App() {
       <Router>
         <Navbar toggleTheme={toggleTheme} themeSwitch={themeSwitch} />
         <Routes>
-          <Route path='/' element={<Homepage />} />
           <Route path='/auth' element={<Auth />} />
-          <Route path='/invoices' element={<InvoiceDetailsPage />} />
+          {/* <Route path='/' element={<Homepage />} />
+          <Route path='/invoices' element={<InvoiceDetailsPage />} /> */}
+
+          <Route element={<PrivateRoute />}>
+            <Route path='/' element={<Layout />}>
+              <Route index element={<Homepage />} />
+              <Route path='invoices' element={<InvoiceDetailsPage />} />
+            </Route>
+          </Route>
         </Routes>
       </Router>
     </ThemeProvider>

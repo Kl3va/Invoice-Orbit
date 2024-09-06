@@ -8,6 +8,7 @@ export interface ThemeTypes extends DefaultTheme {
   bg500: string
   bg600: string
   bg700: string
+  bg800: string
   font100: string
   font200: string
   font300: string
@@ -26,6 +27,7 @@ export const lightTheme: ThemeTypes = {
   bg500: '#373B53',
   bg600: '#DFE3FA',
   bg700: '#DFE3FA',
+  bg800: '#FFFFFF',
   font100: '#0C0E16',
   font200: '#888EB0',
   font300: '#7E88C3',
@@ -44,6 +46,7 @@ export const darkTheme: ThemeTypes = {
   bg500: '#0C0E16',
   bg600: '#252945',
   bg700: '#FFFFFF',
+  bg800: '#141625',
   font100: '#FFFFFF',
   font200: '#DFE3FA',
   font300: '#DFE3FA',

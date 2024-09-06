@@ -73,6 +73,24 @@ const Homepage = () => {
           <InvoiceBar />
           <InvoiceBar />
           <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
 
           {/* <IllustrationWrapper>
             <img src={IllustrationEmpty} alt='illustration for no invoice' />

@@ -3,13 +3,13 @@ import { QUERIES } from 'styles/mediaQueries'
 
 export const StickySection = styled.section`
   @media ${QUERIES.mobileLarge} {
-    // position: sticky;
-    // top: 6rem;
-    z-index: 1000;
+    position: sticky;
+    top: 6rem;
+    z-index: 90;
   }
 
   @media ${QUERIES.tablet} {
-    // top: 1rem;
+    top: 1rem;
   }
 `
 
