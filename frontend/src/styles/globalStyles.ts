@@ -165,7 +165,7 @@ input[type=number] {
 input, select {
 padding: 1.125rem 1rem 0.94rem 1.1rem;
 width: 100%;
-border-radius: 0.2rem;
+border-radius: 0.3rem;
 border: 1px solid var(--color-border-100);
 background: var(--color-bg-300);
 
