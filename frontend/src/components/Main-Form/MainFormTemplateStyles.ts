@@ -47,6 +47,20 @@ export const InvoiceFormContainer = styled.form`
     gap: 1.56rem;
     border: none;
   }
+
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%237C5DFA'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 1.5em;
+
+    option {
+      font-size: 1rem;
+    }
+  }
 `
 
 export const LocationContainer = styled.div`

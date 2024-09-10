@@ -163,7 +163,7 @@ input[type=number] {
 }
 
 input, select {
-padding: 1.125rem 0 0.94rem 1.25rem;
+padding: 1.125rem 1rem 0.94rem 1.1rem;
 width: 100%;
 border-radius: 0.2rem;
 border: 1px solid var(--color-border-100);
@@ -172,6 +172,12 @@ background: var(--color-bg-300);
 color: var(--color-font-100);
 font-weight: 700;
 font-size: var(--font-size-small);
+
+
+&:focus {
+  outline:none;
+  border-color: var(--color-accent-100);
+  }
 }
 
 `

@@ -80,28 +80,34 @@ const MainFormTemplate = () => {
           <DateAndTermsContainer>
             <div>
               <label>Invoice Date</label>
-              <input type='date' />
+              <input type='date' required />
             </div>
             <div>
               <label>Payment Terms</label>
-              <select name='terms' id='terms'>
+              <select name='terms' id='terms' required>
                 <option value='select'>Select Payment Terms</option>
-                <option value='1'>Net 1 day</option>
-                <option value='7'>Net 7 day</option>
-                <option value='14'>Net 1 day</option>
-                <option value='30'>Net 1 day</option>
+                <option value='1'>Next 1 day</option>
+                <option value='7'>Next 7 day</option>
+                <option value='14'>Next 14 days</option>
+                <option value='30'>Next 30 days</option>
               </select>
             </div>
           </DateAndTermsContainer>
 
           <div>
-            <label htmlFor=''>Country</label>
-            <input type='text' />
+            <label>Project/Description</label>
+            <input type='text' placeholder='Graphic Design' required />
           </div>
 
           <div>
-            <label htmlFor=''>Country</label>
-            <input type='text' />
+            <label>Currency</label>
+            <select name='terms' id='terms' required>
+              <option value='select'>Select Currency</option>
+              <option value='naira'>₦: Naira</option>
+              <option value='dollar'>$: Dollar</option>
+              <option value='pound'>£: Pound</option>
+              <option value='euro'>€: Euro</option>
+            </select>
           </div>
         </fieldset>
 
@@ -109,7 +115,7 @@ const MainFormTemplate = () => {
           <legend>Item List</legend>
           <div>
             <div>
-              <label htmlFor=''>Country</label>
+              <label>Item Name</label>
               <input type='text' />
             </div>
 
@@ -127,6 +133,7 @@ const MainFormTemplate = () => {
               <label htmlFor=''>Country</label>
               <p>value</p>
             </div>
+
             <svg width='13' height='16' xmlns='http://www.w3.org/2000/svg'>
               <path
                 d='M11.583 3.556v10.666c0 .982-.795 1.778-1.777 1.778H2.694a1.777 1.777 0 01-1.777-1.778V3.556h10.666zM8.473 0l.888.889h3.111v1.778H.028V.889h3.11L4.029 0h4.444z'
