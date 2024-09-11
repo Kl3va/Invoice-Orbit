@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { QUERIES } from 'styles/mediaQueries'
 
 export const FormInvoiceContainer = styled.div`
   position: fixed;
@@ -23,8 +24,9 @@ export const GobackFormBtnWrapper = styled.div`
 `
 
 export const InvoiceFormContainer = styled.form`
-  height: calc(100% - 16rem);
+  height: calc(100% - 15rem);
   overflow-y: scroll;
+  padding-bottom: 3rem;
 
   display: grid;
   gap: 2.56rem;
@@ -75,6 +77,24 @@ export const ItemListWrapper = styled.fieldset`
   }
 `
 
+export const ItemListHeading = styled.div`
+  display: none;
+
+  h3 {
+    color: var(--color-font-400);
+    font-size: var(--font-size-mini);
+    font-weight: 500;
+  }
+
+  @media ${QUERIES.mobileLarge} {
+    display: grid;
+    grid-template-columns:
+      13.38rem minmax(min-content, 4rem) minmax(min-content, 6.25rem)
+      auto;
+    gap: 1rem;
+  }
+`
+
 export const LocationContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -83,28 +103,62 @@ export const LocationContainer = styled.div`
   & > :last-child {
     grid-column: span 2;
   }
+
+  @media ${QUERIES.mobileLarge} {
+    grid-template-columns: 1fr 1fr 1fr;
+
+    & > :last-child {
+      grid-column: 3 / 4;
+    }
+  }
 `
 export const DateAndTermsContainer = styled.div`
   display: grid;
   gap: 1.56rem;
+
+  @media ${QUERIES.mobileLarge} {
+    grid-template-columns: 1fr 1fr;
+  }
 `
 export const CurrencyContainer = styled.div`
   width: 10rem;
 `
 export const ListContainer = styled.div`
   display: grid;
-  grid-template-columns: 4rem 6.25rem auto fit-content(13px);
+  grid-template-columns: minmax(min-content, 4rem) minmax(min-content, 6.25rem) auto fit-content(
+      13px
+    );
   grid-template-rows: auto auto;
   gap: 1rem;
+
+  @media ${QUERIES.mobileLarge} {
+    grid-template-columns:
+      13.38rem minmax(min-content, 4rem) minmax(min-content, 6.25rem)
+      auto fit-content(13px);
+    grid-template-rows: auto;
+
+    label {
+      display: none;
+    }
+  }
 
   & > :first-child {
     grid-column: 1 / -1;
     grid-row: 1 / 2;
+
+    @media ${QUERIES.mobileLarge} {
+      grid-column: 1 / 2;
+      grid-row: 1 / 2;
+    }
   }
 
   & > :nth-child(4) {
     display: grid;
     grid-template-rows: min-content auto;
+
+    @media ${QUERIES.mobileLarge} {
+      align-self: center;
+    }
 
     p {
       align-self: center;
@@ -117,18 +171,70 @@ export const ListContainer = styled.div`
   & > :last-child {
     align-self: center;
     margin-top: 1rem;
+
+    @media ${QUERIES.mobileLarge} {
+      margin-top: 0;
+    }
   }
 `
 
 export const FormButtonsContainer = styled.div`
   position: fixed;
-  background-color: brown;
+  background-color: var(--color-bg-300);
   bottom: 0;
   left: 0;
   width: min(100%, 38.56rem);
-
+  box-shadow: 0 -14px 14px rgba(0, 0, 0, 0.1);
   z-index: 95;
-  padding: 2rem;
+  padding: 1.38rem 1.5rem;
+`
 
-  // display: none;
+export const SubmitButtonsContainer = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+
+  button {
+    border: none;
+    border-radius: 6.25rem;
+    font-weight: 500;
+    font-size: 0.8rem;
+    height: 3rem;
+    padding-inline: 0.7rem;
+    cursor: pointer;
+    transition: opacity ease-in 0.2s;
+
+    &:hover {
+      opacity: 0.6;
+    }
+
+    @media ${QUERIES.mobileMini} {
+      padding-inline: 1.3rem;
+      font-size: 0.8rem;
+    }
+
+    @media ${QUERIES.mobile} {
+      padding-inline: 1.5rem;
+      font-weight: 700;
+      font-size: 0.94rem;
+    }
+  }
+
+  & > :first-child {
+    background-color: var(--color-bg-400);
+    color: var(color-font-300);
+  }
+
+  & > :last-child {
+    background-color: var(--color-accent-100);
+    color: var(--color-font-normal);
+  }
+`
+
+export const DiscardButton = styled.button`
+  margin-right: auto;
+`
+export const DraftButton = styled.button`
+  background-color: var(--color-bg-200);
+  color: var(--color-font-500);
 `

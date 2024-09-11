@@ -2,16 +2,22 @@ import GobackButton from 'components/GobackButton/GobackButton'
 import {
   CurrencyContainer,
   DateAndTermsContainer,
+  DiscardButton,
+  DraftButton,
   FormButtonsContainer,
   FormInvoiceContainer,
   GobackFormBtnWrapper,
   InvoiceFormContainer,
+  ItemListHeading,
   ItemListWrapper,
   ListContainer,
   LocationContainer,
+  SubmitButtonsContainer,
 } from 'components/Main-Form/MainFormTemplateStyles'
 
 const MainFormTemplate = () => {
+  const isEditing = false
+
   return (
     <FormInvoiceContainer>
       <GobackFormBtnWrapper>
@@ -88,9 +94,11 @@ const MainFormTemplate = () => {
             <div>
               <label>Payment Terms</label>
               <select name='terms' id='terms' required>
-                <option value='select'>Select Payment Terms</option>
+                <option value='' hidden>
+                  Select Payment Terms
+                </option>
                 <option value='1'>Next 1 day</option>
-                <option value='7'>Next 7 day</option>
+                <option value='7'>Next 7 days</option>
                 <option value='14'>Next 14 days</option>
                 <option value='30'>Next 30 days</option>
               </select>
@@ -105,7 +113,9 @@ const MainFormTemplate = () => {
           <CurrencyContainer>
             <label>Currency</label>
             <select name='terms' id='terms' required>
-              <option value='select'>Select Currency</option>
+              <option value='' hidden>
+                Select Currency
+              </option>
               <option value='naira'>₦: Naira</option>
               <option value='dollar'>$: Dollar</option>
               <option value='pound'>£: Pound</option>
@@ -116,6 +126,12 @@ const MainFormTemplate = () => {
 
         <ItemListWrapper>
           <legend>Item List</legend>
+          <ItemListHeading>
+            <h3>Item Name</h3>
+            <h3>Qty.</h3>
+            <h3>Price</h3>
+            <h3>Total</h3>
+          </ItemListHeading>
           <ListContainer>
             <div>
               <label>Item Name</label>
@@ -141,7 +157,7 @@ const MainFormTemplate = () => {
               <path
                 d='M11.583 3.556v10.666c0 .982-.795 1.778-1.777 1.778H2.694a1.777 1.777 0 01-1.777-1.778V3.556h10.666zM8.473 0l.888.889h3.111v1.778H.028V.889h3.11L4.029 0h4.444z'
                 fill='#888EB0'
-                fill-rule='nonzero'
+                fillRule='nonzero'
               />
             </svg>
           </ListContainer>
@@ -171,7 +187,7 @@ const MainFormTemplate = () => {
               <path
                 d='M11.583 3.556v10.666c0 .982-.795 1.778-1.777 1.778H2.694a1.777 1.777 0 01-1.777-1.778V3.556h10.666zM8.473 0l.888.889h3.111v1.778H.028V.889h3.11L4.029 0h4.444z'
                 fill='#888EB0'
-                fill-rule='nonzero'
+                fillRule='nonzero'
               />
             </svg>
           </ListContainer>
@@ -180,8 +196,18 @@ const MainFormTemplate = () => {
         </ItemListWrapper>
 
         <FormButtonsContainer>
-          <button>kasds</button>
-          <button>asbh v/is</button>
+          {isEditing ? (
+            <SubmitButtonsContainer>
+              <button>Cancel</button>
+              <button>Save Changes</button>
+            </SubmitButtonsContainer>
+          ) : (
+            <SubmitButtonsContainer>
+              <DiscardButton>Discard</DiscardButton>
+              <DraftButton>Save as Draft</DraftButton>
+              <button>Save & Send</button>
+            </SubmitButtonsContainer>
+          )}
         </FormButtonsContainer>
       </InvoiceFormContainer>
     </FormInvoiceContainer>
