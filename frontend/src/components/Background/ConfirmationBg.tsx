@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const BackgroundBlur = styled.aside<{
-  formState?: null | 'edit' | 'new'
+  confirm?: boolean
 }>`
   position: fixed;
   top: 0;
@@ -9,13 +9,12 @@ export const BackgroundBlur = styled.aside<{
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.35);
-  z-index: ${({ formState }) =>
-    formState === 'new' || formState === 'edit' ? 98 : 100};
+  z-index: ${({ confirm }) => (confirm ? 100 : 98)};
   display: block;
 `
 
 const ConfirmationBg = () => {
-  return <BackgroundBlur formState={'edit'}></BackgroundBlur>
+  return <BackgroundBlur confirm={false}></BackgroundBlur>
 }
 
 export default ConfirmationBg
