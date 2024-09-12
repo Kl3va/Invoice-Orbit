@@ -29,6 +29,10 @@ export const FormInvoiceContainer = styled.div`
 export const GobackFormBtnWrapper = styled.div`
   width: fit-content;
   margin-bottom: 1.6rem;
+
+  @media ${QUERIES.mobileLarge} {
+    display: none;
+  }
 `
 
 export const InvoiceFormContainer = styled.form`
@@ -39,8 +43,12 @@ export const InvoiceFormContainer = styled.form`
   display: grid;
   gap: 2.56rem;
 
+  @media ${QUERIES.mobileLarge} {
+    height: calc(100% - 13.4rem);
+  }
+
   @media ${QUERIES.tablet} {
-    height: calc(100% - 10.5rem);
+    height: calc(100% - 8.9rem);
   }
 
   label {
