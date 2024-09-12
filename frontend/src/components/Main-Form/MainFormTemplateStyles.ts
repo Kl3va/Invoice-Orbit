@@ -9,9 +9,17 @@ export const FormInvoiceContainer = styled.div`
   height: 100vh;
   border-radius: 0 1.25rem 1.25rem 0;
   top: 4.5rem;
-
   left: 0;
   z-index: 95;
+
+  @media ${QUERIES.tabletMini} {
+    padding: 3.5rem 3.5rem 0 3.5rem;
+  }
+
+  @media ${QUERIES.tablet} {
+    top: 0;
+    left: 6.44rem;
+  }
 
   h2 {
     font-size: 1.5rem;
@@ -30,6 +38,10 @@ export const InvoiceFormContainer = styled.form`
 
   display: grid;
   gap: 2.56rem;
+
+  @media ${QUERIES.tablet} {
+    height: calc(100% - 10.5rem);
+  }
 
   label {
     display: block;
@@ -187,6 +199,15 @@ export const FormButtonsContainer = styled.div`
   box-shadow: 0 -14px 14px rgba(0, 0, 0, 0.1);
   z-index: 95;
   padding: 1.38rem 1.5rem;
+  border-bottom-right-radius: 1.25rem;
+
+  @media ${QUERIES.tabletMini} {
+    padding-inline: 3.5rem;
+  }
+
+  @media ${QUERIES.tablet} {
+    left: 6.44rem;
+  }
 `
 
 export const SubmitButtonsContainer = styled.div`
