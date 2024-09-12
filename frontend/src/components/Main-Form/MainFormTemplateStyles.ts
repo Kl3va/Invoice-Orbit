@@ -137,15 +137,15 @@ export const CurrencyContainer = styled.div`
 `
 export const ListContainer = styled.div`
   display: grid;
-  grid-template-columns: minmax(min-content, 4rem) minmax(min-content, 6.25rem) auto fit-content(
-      13px
-    );
+  grid-template-columns: 4rem 6.25rem auto fit-content(13px);
   grid-template-rows: auto auto;
   gap: 1rem;
+  max-width: 100%;
+  overflow-x: auto;
 
   @media ${QUERIES.mobileLarge} {
     grid-template-columns:
-      13.38rem minmax(min-content, 4rem) minmax(min-content, 6.25rem)
+      13.38rem 4rem 6.25rem
       auto fit-content(13px);
     grid-template-rows: auto;
 
