@@ -7,10 +7,13 @@ export const FormInvoiceContainer = styled.div`
   width: min(100%, 38.56rem);
   padding: 2rem 1.5rem 0 1.5rem;
   height: 100vh;
-  border-radius: 0 1.25rem 1.25rem 0;
   top: 4.5rem;
   left: 0;
-  z-index: 95;
+  z-index: 105;
+
+  @media ${QUERIES.mobileLarge} {
+    border-radius: 0 1.25rem 1.25rem 0;
+  }
 
   @media ${QUERIES.tabletMini} {
     padding: 3.5rem 3.5rem 0 3.5rem;
@@ -205,7 +208,7 @@ export const FormButtonsContainer = styled.div`
   left: 0;
   width: min(100%, 38.56rem);
   box-shadow: 0 -14px 14px rgba(0, 0, 0, 0.1);
-  z-index: 95;
+  z-index: 110;
   padding: 1.38rem 1.5rem;
   border-bottom-right-radius: 1.25rem;
 

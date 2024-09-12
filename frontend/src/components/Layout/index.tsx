@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom'
+import ConfirmationBg from 'components/Background/ConfirmationBg'
 import MainFormTemplate from 'components/Main-Form/MainFormTemplate'
 
 const Layout = () => {
@@ -6,6 +7,7 @@ const Layout = () => {
     <>
       <Outlet />
       <MainFormTemplate />
+      <ConfirmationBg />
     </>
   )
 }
