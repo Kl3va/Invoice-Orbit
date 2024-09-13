@@ -4,7 +4,7 @@ import { QUERIES } from 'styles/mediaQueries'
 export const FormInvoiceContainer = styled.div`
   position: fixed;
   background-color: var(--color-bg-800);
-  width: min(100%, 38.56rem);
+  width: min(100%, 39.56rem);
   padding: 2rem 1.5rem 0 1.5rem;
   height: 100vh;
   top: 4.5rem;
@@ -21,7 +21,8 @@ export const FormInvoiceContainer = styled.div`
 
   @media ${QUERIES.tablet} {
     top: 0;
-    left: 6.44rem;
+    left: 5.44rem;
+    padding-left: 4.5rem;
   }
 
   h2 {
@@ -97,6 +98,7 @@ export const ItemListWrapper = styled.fieldset`
     font-weight: 700;
     font-size: var(--font-size-small);
     border: none;
+    cursor: pointer;
   }
 `
 
@@ -206,7 +208,7 @@ export const FormButtonsContainer = styled.div`
   background-color: var(--color-bg-300);
   bottom: 0;
   left: 0;
-  width: min(100%, 38.56rem);
+  width: min(100%, 39.56rem);
   box-shadow: 0 -14px 14px rgba(0, 0, 0, 0.1);
   z-index: 110;
   padding: 1.38rem 1.5rem;
@@ -217,7 +219,8 @@ export const FormButtonsContainer = styled.div`
   }
 
   @media ${QUERIES.tablet} {
-    left: 6.44rem;
+    left: 5.44rem;
+    padding-left: 4.5rem;
   }
 `
 

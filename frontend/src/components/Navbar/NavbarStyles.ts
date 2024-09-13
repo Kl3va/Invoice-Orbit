@@ -7,7 +7,7 @@ export const NavbarAside = styled.aside`
   height: 4.5rem;
   width: 100%;
   top: 0;
-  z-index: 99;
+  z-index: 109;
   //pointer-events: none;
 
   @media ${QUERIES.tablet} {
