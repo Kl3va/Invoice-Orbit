@@ -135,17 +135,17 @@ const MainFormTemplate = () => {
           <ListContainer>
             <div>
               <label>Item Name</label>
-              <input type='text' placeholder='logo design' required />
+              <input type='text' placeholder='Logo design' required />
             </div>
 
             <div>
-              <label htmlFor=''>Qty.</label>
-              <input type='number' required />
+              <label>Qty.</label>
+              <input type='number' required placeholder='0' />
             </div>
 
             <div>
-              <label htmlFor=''>Price</label>
-              <input type='number' required />
+              <label>Price</label>
+              <input type='number' required placeholder='0' />
             </div>
 
             <div>
@@ -165,17 +165,22 @@ const MainFormTemplate = () => {
           <ListContainer>
             <div>
               <label>Item Name</label>
-              <input type='text' placeholder='brand design' required />
+              <input
+                type='text'
+                placeholder='brand design'
+                maxLength={30}
+                required
+              />
             </div>
 
             <div>
-              <label htmlFor=''>Qty.</label>
-              <input type='number' required />
+              <label>Qty.</label>
+              <input type='number' placeholder='0' required />
             </div>
 
             <div>
-              <label htmlFor=''>Price</label>
-              <input type='number' required />
+              <label>Price</label>
+              <input type='number' placeholder='0' required />
             </div>
 
             <div>

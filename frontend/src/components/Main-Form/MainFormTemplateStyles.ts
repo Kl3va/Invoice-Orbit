@@ -99,6 +99,11 @@ export const ItemListWrapper = styled.fieldset`
     font-size: var(--font-size-small);
     border: none;
     cursor: pointer;
+    transition: opacity ease-out 0.2s;
+
+    &:hover {
+      opacity: 0.7;
+    }
   }
 `
 
@@ -196,6 +201,12 @@ export const ListContainer = styled.div`
   & > :last-child {
     align-self: center;
     margin-top: 1rem;
+    cursor: pointer;
+    transition: fill ease-in 0.25s;
+
+    &:hover path {
+      fill: var(--color-bg-delete);
+    }
 
     @media ${QUERIES.mobileLarge} {
       margin-top: 0;

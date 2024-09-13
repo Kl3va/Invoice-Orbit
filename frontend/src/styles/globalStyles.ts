@@ -180,4 +180,9 @@ font-size: var(--font-size-small);
   }
 }
 
+input:not(:placeholder-shown):invalid:not([type="date"]) {
+  border-color: var(--color-bg-delete);
+}
+
+
 `

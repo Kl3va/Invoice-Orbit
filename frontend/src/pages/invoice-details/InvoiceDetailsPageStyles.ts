@@ -140,6 +140,7 @@ export const BasicInfoSecondary = styled.div`
   flex-direction: column;
   gap: 1.88rem;
   margin-bottom: 1.94rem;
+  word-break: break-word;
 
   @media ${QUERIES.tabletMini} {
     flex-direction: row;
@@ -181,6 +182,7 @@ export const BasicInfoPrimary = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1.94rem;
+  word-break: break-word;
 
   @media ${QUERIES.tabletMini} {
     grid-template-columns: 1fr 1fr 1fr;
@@ -257,7 +259,8 @@ export const ItemsDetailsHeadingWrapper = styled.div`
 
   @media ${QUERIES.tabletMini} {
     display: grid;
-    grid-template-columns: 0.9fr 0.1fr 0.45fr 0.5fr;
+    grid-template-columns: 14rem 4.25rem auto auto;
+    gap: 3rem;
   }
 
   & > :nth-child(2) {
@@ -280,13 +283,16 @@ export const ItemsDetailsHeadingWrapper = styled.div`
 `
 export const ItemsDetailsWrapper = styled.div`
   display: grid;
-  grid-template-rows: 1fr 1fr;
-  grid-row-gap: 0.5rem;
+  grid-template-rows: auto auto;
+  grid-gap: 0.5rem;
   grid-auto-flow: column;
+  max-width: 100%;
+  overflow-x: auto;
 
   @media ${QUERIES.tabletMini} {
-    grid-template-columns: 0.9fr 0.1fr 0.45fr 0.5fr;
+    grid-template-columns: 14rem 4.25rem auto auto;
     grid-template-rows: auto;
+    grid-column-gap: 3rem;
     grid-auto-flow: row;
   }
 
@@ -342,7 +348,10 @@ export const GrandTotalWrapper = styled.div`
 
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
   align-items: center;
+  max-width: 100%;
+  overflow-x: auto;
 
   h2 {
     font-size: var(--font-size-mini);

@@ -113,10 +113,10 @@ const InvoiceDetailsPage = () => {
               </ItemsDetailsHeadingWrapper>
               <ItemsDetailsWrapper>
                 <p>Banner Design</p>
-                <p>1 x £ 156.00</p>
-                <p>1</p>
-                <p>£ 156.00</p>
-                <p>£ 156.00</p>
+                <p>1 x £156.00</p>
+                <p>1,000,000</p>
+                <p>£156.00</p>
+                <p>£156.00</p>
               </ItemsDetailsWrapper>
               <ItemsDetailsWrapper>
                 <p>Email Design</p>
