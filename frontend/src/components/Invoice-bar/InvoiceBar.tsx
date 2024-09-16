@@ -8,6 +8,9 @@ import {
 } from 'components/Invoice-bar/InvoiceBarStyles'
 import { Link } from 'react-router-dom'
 
+//Helpers
+import { sliceStr, formatNumber } from 'helpers'
+
 const InvoiceBar = () => {
   return (
     <Link to={'/invoices'}>
@@ -16,11 +19,11 @@ const InvoiceBar = () => {
           <span>#</span>RT3080
         </InvoiceID>
 
-        <InvoiceDueDate>Due 19 Aug 2021</InvoiceDueDate>
+        <InvoiceDueDate>Due 19 Aug 2021£</InvoiceDueDate>
 
-        <InvoiceName>Jensen Huang</InvoiceName>
+        <InvoiceName>{sliceStr('Jensen Huang')}</InvoiceName>
 
-        <InvoicePrice>£ 1,800.90</InvoicePrice>
+        <InvoicePrice>{`£ ${formatNumber(187900678.9)}`}</InvoicePrice>
 
         <StatusContainer>
           <span></span>

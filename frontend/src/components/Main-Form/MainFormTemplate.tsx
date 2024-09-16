@@ -46,11 +46,11 @@ const MainFormTemplate = () => {
             </div>
             <div>
               <label htmlFor=''>Post Code</label>
-              <input type='text' placeholder='E1 AFB' required />
+              <input type='text' placeholder='E1 AFB' maxLength={11} required />
             </div>
             <div>
               <label htmlFor=''>Country</label>
-              <input type='text' placeholder='UK' required />
+              <input type='text' placeholder='UK' required maxLength={50} />
             </div>
           </LocationContainer>
         </fieldset>
@@ -59,7 +59,12 @@ const MainFormTemplate = () => {
           <legend>Bill To</legend>
           <div>
             <label>Client's Name</label>
-            <input type='text' placeholder='Michael Scott' required />
+            <input
+              type='text'
+              placeholder='Michael Scott'
+              required
+              maxLength={50}
+            />
           </div>
           <div>
             <label>Client's Email</label>
@@ -76,11 +81,16 @@ const MainFormTemplate = () => {
             </div>
             <div>
               <label>Post Code</label>
-              <input type='text' placeholder='BD1 9BB' required />
+              <input
+                type='text'
+                placeholder='BD1 9BB'
+                maxLength={11}
+                required
+              />
             </div>
             <div>
               <label>Country</label>
-              <input type='text' placeholder='UK' required />
+              <input type='text' placeholder='UK' maxLength={50} required />
             </div>
           </LocationContainer>
         </fieldset>
@@ -135,12 +145,17 @@ const MainFormTemplate = () => {
           <ListContainer>
             <div>
               <label>Item Name</label>
-              <input type='text' placeholder='Logo design' required />
+              <input
+                type='text'
+                placeholder='Logo design'
+                maxLength={30}
+                required
+              />
             </div>
 
             <div>
               <label>Qty.</label>
-              <input type='number' required placeholder='0' />
+              <input type='number' required placeholder='0' max={100000} />
             </div>
 
             <div>
@@ -175,7 +190,7 @@ const MainFormTemplate = () => {
 
             <div>
               <label>Qty.</label>
-              <input type='number' placeholder='0' required />
+              <input type='number' placeholder='0' max={1000000} required />
             </div>
 
             <div>
