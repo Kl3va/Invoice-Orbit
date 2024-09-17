@@ -1,5 +1,6 @@
 //COMPONENTS
 import GobackButton from 'components/GobackButton/GobackButton'
+import ConfirmDeletion from 'components/ConfirmDeletion'
 
 //Custom Hook
 import useWindow from 'hooks/useWindow'
@@ -34,6 +35,7 @@ const InvoiceDetailsPage = () => {
 
   return (
     <HomePageMain>
+      <ConfirmDeletion />
       <section>
         <GobackWrapper>
           <GobackButton />
