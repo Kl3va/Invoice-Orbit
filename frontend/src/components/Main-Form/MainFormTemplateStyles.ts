@@ -1,7 +1,11 @@
 import styled from 'styled-components'
 import { QUERIES } from 'styles/mediaQueries'
 
-export const FormInvoiceContainer = styled.div`
+interface AnimatedFormInvoiceContainerProps {
+  isActive?: boolean
+}
+
+export const FormInvoiceContainer = styled.div<AnimatedFormInvoiceContainerProps>`
   position: fixed;
   background-color: var(--color-bg-800);
   width: min(100%, 39.56rem);
@@ -10,6 +14,8 @@ export const FormInvoiceContainer = styled.div`
   top: 4.5rem;
   left: 0;
   z-index: 105;
+  // transform: translateX(${(props) => (props.isActive ? '0' : '-100%')});
+  transition: transform 0.3s ease-in-out;
 
   @media ${QUERIES.mobileLarge} {
     border-radius: 0 1.25rem 1.25rem 0;
@@ -214,7 +220,7 @@ export const ListContainer = styled.div`
   }
 `
 
-export const FormButtonsContainer = styled.div`
+export const FormButtonsContainer = styled.div<AnimatedFormInvoiceContainerProps>`
   position: fixed;
   background-color: var(--color-bg-300);
   bottom: 0;
@@ -225,6 +231,9 @@ export const FormButtonsContainer = styled.div`
   padding: 1.38rem 1.5rem;
   border-bottom-right-radius: 1.25rem;
 
+  //  transform: translateX(${(props) => (props.isActive ? '0' : '-100%')});
+  transition: transform 0.3s ease-in-out;
+
   @media ${QUERIES.tabletMini} {
     padding-inline: 3.5rem;
   }
@@ -232,6 +241,7 @@ export const FormButtonsContainer = styled.div`
   @media ${QUERIES.tablet} {
     left: 5.44rem;
     padding-left: 4.5rem;
+    // transform: translateX(${(props) => (props.isActive ? '0' : '-100%')});
   }
 `
 

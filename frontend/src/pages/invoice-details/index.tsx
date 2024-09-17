@@ -35,7 +35,7 @@ const InvoiceDetailsPage = () => {
 
   return (
     <HomePageMain>
-      <ConfirmDeletion />
+      {/* <ConfirmDeletion /> */}
       <section>
         <GobackWrapper>
           <GobackButton />

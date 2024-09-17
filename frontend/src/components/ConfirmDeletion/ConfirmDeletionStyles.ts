@@ -3,12 +3,10 @@ import { QUERIES } from 'styles/mediaQueries'
 
 const scaleIn = keyframes`
   0% {
-   // scale: 0;
     transform: translate(-50%, -50%) scale(0);
     opacity: 0;
   }
   100% {
-   // scale: 1;
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
   }
@@ -20,7 +18,6 @@ export const ConfirmDeletionContainer = styled.div`
   position: fixed;
   top: 50%;
   left: 50%;
-  // transform: translate(-50%, -50%);
   transform: translate(-50%, -50%) scale(0);
 
   background-color: var(--color-bg-300);

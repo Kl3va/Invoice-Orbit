@@ -17,9 +17,10 @@ import {
 
 const MainFormTemplate = () => {
   const isEditing = true
+  const isActive = true
 
   return (
-    <FormInvoiceContainer>
+    <FormInvoiceContainer isActive={isActive}>
       <GobackFormBtnWrapper>
         <GobackButton />
       </GobackFormBtnWrapper>
@@ -215,7 +216,7 @@ const MainFormTemplate = () => {
           <button>+ Add New Item</button>
         </ItemListWrapper>
 
-        <FormButtonsContainer>
+        <FormButtonsContainer isActive={isActive}>
           {isEditing ? (
             <SubmitButtonsContainer>
               <button>Cancel</button>

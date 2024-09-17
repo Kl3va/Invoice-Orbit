@@ -14,7 +14,7 @@ export const BackgroundBlur = styled.aside<{
 `
 
 const ConfirmationBg = () => {
-  return <BackgroundBlur confirm={true}></BackgroundBlur>
+  return <BackgroundBlur confirm={false}></BackgroundBlur>
 }
 
 export default ConfirmationBg
