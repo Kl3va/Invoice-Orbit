@@ -1,5 +1,9 @@
 import { useUser } from '@clerk/clerk-react'
+import { useState } from 'react'
+
+//Components
 import InvoiceBar from 'components/Invoice-bar/InvoiceBar'
+import FilterInputs from 'components/FilterInputs'
 import {
   HomePageMain,
   MainHeaderContainer,
@@ -15,6 +19,7 @@ import IllustrationEmpty from 'assets/illustration-empty.svg'
 
 const Homepage = () => {
   const { user } = useUser()
+  const [first, setfirst] = useState(true)
 
   return (
     <HomePageMain>
@@ -46,6 +51,7 @@ const Homepage = () => {
                 />
               </svg>
             </span>
+            <FilterInputs />
           </FilterContainer>
 
           <NewInvoiceBtn>

@@ -6,8 +6,8 @@ const Layout = () => {
   return (
     <>
       <Outlet />
-      <MainFormTemplate />
-      <ConfirmationBg />
+      {/* <MainFormTemplate /> */}
+      {/* <ConfirmationBg /> */}
     </>
   )
 }

@@ -162,7 +162,7 @@ input[type=number] {
   -moz-appearance: textfield;
 }
 
-input, select {
+input:not([type="checkbox"]), select {
 padding: 1.125rem 1rem 0.94rem 1.1rem;
 width: 100%;
 border-radius: 0.3rem;

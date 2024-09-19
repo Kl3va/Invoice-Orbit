@@ -27,7 +27,7 @@ const InvoiceBar = () => {
 
         <StatusContainer>
           <span></span>
-          <h4>Paid</h4>
+          <h4>Pending</h4>
         </StatusContainer>
 
         <svg width='7' height='10' xmlns='http://www.w3.org/2000/svg'>

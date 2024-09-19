@@ -14,7 +14,7 @@ export const FormInvoiceContainer = styled.div<AnimatedFormInvoiceContainerProps
   top: 4.5rem;
   left: 0;
   z-index: 105;
-  // transform: translateX(${(props) => (props.isActive ? '0' : '-100%')});
+  transform: translateX(${(props) => (props.isActive ? '0' : '-100%')});
   transition: transform 0.3s ease-in-out;
 
   @media ${QUERIES.mobileLarge} {
@@ -231,7 +231,9 @@ export const FormButtonsContainer = styled.div<AnimatedFormInvoiceContainerProps
   padding: 1.38rem 1.5rem;
   border-bottom-right-radius: 1.25rem;
 
-  //  transform: translateX(${(props) => (props.isActive ? '0' : '-100%')});
+  transform: translate(
+    ${(props) => (props.isActive ? '0, -4.5rem' : '-100%, 0')}
+  );
   transition: transform 0.3s ease-in-out;
 
   @media ${QUERIES.tabletMini} {
@@ -239,9 +241,10 @@ export const FormButtonsContainer = styled.div<AnimatedFormInvoiceContainerProps
   }
 
   @media ${QUERIES.tablet} {
-    left: 5.44rem;
+    // left: 5.44rem;
+
+    transform: translate(${(props) => (props.isActive ? '0, 0' : '0, 0')});
     padding-left: 4.5rem;
-    // transform: translateX(${(props) => (props.isActive ? '0' : '-100%')});
   }
 `
 

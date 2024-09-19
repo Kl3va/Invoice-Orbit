@@ -7,6 +7,10 @@ export const HomePageMain = styled.main`
 
   section:not(:last-child) {
     margin-bottom: 2rem;
+
+    @media ${QUERIES.tabletMini} {
+      margin-bottom: 3rem;
+    }
   }
 
   @media ${QUERIES.tablet} {
@@ -46,6 +50,10 @@ export const HomeSecondaryContainer = styled.div`
   display: flex;
   gap: 1.16rem;
 
+  @media ${QUERIES.tabletMini} {
+    gap: 2.5rem;
+  }
+
   h1 {
     font-size: clamp(1.25rem, calc(1.8vw + 1rem), 1.875rem);
   }
@@ -63,6 +71,12 @@ export const FilterContainer = styled.div`
   gap: 0.87rem;
   align-items: center;
   cursor: pointer;
+  position: relative;
+
+  svg {
+    // transform: rotate(180deg);
+    // transform-origin: center;
+  }
 
   p {
     color: var(--color-font-100);
