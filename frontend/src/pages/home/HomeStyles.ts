@@ -3,7 +3,7 @@ import { QUERIES } from 'styles/mediaQueries'
 
 export const HomePageMain = styled.main`
   margin-top: 4.5rem;
-  padding-block: 1.5rem 1rem;
+  padding-block: 1rem;
 
   section:not(:last-child) {
     margin-bottom: 2rem;
@@ -64,6 +64,7 @@ export const InvoiceHeading = styled.div`
 
   p {
     color: var(--color-font-500);
+    font-size: var(--font-size-mini);
   }
 `
 export const FilterContainer = styled.div`
@@ -142,31 +143,7 @@ export const InvoiceBarsWrapper = styled.div`
     margin-bottom: 1rem;
   }
 
-  @media ${QUERIES.tablet} {
-    min-height: calc(100vh - 12.4rem);
-  }
-`
-
-export const IllustrationWrapper = styled.div`
-  width: min(87.2%, 15.1rem);
-  margin-inline: auto;
-  text-align: center;
-  align-self: center;
-
-  h2 {
-    margin-block: 2.63rem 1.44rem;
-    font-size: 1.5rem;
-  }
-
-  p {
-    color: var(--color-font-500);
-
-    span {
-      display: none;
-
-      @media (min-width: 48em) {
-        display: inline;
-      }
-    }
+  &:has(div img) {
+    align-content: center;
   }
 `

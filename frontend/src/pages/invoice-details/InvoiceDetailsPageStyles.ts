@@ -1,6 +1,19 @@
 import styled from 'styled-components'
 import { QUERIES } from 'styles/mediaQueries'
 
+export const DetailPageMain = styled.main`
+  margin-top: 4.5rem;
+  padding-block: 1.5rem 1rem;
+
+  section:not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
+
+  @media ${QUERIES.tablet} {
+    margin: 1rem 0 0 6.44rem;
+  }
+`
+
 export const StickySection = styled.section`
   @media ${QUERIES.mobileLarge} {
     position: sticky;

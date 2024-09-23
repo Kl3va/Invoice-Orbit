@@ -7,7 +7,7 @@ import useWindow from 'hooks/useWindow'
 
 //STYLES
 import { StatusContainer } from 'components/Invoice-bar/InvoiceBarStyles'
-import { HomePageMain } from 'pages/home/HomeStyles'
+
 import {
   BasicInfoPrimary,
   BasicInfoSecondary,
@@ -28,13 +28,14 @@ import {
   StickySection,
   PaymentDueWrapper,
   SentToWrapper,
+  DetailPageMain,
 } from 'pages/invoice-details/InvoiceDetailsPageStyles'
 
 const InvoiceDetailsPage = () => {
   const windowWidth = useWindow()
 
   return (
-    <HomePageMain>
+    <DetailPageMain>
       {/* <ConfirmDeletion /> */}
       <section>
         <GobackWrapper>
@@ -135,7 +136,7 @@ const InvoiceDetailsPage = () => {
           </ItemsContainer>
         </DetailsPrimary>
       </section>
-    </HomePageMain>
+    </DetailPageMain>
   )
 }
 

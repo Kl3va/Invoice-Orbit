@@ -13,6 +13,8 @@ export const GlobalStyles = createGlobalStyle`
         --color-bg-600: ${({ theme }) => theme.bg600};
         --color-bg-700: ${({ theme }) => theme.bg700};
         --color-bg-800: ${({ theme }) => theme.bg800};
+        --color-bg-900: ${({ theme }) => theme.bg900};
+        --color-bg-999: ${({ theme }) => theme.bg999};
         --color-bg-draft: #1E2139;
         --color-bg-delete: #EC5757;
         --color-accent-100: #7C5DFA;

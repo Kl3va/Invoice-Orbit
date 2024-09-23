@@ -1,9 +1,12 @@
 import { useUser } from '@clerk/clerk-react'
-import { useState } from 'react'
 
 //Components
 import InvoiceBar from 'components/Invoice-bar/InvoiceBar'
 import FilterInputs from 'components/FilterInputs'
+import { SkeletonInvoiceBarList } from 'components/SkeletonInvoiceBar'
+import Illustration from 'components/Illustration'
+
+//Styling
 import {
   HomePageMain,
   MainHeaderContainer,
@@ -13,13 +16,10 @@ import {
   NewInvoiceBtn,
   InvoiceBarsWrapper,
   SecondarySectionSticky,
-  IllustrationWrapper,
 } from 'pages/home/HomeStyles'
-import IllustrationEmpty from 'assets/illustration-empty.svg'
 
 const Homepage = () => {
   const { user } = useUser()
-  const [first, setfirst] = useState(true)
 
   return (
     <HomePageMain>
@@ -33,7 +33,7 @@ const Homepage = () => {
         <HomeSecondaryContainer>
           <InvoiceHeading>
             <h1>Invoices</h1>
-            <p>No Invoices</p>
+            <p>There are 123 total Invoices</p>
           </InvoiceHeading>
 
           <FilterContainer>
@@ -51,7 +51,7 @@ const Homepage = () => {
                 />
               </svg>
             </span>
-            <FilterInputs />
+            {/* <FilterInputs /> */}
           </FilterContainer>
 
           <NewInvoiceBtn>
@@ -73,42 +73,18 @@ const Homepage = () => {
 
       <section>
         <InvoiceBarsWrapper>
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
+          {/* Invoices from API */}
           <InvoiceBar />
           <InvoiceBar />
           <InvoiceBar />
           <InvoiceBar />
           <InvoiceBar />
 
-          {/* <IllustrationWrapper>
-            <img src={IllustrationEmpty} alt='illustration for no invoice' />
-            <h2>There is nothing here</h2>
-            <p>
-              Create an invoice by clicking the{' '}
-              <b>
-                New <span>Invoice</span>
-              </b>{' '}
-              button and get started
-            </p>
-          </IllustrationWrapper> */}
+          {/* Skeleton UI for loading state */}
+          {/* <SkeletonInvoiceBarList count={5} /> */}
+
+          {/* ILLustration */}
+          {/* <Illustration /> */}
         </InvoiceBarsWrapper>
       </section>
     </HomePageMain>
