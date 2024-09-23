@@ -26,6 +26,7 @@ interface InvoiceOrbit {
   senderAddress: Address
   clientAddress: Address
   items: Item[]
+  currency: 'naira' | 'dollar' | 'pound' | 'euro'
   total?: number
   _id?: string
 }
@@ -58,6 +59,11 @@ const invoiceOrbitSchema = new mongoose.Schema<InvoiceOrbit>({
   paymentTerms: { type: Number, required: true },
   clientName: { type: String, required: true },
   clientEmail: { type: String, required: true },
+  currency: {
+    type: String,
+    enum: ['naira', 'dollar', 'pound', 'euro'],
+    default: 'pound',
+  },
   status: {
     type: String,
     enum: ['paid', 'pending', 'draft'],
