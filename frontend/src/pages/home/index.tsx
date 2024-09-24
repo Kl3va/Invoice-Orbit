@@ -1,11 +1,13 @@
 import { useUser } from '@clerk/clerk-react'
-import { ClipLoader } from 'react-spinners'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { controlFilterStatusModal } from 'store/features/modal/modalSlice'
+//import { ClipLoader } from 'react-spinners'
 
 //Components
 import InvoiceBar from 'components/Invoice-bar/InvoiceBar'
 import FilterInputs from 'components/FilterInputs'
-import { SkeletonInvoiceBarList } from 'components/SkeletonInvoiceBar'
-import Illustration from 'components/Illustration'
+//import { SkeletonInvoiceBarList } from 'components/SkeletonInvoiceBar'
+//import Illustration from 'components/Illustration'
 
 //Styling
 import {
@@ -17,10 +19,16 @@ import {
   NewInvoiceBtn,
   InvoiceBarsWrapper,
   SecondarySectionSticky,
+  FilterSvg,
 } from 'pages/home/HomeStyles'
 
 const Homepage = () => {
   const { user } = useUser()
+  const dispatch = useAppDispatch()
+
+  const { isFilterStatusOpen } = useAppSelector((state) => state.modal)
+
+  const handleFilterStatus = () => dispatch(controlFilterStatusModal())
 
   return (
     <HomePageMain>
@@ -37,12 +45,17 @@ const Homepage = () => {
             <p>There are 123 total Invoices</p>
           </InvoiceHeading>
 
-          <FilterContainer>
+          <FilterContainer onClick={handleFilterStatus}>
             <p>
               Filter <span>by status</span>
             </p>
             <span>
-              <svg width='11' height='7' xmlns='http://www.w3.org/2000/svg'>
+              <FilterSvg
+                width='11'
+                height='7'
+                xmlns='http://www.w3.org/2000/svg'
+                shown={isFilterStatusOpen}
+              >
                 <path
                   d='M1 1l4.228 4.228L9.456 1'
                   stroke='#7C5DFA'
@@ -50,9 +63,10 @@ const Homepage = () => {
                   fill='none'
                   fillRule='evenodd'
                 />
-              </svg>
+              </FilterSvg>
             </span>
             {/* <FilterInputs /> */}
+            {isFilterStatusOpen && <FilterInputs />}
           </FilterContainer>
 
           <NewInvoiceBtn>

@@ -74,11 +74,6 @@ export const FilterContainer = styled.div`
   cursor: pointer;
   position: relative;
 
-  svg {
-    // transform: rotate(180deg);
-    // transform-origin: center;
-  }
-
   p {
     color: var(--color-font-100);
     font-weight: 700;
@@ -91,6 +86,11 @@ export const FilterContainer = styled.div`
       }
     }
   }
+`
+export const FilterSvg = styled.svg<{ shown?: boolean }>`
+  transform: ${({ shown }) => (shown ? 'rotate(180deg)' : 'rotate(0deg)')};
+  transform-origin: center;
+  transition: transform 0.2s ease-in-out;
 `
 
 export const NewInvoiceBtn = styled.button`
