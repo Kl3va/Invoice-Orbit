@@ -12,9 +12,9 @@ const Layout = () => {
   return (
     <>
       <Outlet />
-      {/* <MainFormTemplate /> */}
-      {/* <ConfirmationBg /> */}
-      {isFormOpen || (isConfirmDeleteOpen && <ConfirmationBg />)}
+      {isFormOpen && <MainFormTemplate />}
+
+      {(isFormOpen || isConfirmDeleteOpen) && <ConfirmationBg />}
     </>
   )
 }

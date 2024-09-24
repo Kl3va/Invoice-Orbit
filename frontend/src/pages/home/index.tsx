@@ -1,6 +1,7 @@
 import { useUser } from '@clerk/clerk-react'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { controlFilterStatusModal } from 'store/features/modal/modalSlice'
+import { openNewInvoiceForm } from 'store/features/invoice/invoiceSlice'
 //import { ClipLoader } from 'react-spinners'
 
 //Components
@@ -28,7 +29,13 @@ const Homepage = () => {
 
   const { isFilterStatusOpen } = useAppSelector((state) => state.modal)
 
-  const handleFilterStatus = () => dispatch(controlFilterStatusModal())
+  const handleFilterStatus = () =>
+    dispatch(controlFilterStatusModal(!isFilterStatusOpen))
+
+  const openFormBar = () => {
+    dispatch(openNewInvoiceForm())
+    dispatch(controlFilterStatusModal(false))
+  }
 
   return (
     <HomePageMain>
@@ -69,7 +76,7 @@ const Homepage = () => {
             {isFilterStatusOpen && <FilterInputs />}
           </FilterContainer>
 
-          <NewInvoiceBtn>
+          <NewInvoiceBtn onClick={openFormBar}>
             <span>
               <svg width='11' height='11' xmlns='http://www.w3.org/2000/svg'>
                 <path

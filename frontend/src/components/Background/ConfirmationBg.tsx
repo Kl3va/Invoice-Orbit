@@ -27,7 +27,7 @@ const ConfirmationBg = () => {
   const closeAllModals = () => {
     dispatch(closeInvoiceForm())
     dispatch(controlConfirmDeleteModal(false))
-    dispatch(controlFilterStatusModal())
+    dispatch(controlFilterStatusModal(false))
   }
 
   return (

@@ -16,8 +16,8 @@ const modalSlice = createSlice({
   name: 'modal',
   initialState,
   reducers: {
-    controlFilterStatusModal: (state) => {
-      state.isFilterStatusOpen = !state.isFilterStatusOpen
+    controlFilterStatusModal: (state, action: PayloadAction<boolean>) => {
+      state.isFilterStatusOpen = action.payload
     },
     controlConfirmDeleteModal: (state, action: PayloadAction<boolean>) => {
       state.isConfirmDeleteOpen = action.payload
