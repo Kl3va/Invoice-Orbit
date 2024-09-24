@@ -1,6 +1,10 @@
+//Redux
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { controlConfirmDeleteModal } from 'store/features/modal/modalSlice'
+
 //COMPONENTS
 import GobackButton from 'components/GobackButton/GobackButton'
-import { ClipLoader } from 'react-spinners'
+//import { ClipLoader } from 'react-spinners'
 import ConfirmDeletion from 'components/ConfirmDeletion'
 
 //Custom Hook
@@ -34,10 +38,16 @@ import {
 
 const InvoiceDetailsPage = () => {
   const windowWidth = useWindow()
+  const dispatch = useAppDispatch()
+
+  const { isConfirmDeleteOpen } = useAppSelector((state) => state.modal)
+
+  const openConfirmationModal = () => dispatch(controlConfirmDeleteModal(true))
 
   return (
     <DetailPageMain>
       {/* <ConfirmDeletion /> */}
+      {isConfirmDeleteOpen && <ConfirmDeletion />}
       <section>
         <GobackWrapper>
           <GobackButton />
@@ -56,7 +66,7 @@ const InvoiceDetailsPage = () => {
 
           <ButtonsGroup>
             <button>Edit</button>
-            <button>Delete</button>
+            <button onClick={openConfirmationModal}>Delete</button>
             <button>Mark as paid</button>
           </ButtonsGroup>
         </DetailsSecondary>
