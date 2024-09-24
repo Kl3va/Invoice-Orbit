@@ -1,4 +1,5 @@
 import { useUser } from '@clerk/clerk-react'
+import { ClipLoader } from 'react-spinners'
 
 //Components
 import InvoiceBar from 'components/Invoice-bar/InvoiceBar'
@@ -74,6 +75,9 @@ const Homepage = () => {
       <section>
         <InvoiceBarsWrapper>
           {/* Invoices from API */}
+          <InvoiceBar />
+          <InvoiceBar />
+          <InvoiceBar />
           <InvoiceBar />
           <InvoiceBar />
           <InvoiceBar />

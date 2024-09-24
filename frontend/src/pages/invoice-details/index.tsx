@@ -1,5 +1,6 @@
 //COMPONENTS
 import GobackButton from 'components/GobackButton/GobackButton'
+import { ClipLoader } from 'react-spinners'
 import ConfirmDeletion from 'components/ConfirmDeletion'
 
 //Custom Hook
@@ -60,6 +61,9 @@ const InvoiceDetailsPage = () => {
           </ButtonsGroup>
         </DetailsSecondary>
       </StickySection>
+
+      {/* LOADING STATE BEFORE RENDERING DETAILS */}
+      {/* <ClipLoader size={78} color='var(--color-accent-100)' /> */}
 
       <section>
         <DetailsPrimary>
