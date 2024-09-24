@@ -1,4 +1,10 @@
 import styled from 'styled-components'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+import {
+  controlConfirmDeleteModal,
+  controlFilterStatusModal,
+} from 'store/features/modal/modalSlice'
+import { closeInvoiceForm } from 'store/features/invoice/invoiceSlice'
 
 export const BackgroundBlur = styled.aside<{
   confirm?: boolean
@@ -14,7 +20,22 @@ export const BackgroundBlur = styled.aside<{
 `
 
 const ConfirmationBg = () => {
-  return <BackgroundBlur confirm={false}></BackgroundBlur>
+  const dispatch = useAppDispatch()
+
+  const { isConfirmDeleteOpen } = useAppSelector((state) => state.modal)
+
+  const closeAllModals = () => {
+    dispatch(closeInvoiceForm())
+    dispatch(controlConfirmDeleteModal(false))
+    dispatch(controlFilterStatusModal())
+  }
+
+  return (
+    <BackgroundBlur
+      confirm={isConfirmDeleteOpen}
+      onClick={closeAllModals}
+    ></BackgroundBlur>
+  )
 }
 
 export default ConfirmationBg
