@@ -8,7 +8,6 @@ export const NavbarAside = styled.aside`
   width: 100%;
   top: 0;
   z-index: 109;
-  //pointer-events: none;
 
   @media ${QUERIES.tablet} {
     height: 100vh;
@@ -40,10 +39,10 @@ export const ThemeWrapper = styled.div`
   }
 `
 
-export const LogoContainer = styled.div`
+export const LogoContainer = styled.div<{ isActive: boolean }>`
   width: 4.5rem;
   aspect-ratio: 1 / 1;
-  cursor: pointer;
+  cursor: ${({ isActive }) => (isActive ? 'text' : 'pointer')};
 
   @media ${QUERIES.tablet} {
     width: 6.44rem;

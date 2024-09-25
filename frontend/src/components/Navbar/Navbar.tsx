@@ -1,3 +1,6 @@
+//REDUX
+import { useAppSelector } from 'store/hooks'
+
 //PACKAGES
 import { UserButton, useUser } from '@clerk/clerk-react'
 import { dark, neobrutalism } from '@clerk/themes'
@@ -25,14 +28,21 @@ interface NavbarProps {
 
 const Navbar = ({ themeSwitch, toggleTheme }: NavbarProps) => {
   const { user } = useUser()
+
+  const { isFormOpen } = useAppSelector((state) => state.invoice)
+
   return (
     <NavbarAside>
       <NavbarContainer>
         <ThemeWrapper>
-          <LogoContainer>
-            <Link to='/'>
+          <LogoContainer isActive={isFormOpen}>
+            {isFormOpen ? (
               <img src={logo} alt='logo' />
-            </Link>
+            ) : (
+              <Link to='/'>
+                <img src={logo} alt='logo' />
+              </Link>
+            )}
           </LogoContainer>
 
           <div onClick={toggleTheme} style={{ cursor: 'pointer' }}>

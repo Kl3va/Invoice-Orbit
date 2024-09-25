@@ -1,6 +1,7 @@
 //Redux
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { controlConfirmDeleteModal } from 'store/features/modal/modalSlice'
+import { openEditInvoiceForm } from 'store/features/invoice/invoiceSlice'
 
 //COMPONENTS
 import GobackButton from 'components/GobackButton/GobackButton'
@@ -44,6 +45,10 @@ const InvoiceDetailsPage = () => {
 
   const openConfirmationModal = () => dispatch(controlConfirmDeleteModal(true))
 
+  const openEditFormBar = () => {
+    dispatch(openEditInvoiceForm())
+  }
+
   return (
     <DetailPageMain>
       {/* <ConfirmDeletion /> */}
@@ -65,7 +70,7 @@ const InvoiceDetailsPage = () => {
           </StatusBar>
 
           <ButtonsGroup>
-            <button>Edit</button>
+            <button onClick={openEditFormBar}>Edit</button>
             <button onClick={openConfirmationModal}>Delete</button>
             <button>Mark as paid</button>
           </ButtonsGroup>

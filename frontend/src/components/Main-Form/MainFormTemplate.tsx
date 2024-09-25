@@ -1,3 +1,8 @@
+//REDUX
+import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { closeInvoiceForm } from 'store/features/invoice/invoiceSlice'
+
+//COMPONENTS
 import GobackButton from 'components/GobackButton/GobackButton'
 import {
   CurrencyContainer,
@@ -16,11 +21,23 @@ import {
 } from 'components/Main-Form/MainFormTemplateStyles'
 
 const MainFormTemplate = () => {
-  const isEditing = true
-  const isActive = true
+  // const isEditing = true
+  //const isActive = true
+
+  const dispatch = useAppDispatch()
+
+  const { isEditing, isFormOpen } = useAppSelector((state) => state.invoice)
+
+  const closeFormBar = () => {
+    dispatch(closeInvoiceForm())
+  }
+
+  if (!isFormOpen) {
+    return null
+  }
 
   return (
-    <FormInvoiceContainer isActive={isActive}>
+    <FormInvoiceContainer>
       <GobackFormBtnWrapper>
         <GobackButton />
       </GobackFormBtnWrapper>
@@ -216,15 +233,15 @@ const MainFormTemplate = () => {
           <button>+ Add New Item</button>
         </ItemListWrapper>
 
-        <FormButtonsContainer isActive={isActive}>
+        <FormButtonsContainer>
           {isEditing ? (
             <SubmitButtonsContainer>
-              <button>Cancel</button>
+              <button onClick={closeFormBar}>Cancel</button>
               <button>Save Changes</button>
             </SubmitButtonsContainer>
           ) : (
             <SubmitButtonsContainer>
-              <DiscardButton>Discard</DiscardButton>
+              <DiscardButton onClick={closeFormBar}>Discard</DiscardButton>
               <DraftButton>Save as Draft</DraftButton>
               <button>Save & Send</button>
             </SubmitButtonsContainer>

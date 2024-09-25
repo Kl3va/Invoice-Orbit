@@ -1,11 +1,29 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { QUERIES } from 'styles/mediaQueries'
 
-interface AnimatedFormInvoiceContainerProps {
-  isActive?: boolean
-}
+// interface AnimatedFormInvoiceContainerProps {
+//   isActive?: boolean
+// }
 
-export const FormInvoiceContainer = styled.div<AnimatedFormInvoiceContainerProps>`
+const slidesAnimation = keyframes`
+  from {
+    transform: translate(-100%, 0);
+  }
+  to {
+     transform: translate(0, 0);
+  }
+`
+
+const slideIn = keyframes`
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+`
+
+export const FormInvoiceContainer = styled.div`
   position: fixed;
   background-color: var(--color-bg-800);
   width: min(100%, 39.56rem);
@@ -14,8 +32,7 @@ export const FormInvoiceContainer = styled.div<AnimatedFormInvoiceContainerProps
   top: 4.5rem;
   left: 0;
   z-index: 105;
-  transform: translateX(${(props) => (props.isActive ? '0' : '-100%')});
-  transition: transform 0.3s ease-in-out;
+  animation: ${slideIn} 0.3s ease-in-out;
 
   @media ${QUERIES.mobileLarge} {
     border-radius: 0 1.25rem 1.25rem 0;
@@ -220,7 +237,7 @@ export const ListContainer = styled.div`
   }
 `
 
-export const FormButtonsContainer = styled.div<AnimatedFormInvoiceContainerProps>`
+export const FormButtonsContainer = styled.div`
   position: fixed;
   background-color: var(--color-bg-300);
   bottom: 0;
@@ -231,20 +248,15 @@ export const FormButtonsContainer = styled.div<AnimatedFormInvoiceContainerProps
   padding: 1.38rem 1.5rem;
   border-bottom-right-radius: 1.25rem;
 
-  transform: translate(
-    ${(props) => (props.isActive ? '0, -4.5rem' : '-100%, 0')}
-  );
-  transition: transform 0.3s ease-in-out;
+  animation: ${slidesAnimation} 0.3s ease-in-out;
 
   @media ${QUERIES.tabletMini} {
     padding-inline: 3.5rem;
   }
 
   @media ${QUERIES.tablet} {
-    // left: 5.44rem;
-
-    transform: translate(${(props) => (props.isActive ? '0, 0' : '0, 0')});
     padding-left: 4.5rem;
+    transform: translateX(5.44rem);
   }
 `
 
