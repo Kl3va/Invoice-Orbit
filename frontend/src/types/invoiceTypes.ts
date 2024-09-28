@@ -9,13 +9,13 @@ export interface Item {
   name: string
   quantity: number
   price: number
-  total?: number
+  total: number
 }
 
 export interface InvoiceOrbit {
   userId: string
   createdAt: string
-  paymentDue?: string
+  paymentDue: string
   description: string
   paymentTerms: number
   clientName: string
@@ -25,6 +25,6 @@ export interface InvoiceOrbit {
   clientAddress: Address
   items: Item[]
   currency: 'NGN' | 'USD' | 'GBP' | 'EUR'
-  total?: number
-  _id?: string
+  total: number
+  _id: string
 }

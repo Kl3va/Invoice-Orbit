@@ -35,7 +35,7 @@ function App() {
           <Route element={<PrivateRoute />}>
             <Route path='/' element={<Layout />}>
               <Route index element={<Homepage />} />
-              <Route path='invoices' element={<InvoiceDetailsPage />} />
+              <Route path='invoices/:id' element={<InvoiceDetailsPage />} />
             </Route>
           </Route>
         </Routes>

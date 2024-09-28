@@ -3,8 +3,6 @@ import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { controlFilterStatusModal } from 'store/features/modal/modalSlice'
 import { openNewInvoiceForm } from 'store/features/invoice/invoiceSlice'
 
-import { useAuth } from '@clerk/clerk-react'
-
 //import { ClipLoader } from 'react-spinners'
 
 //MockData
@@ -43,16 +41,8 @@ const Homepage = () => {
     dispatch(controlFilterStatusModal(false))
   }
 
-  const { getToken } = useAuth()
-
-  const displayToken = async () => {
-    const token = await getToken()
-    console.log('Your token:', token)
-  }
-
   return (
     <HomePageMain>
-      <button onClick={displayToken}>Get Token</button>
       <section>
         <MainHeaderContainer>
           <p>{`Hi, ${user?.firstName}`}</p>
@@ -111,7 +101,8 @@ const Homepage = () => {
         <InvoiceBarsWrapper>
           {/* Invoices from API */}
           {mockDataArray.map((data, index) => {
-            const { paymentDue, _id, total, clientName, status } = data
+            const { paymentDue, _id, total, clientName, status, currency } =
+              data
 
             return (
               <InvoiceBar
@@ -122,6 +113,7 @@ const Homepage = () => {
                   total,
                   clientName,
                   status,
+                  currency,
                 }}
               />
             )

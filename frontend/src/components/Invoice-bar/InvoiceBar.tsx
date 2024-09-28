@@ -9,33 +9,54 @@ import {
 import { Link } from 'react-router-dom'
 
 //Helpers
-import { sliceStr, formatNumber } from 'helpers'
+import {
+  sliceStr,
+  formatDueDate,
+  formatLargeNumber,
+  currencyLocale,
+} from 'helpers'
 
 interface InvoiceBarProps {
-  paymentDue?: string
+  paymentDue: string
   clientName: string
+  currency: string
   status: 'paid' | 'pending' | 'draft'
-  total?: number
-  _id?: string
+  total: number
+  _id: string
 }
 
-const InvoiceBar = ({}: InvoiceBarProps) => {
+const InvoiceBar = ({
+  paymentDue,
+  currency,
+  clientName,
+  status,
+  total,
+  _id: id,
+}: InvoiceBarProps) => {
   return (
-    <Link to={'/invoices'}>
+    <Link to={`/invoice/${id}`}>
       <InvoiceRectangle>
         <InvoiceID>
-          <span>#</span>RT3080
+          <span>#</span>
+          {sliceStr(id, true)}
         </InvoiceID>
 
-        <InvoiceDueDate>Due 19 Aug 2021</InvoiceDueDate>
+        <InvoiceDueDate>{formatDueDate(paymentDue)}</InvoiceDueDate>
 
-        <InvoiceName>{sliceStr('Jensen Huang')}</InvoiceName>
+        <InvoiceName>{sliceStr(clientName)}</InvoiceName>
 
-        <InvoicePrice>{`£ ${formatNumber(187900678.9)}`}</InvoicePrice>
+        <InvoicePrice>
+          {formatLargeNumber(
+            total,
+            currencyLocale[currency as keyof typeof currencyLocale],
+            currency,
+            false
+          )}
+        </InvoicePrice>
 
-        <StatusContainer>
+        <StatusContainer status={status}>
           <span></span>
-          <h4>Pending</h4>
+          <h4>{status}</h4>
         </StatusContainer>
 
         <svg width='7' height='10' xmlns='http://www.w3.org/2000/svg'>

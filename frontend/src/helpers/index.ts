@@ -1,16 +1,25 @@
-const sliceStr = (str: string) => {
+const currencyLocale = {
+  USD: 'en-US',
+  EUR: 'de-DE',
+  NGN: 'en-NG',
+  GBP: 'en-GB',
+}
+
+const sliceStr = (str: string, isId: boolean = false) => {
+  if (isId) return `${str.slice(0, 7)}...`
+
   return str.length > 17 ? `${str.slice(0, 17)}...` : str
 }
 
-const formatNumber = (num: number) => {
-  if (num >= 1_000_000_000) {
-    return `${(num / 1_000_000_000).toFixed(2)}B+`
-  } else {
-    return num.toLocaleString(undefined, {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
-    })
+function formatDueDate(dateString: string): string {
+  const dateObject = new Date(dateString)
+  const options: Intl.DateTimeFormatOptions = {
+    day: 'numeric',
+    month: 'short',
+    year: 'numeric',
   }
+  const formattedDate = dateObject.toLocaleDateString('en-GB', options)
+  return `Due ${formattedDate}`
 }
 
 function formatLargeNumber(
@@ -58,4 +67,4 @@ function formatLargeNumber(
   return currencySymbol + formattedNumber
 }
 
-export { sliceStr, formatNumber, formatLargeNumber }
+export { sliceStr, formatLargeNumber, formatDueDate, currencyLocale }
