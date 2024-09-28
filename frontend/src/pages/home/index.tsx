@@ -2,7 +2,13 @@ import { useUser } from '@clerk/clerk-react'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { controlFilterStatusModal } from 'store/features/modal/modalSlice'
 import { openNewInvoiceForm } from 'store/features/invoice/invoiceSlice'
+
+import { useAuth } from '@clerk/clerk-react'
+
 //import { ClipLoader } from 'react-spinners'
+
+//MockData
+import { mockDataArray } from 'data/mockData'
 
 //Components
 import InvoiceBar from 'components/Invoice-bar/InvoiceBar'
@@ -37,8 +43,16 @@ const Homepage = () => {
     dispatch(controlFilterStatusModal(false))
   }
 
+  const { getToken } = useAuth()
+
+  const displayToken = async () => {
+    const token = await getToken()
+    console.log('Your token:', token)
+  }
+
   return (
     <HomePageMain>
+      <button onClick={displayToken}>Get Token</button>
       <section>
         <MainHeaderContainer>
           <p>{`Hi, ${user?.firstName}`}</p>
@@ -96,14 +110,30 @@ const Homepage = () => {
       <section>
         <InvoiceBarsWrapper>
           {/* Invoices from API */}
+          {mockDataArray.map((data, index) => {
+            const { paymentDue, _id, total, clientName, status } = data
+
+            return (
+              <InvoiceBar
+                key={index}
+                {...{
+                  paymentDue,
+                  _id,
+                  total,
+                  clientName,
+                  status,
+                }}
+              />
+            )
+          })}
+
+          {/* <InvoiceBar />
           <InvoiceBar />
           <InvoiceBar />
           <InvoiceBar />
           <InvoiceBar />
           <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
+          <InvoiceBar /> */}
 
           {/* Skeleton UI for loading state */}
           {/* <SkeletonInvoiceBarList count={5} /> */}

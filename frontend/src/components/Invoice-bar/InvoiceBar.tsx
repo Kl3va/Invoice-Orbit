@@ -11,7 +11,15 @@ import { Link } from 'react-router-dom'
 //Helpers
 import { sliceStr, formatNumber } from 'helpers'
 
-const InvoiceBar = () => {
+interface InvoiceBarProps {
+  paymentDue?: string
+  clientName: string
+  status: 'paid' | 'pending' | 'draft'
+  total?: number
+  _id?: string
+}
+
+const InvoiceBar = ({}: InvoiceBarProps) => {
   return (
     <Link to={'/invoices'}>
       <InvoiceRectangle>
@@ -19,7 +27,7 @@ const InvoiceBar = () => {
           <span>#</span>RT3080
         </InvoiceID>
 
-        <InvoiceDueDate>Due 19 Aug 2021£</InvoiceDueDate>
+        <InvoiceDueDate>Due 19 Aug 2021</InvoiceDueDate>
 
         <InvoiceName>{sliceStr('Jensen Huang')}</InvoiceName>
 

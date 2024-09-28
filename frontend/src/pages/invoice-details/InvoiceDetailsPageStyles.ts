@@ -114,7 +114,13 @@ export const ButtonsGroup = styled.div`
     transition: opacity ease-in 0.2s;
 
     &:hover {
+      opacity: 0.7;
+    }
+
+    &:disabled {
       opacity: 0.5;
+      text-decoration: line-through;
+      cursor: text;
     }
   }
 
@@ -135,6 +141,12 @@ export const ButtonsGroup = styled.div`
 
     &:hover {
       opacity: 0.8;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: text;
+      text-decoration: line-through;
     }
   }
 `

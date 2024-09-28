@@ -41,7 +41,7 @@ const MainFormTemplate = () => {
       <GobackFormBtnWrapper>
         <GobackButton />
       </GobackFormBtnWrapper>
-      <h2>New Invoice</h2>
+      <h2>{isEditing ? 'Edit' : 'New Invoice'}</h2>
       <InvoiceFormContainer>
         <fieldset>
           <legend>Bill From</legend>
@@ -144,10 +144,10 @@ const MainFormTemplate = () => {
               <option value='' hidden>
                 Select Currency
               </option>
-              <option value='naira'>₦: Naira</option>
-              <option value='dollar'>$: Dollar</option>
-              <option value='pound'>£: Pound</option>
-              <option value='euro'>€: Euro</option>
+              <option value='NGN'>₦: Naira</option>
+              <option value='USD'>$: Dollar</option>
+              <option value='GBP'>£: Pound</option>
+              <option value='EUR'>€: Euro</option>
             </select>
           </CurrencyContainer>
         </fieldset>
