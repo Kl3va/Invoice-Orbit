@@ -61,7 +61,7 @@ export const InvoiceRectangle = styled.div`
 `
 
 export const StatusContainer = styled.div<{
-  status?: 'paid' | 'pending' | 'draft'
+  status: 'paid' | 'pending' | 'draft'
 }>`
   justify-self: right;
   display: flex;

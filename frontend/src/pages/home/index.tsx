@@ -53,7 +53,7 @@ const Homepage = () => {
         <HomeSecondaryContainer>
           <InvoiceHeading>
             <h1>Invoices</h1>
-            <p>There are 123 total Invoices</p>
+            <p>{`There are ${mockDataArray.length} total Invoices.`}</p>
           </InvoiceHeading>
 
           <FilterContainer onClick={handleFilterStatus}>

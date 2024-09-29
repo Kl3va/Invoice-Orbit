@@ -1,4 +1,4 @@
-const currencyLocale = {
+const currencyLocale: { [key in 'USD' | 'EUR' | 'NGN' | 'GBP']: string } = {
   USD: 'en-US',
   EUR: 'de-DE',
   NGN: 'en-NG',

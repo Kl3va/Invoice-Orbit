@@ -11,6 +11,12 @@ import ConfirmDeletion from 'components/ConfirmDeletion'
 //Custom Hook
 import useWindow from 'hooks/useWindow'
 
+//Helper Functions
+import { formatLargeNumber, currencyLocale } from 'helpers'
+
+//Mock Data
+import { mockInvoiceData } from 'data/mockData'
+
 //STYLES
 import { StatusContainer } from 'components/Invoice-bar/InvoiceBarStyles'
 
@@ -63,9 +69,9 @@ const InvoiceDetailsPage = () => {
         <DetailsSecondary>
           <StatusBar>
             <h2>Status</h2>
-            <StatusContainer>
+            <StatusContainer status={mockInvoiceData.status}>
               <span></span>
-              <h4>Pending</h4>
+              <h4>{mockInvoiceData.status}</h4>
             </StatusContainer>
           </StatusBar>
 
@@ -86,41 +92,42 @@ const InvoiceDetailsPage = () => {
             <BasicInfoSecondary>
               <DescriptionWrapper>
                 <p>
-                  <span>#</span>XM9141
+                  <span>#</span>
+                  {mockInvoiceData._id}
                 </p>
-                <p>Graphic design</p>
+                <p>{mockInvoiceData.description}</p>
               </DescriptionWrapper>
               <UserAddressWrapper>
-                <p>19 Union Terrace</p>
-                <p>London</p>
-                <p>E1 3EZ</p>
-                <p>United Kingdom</p>
+                <p>{mockInvoiceData.senderAddress.street}</p>
+                <p>{mockInvoiceData.senderAddress.city}</p>
+                <p>{mockInvoiceData.senderAddress.postCode}</p>
+                <p>{mockInvoiceData.senderAddress.country}</p>
               </UserAddressWrapper>
             </BasicInfoSecondary>
             <BasicInfoPrimary>
               <div>
                 <h2>Invoice Date</h2>
-                <p>21 Aug 2021</p>
+                <p>{mockInvoiceData.createdAt}</p>
               </div>
               <BillToWrapper>
                 <div>
                   <h2>Bill To</h2>
-                  <p>Alex Grin</p>
+                  <p>{mockInvoiceData.clientName}</p>
                 </div>
                 <div>
-                  <p>84 Church Way</p>
-                  <p>Bradford</p>
-                  <p>BD1 9PB</p>
-                  <p>United Kingdom</p>
+                  <p>{mockInvoiceData.clientAddress.street}</p>
+                  <p>{mockInvoiceData.clientAddress.city}</p>
+                  <p>{mockInvoiceData.clientAddress.postCode}</p>
+                  <p>{mockInvoiceData.clientAddress.country}</p>
                 </div>
               </BillToWrapper>
               <PaymentDueWrapper>
                 <h2>Payment Due</h2>
-                <p>20 Sep 2021</p>
+                <p>{mockInvoiceData.paymentDue}</p>
               </PaymentDueWrapper>
               <SentToWrapper>
                 <h2>Sent to</h2>
-                <p>alexgrim@mail.com</p>
+                <p>{mockInvoiceData.clientEmail}</p>
               </SentToWrapper>
             </BasicInfoPrimary>
           </BasicInfoWrapper>
@@ -133,24 +140,53 @@ const InvoiceDetailsPage = () => {
                 <h2>Price</h2>
                 <h2>Total</h2>
               </ItemsDetailsHeadingWrapper>
-              <ItemsDetailsWrapper>
-                <p>Banner Design</p>
-                <p>1 x £156.00</p>
-                <p>1,000,000</p>
-                <p>£156.00</p>
-                <p>£156.00</p>
-              </ItemsDetailsWrapper>
-              <ItemsDetailsWrapper>
+              {mockInvoiceData.items.map((item, index) => {
+                return (
+                  <ItemsDetailsWrapper key={index}>
+                    <p>{item.name}</p>
+                    <p>
+                      {`${item.quantity} x ${formatLargeNumber(
+                        item.price,
+                        currencyLocale[mockInvoiceData.currency],
+                        mockInvoiceData.currency
+                      )}`}
+                    </p>
+                    <p>{item.quantity}</p>
+                    <p>
+                      {formatLargeNumber(
+                        item.price,
+                        currencyLocale[mockInvoiceData.currency],
+                        mockInvoiceData.currency
+                      )}
+                    </p>
+                    <p>
+                      {formatLargeNumber(
+                        item.total,
+                        currencyLocale[mockInvoiceData.currency],
+                        mockInvoiceData.currency
+                      )}
+                    </p>
+                  </ItemsDetailsWrapper>
+                )
+              })}
+
+              {/* <ItemsDetailsWrapper>
                 <p>Email Design</p>
                 <p>2 x £ 200.00</p>
                 <p>2</p>
                 <p>£ 200.00</p>
                 <p>£ 400.00</p>
-              </ItemsDetailsWrapper>
+              </ItemsDetailsWrapper> */}
             </ItemsDetailsContainer>
             <GrandTotalWrapper>
               <h2>{windowWidth >= 400 ? 'Amount Due' : 'Grand Total'}</h2>
-              <p>£ 556.00</p>
+              <p>
+                {formatLargeNumber(
+                  mockInvoiceData.total,
+                  currencyLocale[mockInvoiceData.currency],
+                  mockInvoiceData.currency
+                )}
+              </p>
             </GrandTotalWrapper>
           </ItemsContainer>
         </DetailsPrimary>

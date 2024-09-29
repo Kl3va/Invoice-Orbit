@@ -19,7 +19,7 @@ import {
 interface InvoiceBarProps {
   paymentDue: string
   clientName: string
-  currency: string
+  currency: 'USD' | 'EUR' | 'NGN' | 'GBP'
   status: 'paid' | 'pending' | 'draft'
   total: number
   _id: string
@@ -34,7 +34,7 @@ const InvoiceBar = ({
   _id: id,
 }: InvoiceBarProps) => {
   return (
-    <Link to={`/invoice/${id}`}>
+    <Link to={`/invoices/${id}`}>
       <InvoiceRectangle>
         <InvoiceID>
           <span>#</span>
@@ -46,12 +46,7 @@ const InvoiceBar = ({
         <InvoiceName>{sliceStr(clientName)}</InvoiceName>
 
         <InvoicePrice>
-          {formatLargeNumber(
-            total,
-            currencyLocale[currency as keyof typeof currencyLocale],
-            currency,
-            false
-          )}
+          {formatLargeNumber(total, currencyLocale[currency], currency, false)}
         </InvoicePrice>
 
         <StatusContainer status={status}>
