@@ -23,8 +23,8 @@ const statusColors = {
     bgColor: 'rgba(255, 143, 0, 0.07)',
   },
   draft: {
-    color: '#DFE3FA',
-    bgColor: 'rgba(223, 227, 250, 0.07)',
+    color: 'var(--color-font-900)',
+    bgColor: 'rgba(55, 59, 83, 0.2)',
   },
 }
 

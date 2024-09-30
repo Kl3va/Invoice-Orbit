@@ -291,11 +291,6 @@ export const SubmitButtonsContainer = styled.div`
     }
   }
 
-  & > :first-child {
-    background-color: var(--color-bg-400);
-    color: var(color-font-300);
-  }
-
   & > :last-child {
     background-color: var(--color-accent-100);
     color: var(--color-font-normal);
@@ -304,7 +299,14 @@ export const SubmitButtonsContainer = styled.div`
 
 export const DiscardButton = styled.button`
   margin-right: auto;
+  background-color: var(--color-accent-600);
+  color: var(--color-font-800);
 `
+export const CancelButton = styled.button`
+  background-color: var(--color-bg-400);
+  color: var(--color-font-300);
+`
+
 export const DraftButton = styled.button`
   background-color: var(--color-bg-200);
   color: var(--color-font-500);

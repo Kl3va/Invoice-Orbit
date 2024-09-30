@@ -1,6 +1,9 @@
 import { useUser } from '@clerk/clerk-react'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { controlFilterStatusModal } from 'store/features/modal/modalSlice'
+import {
+  controlFilterStatusModal,
+  // controlAlertModal,
+} from 'store/features/modal/modalSlice'
 import { openNewInvoiceForm } from 'store/features/invoice/invoiceSlice'
 
 //import { ClipLoader } from 'react-spinners'

@@ -2,6 +2,7 @@ import { Outlet } from 'react-router-dom'
 //COMPONENTS
 import ConfirmationBg from 'components/Background/ConfirmationBg'
 import MainFormTemplate from 'components/Main-Form/MainFormTemplate'
+import Alert from 'components/Alert'
 
 //REDUX
 import { useAppSelector } from 'store/hooks'
@@ -13,6 +14,7 @@ const Layout = () => {
     <>
       <Outlet />
       <MainFormTemplate />
+      <Alert />
       {(isFormOpen || isConfirmDeleteOpen) && <ConfirmationBg />}
     </>
   )

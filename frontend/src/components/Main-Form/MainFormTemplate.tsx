@@ -5,6 +5,7 @@ import { closeInvoiceForm } from 'store/features/invoice/invoiceSlice'
 //COMPONENTS
 import GobackButton from 'components/GobackButton/GobackButton'
 import {
+  CancelButton,
   CurrencyContainer,
   DateAndTermsContainer,
   DiscardButton,
@@ -236,7 +237,7 @@ const MainFormTemplate = () => {
         <FormButtonsContainer>
           {isEditing ? (
             <SubmitButtonsContainer>
-              <button onClick={closeFormBar}>Cancel</button>
+              <CancelButton onClick={closeFormBar}>Cancel</CancelButton>
               <button>Save Changes</button>
             </SubmitButtonsContainer>
           ) : (

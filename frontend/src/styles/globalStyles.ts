@@ -22,6 +22,7 @@ export const GlobalStyles = createGlobalStyle`
         --color-accent-300: #33D69F;
         --color-accent-400: #FF8F00;
         --color-accent-500: #DFE3FA;
+        --color-accent-600: #F9FAFE;
         --color-font-normal: #FFFFFF;
         --color-font-100: ${({ theme }) => theme.font100};
         --color-font-200: ${({ theme }) => theme.font200};
@@ -30,6 +31,7 @@ export const GlobalStyles = createGlobalStyle`
         --color-font-500: ${({ theme }) => theme.font500};
         --color-font-600: ${({ theme }) => theme.font600};
         --color-font-700: ${({ theme }) => theme.font700};
+        --color-font-900: ${({ theme }) => theme.font900};
         --color-font-800: #7E88C3;
         --color-border-100: ${({ theme }) => theme.border100};
         --color-border-200: #494E6E;
