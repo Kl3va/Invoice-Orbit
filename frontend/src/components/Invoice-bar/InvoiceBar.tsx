@@ -51,7 +51,7 @@ const InvoiceBar = ({
 
         <StatusContainer $status={status}>
           <span></span>
-          <h4>{status}</h4>
+          <h3>{status}</h3>
         </StatusContainer>
 
         <svg width='7' height='10' xmlns='http://www.w3.org/2000/svg'>

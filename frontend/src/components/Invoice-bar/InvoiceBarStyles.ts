@@ -85,7 +85,7 @@ export const StatusContainer = styled.div<{
       props.$status ? statusColors[props.$status].color : '#FF8F00'};
   }
 
-  h4 {
+  h3 {
     font-size: 0.94rem;
     color: ${(props) =>
       props.$status ? statusColors[props.$status].color : '#FF8F00'};
@@ -136,7 +136,7 @@ export const InvoiceDueDate = styled.p`
   }
 `
 
-export const InvoiceID = styled.h3`
+export const InvoiceID = styled.h2`
   font-size: 0.94rem;
   color: var(--color-font-100);
   margin-bottom: 1.5rem;
