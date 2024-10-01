@@ -28,6 +28,7 @@ import {
   InvoiceBarsWrapper,
   SecondarySectionSticky,
   FilterSvg,
+  FilteringWrapper,
 } from 'pages/home/HomeStyles'
 
 const Homepage = () => {
@@ -59,29 +60,31 @@ const Homepage = () => {
             <p>{`There are ${mockDataArray.length} total Invoices.`}</p>
           </InvoiceHeading>
 
-          <FilterContainer onClick={handleFilterStatus}>
-            <p>
-              Filter <span>by status</span>
-            </p>
-            <span>
-              <FilterSvg
-                width='11'
-                height='7'
-                xmlns='http://www.w3.org/2000/svg'
-                shown={isFilterStatusOpen}
-              >
-                <path
-                  d='M1 1l4.228 4.228L9.456 1'
-                  stroke='#7C5DFA'
-                  strokeWidth='2'
-                  fill='none'
-                  fillRule='evenodd'
-                />
-              </FilterSvg>
-            </span>
-            {/* <FilterInputs /> */}
+          <FilteringWrapper>
+            <FilterContainer onClick={handleFilterStatus}>
+              <p>
+                Filter <span>by status</span>
+              </p>
+              <span>
+                <FilterSvg
+                  width='11'
+                  height='7'
+                  xmlns='http://www.w3.org/2000/svg'
+                  $shown={isFilterStatusOpen}
+                >
+                  <path
+                    d='M1 1l4.228 4.228L9.456 1'
+                    stroke='#7C5DFA'
+                    strokeWidth='2'
+                    fill='none'
+                    fillRule='evenodd'
+                  />
+                </FilterSvg>
+              </span>
+              {/* <FilterInputs /> */}
+            </FilterContainer>
             {isFilterStatusOpen && <FilterInputs />}
-          </FilterContainer>
+          </FilteringWrapper>
 
           <NewInvoiceBtn onClick={openFormBar}>
             <span>

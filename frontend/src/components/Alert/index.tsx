@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components'
 import { controlAlertModal } from 'store/features/modal/modalSlice'
 import { useAppSelector, useAppDispatch } from 'store/hooks'
 
-const AlertComponent = styled.aside<{ show: boolean }>`
+const AlertComponent = styled.aside<{ $show: boolean }>`
   position: fixed;
   width: min(100%, 25rem);
   padding: 1rem;
@@ -47,8 +47,8 @@ const AlertComponent = styled.aside<{ show: boolean }>`
     }
   }
 
-  ${({ show }) =>
-    show &&
+  ${({ $show }) =>
+    $show &&
     css`
       transform: translate(0);
     `}
@@ -85,7 +85,7 @@ const Alert = () => {
   }, [alert.show, alert.message, alert.type, dispatch])
 
   return (
-    <AlertComponent show={alert.show}>
+    <AlertComponent $show={alert.show}>
       {alert.type === 'success' ? (
         <SuccessIcon>&#10004;</SuccessIcon>
       ) : (

@@ -7,7 +7,7 @@ import {
 import { closeInvoiceForm } from 'store/features/invoice/invoiceSlice'
 
 export const BackgroundBlur = styled.aside<{
-  confirm?: boolean
+  $confirm?: boolean
 }>`
   position: fixed;
   top: 0;
@@ -15,7 +15,7 @@ export const BackgroundBlur = styled.aside<{
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.35);
-  z-index: ${({ confirm }) => (confirm ? 120 : 98)};
+  z-index: ${({ $confirm }) => ($confirm ? 120 : 98)};
   display: block;
 `
 
@@ -32,7 +32,7 @@ const ConfirmationBg = () => {
 
   return (
     <BackgroundBlur
-      confirm={isConfirmDeleteOpen}
+      $confirm={isConfirmDeleteOpen}
       onClick={closeAllModals}
     ></BackgroundBlur>
   )

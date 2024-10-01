@@ -49,7 +49,7 @@ const InvoiceBar = ({
           {formatLargeNumber(total, currencyLocale[currency], currency, false)}
         </InvoicePrice>
 
-        <StatusContainer status={status}>
+        <StatusContainer $status={status}>
           <span></span>
           <h4>{status}</h4>
         </StatusContainer>

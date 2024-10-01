@@ -67,12 +67,15 @@ export const InvoiceHeading = styled.div`
     font-size: var(--font-size-mini);
   }
 `
+export const FilteringWrapper = styled.div`
+  align-self: center;
+  position: relative;
+`
+
 export const FilterContainer = styled.div`
   display: flex;
   gap: 0.87rem;
-  align-items: center;
   cursor: pointer;
-  position: relative;
 
   p {
     color: var(--color-font-100);
@@ -87,8 +90,8 @@ export const FilterContainer = styled.div`
     }
   }
 `
-export const FilterSvg = styled.svg<{ shown?: boolean }>`
-  transform: ${({ shown }) => (shown ? 'rotate(180deg)' : 'rotate(0deg)')};
+export const FilterSvg = styled.svg<{ $shown?: boolean }>`
+  transform: ${({ $shown }) => ($shown ? 'rotate(180deg)' : 'rotate(0deg)')};
   transform-origin: center;
   transition: transform 0.2s ease-in-out;
 `

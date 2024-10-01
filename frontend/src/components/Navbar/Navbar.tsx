@@ -35,7 +35,7 @@ const Navbar = ({ themeSwitch, toggleTheme }: NavbarProps) => {
     <NavbarAside>
       <NavbarContainer>
         <ThemeWrapper>
-          <LogoContainer isActive={isFormOpen}>
+          <LogoContainer $isactive={isFormOpen}>
             {isFormOpen ? (
               <img src={logo} alt='logo' />
             ) : (

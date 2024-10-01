@@ -39,10 +39,10 @@ export const ThemeWrapper = styled.div`
   }
 `
 
-export const LogoContainer = styled.div<{ isActive: boolean }>`
+export const LogoContainer = styled.div<{ $isactive: boolean }>`
   width: 4.5rem;
   aspect-ratio: 1 / 1;
-  cursor: ${({ isActive }) => (isActive ? 'text' : 'pointer')};
+  cursor: ${({ $isactive }) => ($isactive ? 'text' : 'pointer')};
 
   @media ${QUERIES.tablet} {
     width: 6.44rem;

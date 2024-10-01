@@ -3,7 +3,7 @@ import { QUERIES } from 'styles/mediaQueries'
 
 const FilterInputContainer = styled.div`
   position: absolute;
-  top: 3.5rem;
+  top: 2.2rem;
   right: -3.5rem;
   z-index: 1000;
   display: grid;
@@ -15,8 +15,8 @@ const FilterInputContainer = styled.div`
   box-shadow: 0px 10px 20px 0px #48549f40;
 
   @media ${QUERIES.tabletMini} {
-    top: 3.2rem;
-    right: -1.5rem;
+    top: 2rem;
+    right: -1.8rem;
   }
 
   div {
@@ -35,6 +35,7 @@ const FilterInputContainer = styled.div`
 
 export const InputCheckbox = styled.input`
   -webkit-appearance: none;
+  cursor: pointer;
   appearance: none;
   background-color: var(--color-border-100);
   margin: 0;

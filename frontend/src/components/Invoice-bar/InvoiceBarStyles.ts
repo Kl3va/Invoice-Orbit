@@ -61,7 +61,7 @@ export const InvoiceRectangle = styled.div`
 `
 
 export const StatusContainer = styled.div<{
-  status: 'paid' | 'pending' | 'draft'
+  $status: 'paid' | 'pending' | 'draft'
 }>`
   justify-self: right;
   display: flex;
@@ -73,8 +73,8 @@ export const StatusContainer = styled.div<{
   border-radius: 0.4rem;
 
   background-color: ${(props) =>
-    props.status
-      ? statusColors[props.status].bgColor
+    props.$status
+      ? statusColors[props.$status].bgColor
       : 'rgba(255, 143, 0, 0.07)'};
 
   span {
@@ -82,13 +82,13 @@ export const StatusContainer = styled.div<{
     width: 0.5rem;
     height: 0.5rem;
     background-color: ${(props) =>
-      props.status ? statusColors[props.status].color : '#FF8F00'};
+      props.$status ? statusColors[props.$status].color : '#FF8F00'};
   }
 
   h4 {
     font-size: 0.94rem;
     color: ${(props) =>
-      props.status ? statusColors[props.status].color : '#FF8F00'};
+      props.$status ? statusColors[props.$status].color : '#FF8F00'};
   }
 `
 

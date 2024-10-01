@@ -69,7 +69,7 @@ const InvoiceDetailsPage = () => {
         <DetailsSecondary>
           <StatusBar>
             <h2>Status</h2>
-            <StatusContainer status={mockInvoiceData.status}>
+            <StatusContainer $status={mockInvoiceData.status}>
               <span></span>
               <h4>{mockInvoiceData.status}</h4>
             </StatusContainer>
