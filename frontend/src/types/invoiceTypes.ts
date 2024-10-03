@@ -13,7 +13,7 @@ export interface Item {
 }
 
 export interface InvoiceOrbit {
-  userId: string
+  userId?: string
   createdAt: string
   paymentDue: string
   description: string
@@ -25,6 +25,6 @@ export interface InvoiceOrbit {
   clientAddress: Address
   items: Item[]
   currency: 'NGN' | 'USD' | 'GBP' | 'EUR'
-  total: number
-  _id: string
+  total?: number
+  _id?: string
 }

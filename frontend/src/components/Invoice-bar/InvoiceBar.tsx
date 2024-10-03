@@ -8,21 +8,21 @@ import {
 } from 'components/Invoice-bar/InvoiceBarStyles'
 import { Link } from 'react-router-dom'
 
-//Helpers
+//Utils
 import {
   sliceStr,
   formatDueDate,
   formatLargeNumber,
   currencyLocale,
-} from 'helpers'
+} from 'utils/invoiceFormatter'
 
 interface InvoiceBarProps {
   paymentDue: string
   clientName: string
   currency: 'USD' | 'EUR' | 'NGN' | 'GBP'
   status: 'paid' | 'pending' | 'draft'
-  total: number
-  _id: string
+  total?: number
+  _id?: string
 }
 
 const InvoiceBar = ({
@@ -38,7 +38,7 @@ const InvoiceBar = ({
       <InvoiceRectangle>
         <InvoiceID>
           <span>#</span>
-          {sliceStr(id, true)}
+          {id !== undefined && sliceStr(id, true)}
         </InvoiceID>
 
         <InvoiceDueDate>{formatDueDate(paymentDue)}</InvoiceDueDate>
@@ -46,7 +46,8 @@ const InvoiceBar = ({
         <InvoiceName>{sliceStr(clientName)}</InvoiceName>
 
         <InvoicePrice>
-          {formatLargeNumber(total, currencyLocale[currency], currency, false)}
+          {total !== undefined &&
+            formatLargeNumber(total, currencyLocale[currency], currency, false)}
         </InvoicePrice>
 
         <StatusContainer $status={status}>

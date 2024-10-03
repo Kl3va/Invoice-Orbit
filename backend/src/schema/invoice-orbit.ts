@@ -11,13 +11,13 @@ interface Item {
   name: string
   quantity: number
   price: number
-  total?: number
+  total: number
 }
 
 interface InvoiceOrbit {
   userId: string
   createdAt: Date
-  paymentDue?: Date
+  paymentDue: Date
   description: string
   paymentTerms: number
   clientName: string
@@ -27,8 +27,8 @@ interface InvoiceOrbit {
   clientAddress: Address
   items: Item[]
   currency: 'NGN' | 'USD' | 'GBP' | 'EUR'
-  total?: number
-  _id?: string
+  total: number
+  _id: string
 }
 
 const addressSchema = new mongoose.Schema(

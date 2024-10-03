@@ -177,7 +177,6 @@ color: var(--color-font-100);
 font-weight: 700;
 font-size: var(--font-size-small);
 
-
 &:focus {
   outline:none;
   border-color: var(--color-accent-100);

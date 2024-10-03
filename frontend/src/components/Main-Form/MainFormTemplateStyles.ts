@@ -110,6 +110,10 @@ export const InvoiceFormContainer = styled.form`
       font-size: 1rem;
     }
   }
+
+  input[type='date']:read-only {
+    cursor: not-allowed;
+  }
 `
 
 export const ItemListWrapper = styled.fieldset`

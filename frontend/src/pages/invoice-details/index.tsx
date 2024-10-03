@@ -12,7 +12,7 @@ import ConfirmDeletion from 'components/ConfirmDeletion'
 import useWindow from 'hooks/useWindow'
 
 //Helper Functions
-import { formatLargeNumber, currencyLocale } from 'helpers'
+import { formatLargeNumber, currencyLocale } from 'utils/invoiceFormatter'
 
 //Mock Data
 import { mockInvoiceData } from 'data/mockData'
@@ -182,7 +182,7 @@ const InvoiceDetailsPage = () => {
               <h2>{windowWidth >= 400 ? 'Amount Due' : 'Grand Total'}</h2>
               <p>
                 {formatLargeNumber(
-                  mockInvoiceData.total,
+                  mockInvoiceData.total ?? 0,
                   currencyLocale[mockInvoiceData.currency],
                   mockInvoiceData.currency
                 )}
