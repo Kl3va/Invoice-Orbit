@@ -68,6 +68,61 @@ export const fetchInvoiceWithId = createAsyncThunk(
   }
 )
 
+export const createInvoice = createAsyncThunk(
+  'invoices/createInvoice',
+  async (
+    {
+      token,
+      invoiceData,
+    }: { token: string; invoiceData: Partial<InvoiceOrbit> },
+    { rejectWithValue }
+  ) => {
+    try {
+      const headers = getHeaders(token)
+      const response = await apiCallWithErrorHandling((instance) =>
+        instance.post(API_URL, invoiceData, { headers })
+      )
+      return response
+    } catch (error) {
+      rejectWithValue(handleApiError(error))
+    }
+  }
+)
+
+export const updateInvoice = createAsyncThunk(
+  'invoices/update',
+  async (
+    { token, invoice }: { token: string; invoice: Partial<InvoiceOrbit> },
+    { rejectWithValue }
+  ) => {
+    try {
+      const { _id: id, ...invoiceData } = invoice
+      const headers = getHeaders(token)
+      const response = await apiCallWithErrorHandling((instance) =>
+        instance.put(`${API_URL}/${id}`, invoiceData, { headers })
+      )
+      return response
+    } catch (error) {
+      rejectWithValue(handleApiError(error))
+    }
+  }
+)
+
+export const deleteInvoice = createAsyncThunk(
+  'invoices/delete',
+  async ({ token, id }: { token: string; id: string }, { rejectWithValue }) => {
+    try {
+      const headers = getHeaders(token)
+      const response = apiCallWithErrorHandling((instance) =>
+        instance.delete(`${API_URL}/${id}`, { headers })
+      )
+      return response
+    } catch (error) {
+      rejectWithValue(handleApiError(error))
+    }
+  }
+)
+
 const invoiceSlice = createSlice({
   name: 'invoice',
   initialState,
