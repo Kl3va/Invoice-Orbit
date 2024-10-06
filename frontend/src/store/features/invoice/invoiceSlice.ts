@@ -126,10 +126,10 @@ export const deleteInvoice = createAsyncThunk(
   async ({ token, id }: { token: string; id: string }, { rejectWithValue }) => {
     try {
       const headers = getHeaders(token)
-      const response = apiCallWithErrorHandling((instance) =>
+      const response = await apiCallWithErrorHandling((instance) =>
         instance.delete(`${API_URL}/${id}`, { headers })
       )
-      return (await response).data
+      return response.data
     } catch (error) {
       return rejectWithValue(handleApiError(error))
     }
