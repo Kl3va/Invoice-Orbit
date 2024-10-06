@@ -1,4 +1,9 @@
-import axios, { AxiosInstance } from 'axios'
+import axios, { AxiosInstance, AxiosResponse } from 'axios'
+
+export interface ApiError {
+  message: string
+  [key: string]: any
+}
 
 const getHeaders = (token: string) => ({
   'Content-Type': 'application/json',
@@ -17,27 +22,26 @@ const createAxiosInstanceWithTimeout = () => {
   return { instance, timeoutId }
 }
 
-const handleApiError = (error: unknown) => {
+const handleApiError = (error: unknown): ApiError => {
   if (axios.isAxiosError(error)) {
     if (error.code === 'ERR_CANCELED') {
       return { message: 'Request timed out' }
     }
-    return error.response?.data
+    return error.response?.data || { message: error.message }
   }
   return { message: 'An unknown error occured!' }
 }
 
 const apiCallWithErrorHandling = async <T>(
-  apiCall: (instance: AxiosInstance) => Promise<T>
-) => {
+  apiCall: (instance: AxiosInstance) => Promise<AxiosResponse<T>>
+): Promise<AxiosResponse<T>> => {
   const { instance, timeoutId } = createAxiosInstanceWithTimeout()
   try {
     const result = await apiCall(instance)
     clearTimeout(timeoutId)
     return result
-  } catch (error) {
+  } finally {
     clearTimeout(timeoutId)
-    throw error
   }
 }
 
