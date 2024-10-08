@@ -51,7 +51,11 @@ export const fetchInvoices = createAsyncThunk(
   async (token: string, { getState, rejectWithValue }) => {
     const { invoice } = getState() as { invoice: InvoiceState }
 
-    if (invoice.isCacheValid && invoice.invoices.length > 0) {
+    if (
+      invoice.isCacheValid &&
+      invoice.invoices.length > 0 &&
+      invoice.selectedStatus.length === 0
+    ) {
       return invoice.invoices
     }
 
