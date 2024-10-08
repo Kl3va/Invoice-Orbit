@@ -7,7 +7,6 @@ import {
   apiCallWithErrorHandling,
   handleApiError,
   getHeaders,
-  ApiError,
 } from 'utils/apiSimplify'
 
 //Local Host
@@ -23,6 +22,7 @@ export interface InvoiceState {
     updating: boolean
     deleting: boolean
   }
+  selectedStatus: string[]
   isFormOpen: boolean
   isEditing: boolean
   isCacheValid: boolean
@@ -39,6 +39,7 @@ const initialState: InvoiceState = {
     updating: false,
     deleting: false,
   },
+  selectedStatus: [],
   isFormOpen: false,
   isEditing: false,
   isCacheValid: false,
@@ -157,6 +158,9 @@ const invoiceSlice = createSlice({
       state.isEditing = false
       state.invoiceForm = emptyInvoice
     },
+    updateStatus: (state, action: PayloadAction<string[]>) => {
+      state.selectedStatus = action.payload
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -225,7 +229,11 @@ const invoiceSlice = createSlice({
   },
 })
 
-export const { openEditInvoiceForm, openNewInvoiceForm, closeInvoiceForm } =
-  invoiceSlice.actions
+export const {
+  openEditInvoiceForm,
+  openNewInvoiceForm,
+  closeInvoiceForm,
+  updateStatus,
+} = invoiceSlice.actions
 
 export default invoiceSlice.reducer

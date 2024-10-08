@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useUser } from '@clerk/clerk-react'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import {
@@ -36,6 +37,7 @@ const Homepage = () => {
   const dispatch = useAppDispatch()
 
   const { isFilterStatusOpen } = useAppSelector((state) => state.modal)
+  const { selectedStatus } = useAppSelector((state) => state.invoice)
 
   const handleFilterStatus = () =>
     dispatch(controlFilterStatusModal(!isFilterStatusOpen))
@@ -44,6 +46,10 @@ const Homepage = () => {
     dispatch(openNewInvoiceForm())
     dispatch(controlFilterStatusModal(false))
   }
+
+  useEffect(() => {
+    console.log(`selectedStatus in Homepage`, selectedStatus)
+  }, [selectedStatus])
 
   return (
     <HomePageMain>
