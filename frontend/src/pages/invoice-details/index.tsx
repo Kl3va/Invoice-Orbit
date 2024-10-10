@@ -9,7 +9,7 @@ import GobackButton from 'components/GobackButton/GobackButton'
 import ConfirmDeletion from 'components/ConfirmDeletion'
 
 //Custom Hook
-import useWindow from 'hooks/useWindow'
+import useWindow from 'hooks/useWindowWidth'
 
 //Helper Functions
 import { formatLargeNumber, currencyLocale } from 'utils/invoiceFormatter'

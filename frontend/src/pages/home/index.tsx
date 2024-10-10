@@ -1,22 +1,26 @@
 import { useEffect } from 'react'
-import { useUser } from '@clerk/clerk-react'
+import { useUser, useAuth } from '@clerk/clerk-react'
+import { useSearchParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { controlFilterStatusModal } from 'store/features/modal/modalSlice'
+import { handleApiError } from 'utils/apiSimplify'
 import {
-  controlFilterStatusModal,
-  // controlAlertModal,
-} from 'store/features/modal/modalSlice'
-import { openNewInvoiceForm } from 'store/features/invoice/invoiceSlice'
+  openNewInvoiceForm,
+  updateStatus,
+  fetchInvoices,
+} from 'store/features/invoice/invoiceSlice'
+import { useAlert } from 'hooks/useAlert'
 
 //import { ClipLoader } from 'react-spinners'
 
 //MockData
-import { mockDataArray } from 'data/mockData'
+//import { mockDataArray } from 'data/mockData'
 
 //Components
 import InvoiceBar from 'components/Invoice-bar/InvoiceBar'
 import FilterInputs from 'components/FilterInputs'
-//import { SkeletonInvoiceBarList } from 'components/SkeletonInvoiceBar'
-//import Illustration from 'components/Illustration'
+import { SkeletonInvoiceBarList } from 'components/SkeletonInvoiceBar'
+import Illustration from 'components/Illustration'
 
 //Styling
 import {
@@ -34,10 +38,13 @@ import {
 
 const Homepage = () => {
   const { user } = useUser()
+  const { getToken } = useAuth()
+  const showAlert = useAlert()
+  const [searchParams] = useSearchParams()
   const dispatch = useAppDispatch()
 
   const { isFilterStatusOpen } = useAppSelector((state) => state.modal)
-  const { selectedStatus } = useAppSelector((state) => state.invoice)
+  const { invoices, status } = useAppSelector((state) => state.invoice)
 
   const handleFilterStatus = () =>
     dispatch(controlFilterStatusModal(!isFilterStatusOpen))
@@ -48,8 +55,30 @@ const Homepage = () => {
   }
 
   useEffect(() => {
-    console.log(`selectedStatus in Homepage`, selectedStatus)
-  }, [selectedStatus])
+    const fetchData = async () => {
+      try {
+        // Get the token asynchronously
+        const token = await getToken()
+
+        // Get status from search params
+        const statusParam = searchParams.get('status')
+        const filters = statusParam ? statusParam.split(',') : []
+
+        // Update status in the redux state
+        dispatch(updateStatus(filters))
+
+        // Pass the token to the fetchInvoices action
+        if (token) {
+          //  dispatch(fetchInvoices(token))
+        }
+      } catch (error) {
+        const apiError = handleApiError(error)
+        showAlert(apiError?.message, 'failure')
+      }
+    }
+
+    fetchData()
+  }, [searchParams, dispatch, getToken])
 
   return (
     <HomePageMain>
@@ -63,7 +92,7 @@ const Homepage = () => {
         <HomeSecondaryContainer>
           <InvoiceHeading>
             <h1>Invoices</h1>
-            <p>{`There are ${mockDataArray.length} total Invoices.`}</p>
+            <p>{`There are ${invoices.length} total Invoices.`}</p>
           </InvoiceHeading>
 
           <FilteringWrapper>
@@ -87,12 +116,11 @@ const Homepage = () => {
                   />
                 </FilterSvg>
               </span>
-              {/* <FilterInputs /> */}
             </FilterContainer>
             {isFilterStatusOpen && <FilterInputs />}
           </FilteringWrapper>
 
-          <NewInvoiceBtn onClick={openFormBar}>
+          <NewInvoiceBtn onClick={openFormBar} disabled={status.fetchingAll}>
             <span>
               <svg width='11' height='11' xmlns='http://www.w3.org/2000/svg'>
                 <path
@@ -112,7 +140,7 @@ const Homepage = () => {
       <section>
         <InvoiceBarsWrapper>
           {/* Invoices from API */}
-          {mockDataArray.map((data, index) => {
+          {/* {mockDataArray.map((data, index) => {
             const { paymentDue, _id, total, clientName, status, currency } =
               data
 
@@ -129,21 +157,31 @@ const Homepage = () => {
                 }}
               />
             )
-          })}
-
-          {/* <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar />
-          <InvoiceBar /> */}
-
-          {/* Skeleton UI for loading state */}
-          {/* <SkeletonInvoiceBarList count={5} /> */}
-
-          {/* ILLustration */}
-          {/* <Illustration /> */}
+          })} */}
+          {status.fetchingAll ? (
+            <SkeletonInvoiceBarList count={5} />
+          ) : invoices.length === 0 ? (
+            <Illustration />
+          ) : (
+            // Map through actual invoices when they exist
+            invoices.map((data, index) => {
+              const { paymentDue, _id, total, clientName, status, currency } =
+                data
+              return (
+                <InvoiceBar
+                  key={index}
+                  {...{
+                    paymentDue,
+                    _id,
+                    total,
+                    clientName,
+                    status,
+                    currency,
+                  }}
+                />
+              )
+            })
+          )}
         </InvoiceBarsWrapper>
       </section>
     </HomePageMain>

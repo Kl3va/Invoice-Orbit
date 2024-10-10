@@ -1,6 +1,7 @@
 import styled from 'styled-components'
+import React from 'react'
 import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { updateStatus } from 'store/features/invoice/invoiceSlice'
 import { QUERIES } from 'styles/mediaQueries'
@@ -81,6 +82,7 @@ export const InputCheckbox = styled.input`
 
 const FilterInputs = () => {
   const dispatch = useAppDispatch()
+  const [searchParams, setSearchParams] = useSearchParams()
   const navigate = useNavigate()
   const { selectedStatus } = useAppSelector((state) => state.invoice)
 
@@ -92,49 +94,81 @@ const FilterInputs = () => {
     dispatch(updateStatus(newSelectedStatus))
   }
 
+  // useEffect(() => {
+  //   const params = new URLSearchParams()
+  //   if (selectedStatus.length > 0) {
+  //     params.set('status', selectedStatus.join(','))
+  //   }
+  //   // Update the URL
+  //   navigate({ search: params.toString() })
+  // }, [selectedStatus, navigate])
+
   useEffect(() => {
-    const params = new URLSearchParams()
+    const newSearchParams = new URLSearchParams(searchParams)
+
     if (selectedStatus.length > 0) {
-      params.set('status', selectedStatus.join(','))
+      newSearchParams.set('status', selectedStatus.join(','))
+    } else {
+      newSearchParams.delete('status')
     }
-    // Update the URL
-    navigate({ search: params.toString() })
-  }, [selectedStatus, navigate])
+
+    setSearchParams(newSearchParams)
+  }, [selectedStatus, setSearchParams])
+
+  //   return (
+  //     <FilterInputContainer>
+  //       <div>
+  //         <InputCheckbox
+  //           type='checkbox'
+  //           name='draft'
+  //           id='draft'
+  //           checked={selectedStatus.includes('draft')}
+  //           onChange={() => handleCheckboxChange('draft')}
+  //         />
+  //         <label>Draft</label>
+  //       </div>
+  //       <div>
+  //         <InputCheckbox
+  //           type='checkbox'
+  //           name='pending'
+  //           id='pending'
+  //           checked={selectedStatus.includes('pending')}
+  //           onChange={() => handleCheckboxChange('pending')}
+  //         />
+  //         <label>Pending</label>
+  //       </div>
+  //       <div>
+  //         <InputCheckbox
+  //           type='checkbox'
+  //           name='paid'
+  //           id='paid'
+  //           checked={selectedStatus.includes('paid')}
+  //           onChange={() => handleCheckboxChange('paid')}
+  //         />
+  //         <label>Paid</label>
+  //       </div>
+  //     </FilterInputContainer>
+  //   )
+  // }
 
   return (
     <FilterInputContainer>
-      <div>
-        <InputCheckbox
-          type='checkbox'
-          name='draft'
-          id='draft'
-          checked={selectedStatus.includes('draft')}
-          onChange={() => handleCheckboxChange('draft')}
-        />
-        <label>Draft</label>
-      </div>
-      <div>
-        <InputCheckbox
-          type='checkbox'
-          name='pending'
-          id='pending'
-          checked={selectedStatus.includes('pending')}
-          onChange={() => handleCheckboxChange('pending')}
-        />
-        <label>Pending</label>
-      </div>
-      <div>
-        <InputCheckbox
-          type='checkbox'
-          name='paid'
-          id='paid'
-          checked={selectedStatus.includes('paid')}
-          onChange={() => handleCheckboxChange('paid')}
-        />
-        <label>Paid</label>
-      </div>
+      {['draft', 'pending', 'paid'].map((status) => (
+        <div key={status}>
+          <InputCheckbox
+            type='checkbox'
+            name={status}
+            id={status}
+            checked={selectedStatus.includes(status)}
+            onChange={() => handleCheckboxChange(status)}
+          />
+          <label htmlFor={status}>
+            {status.charAt(0).toUpperCase() + status.slice(1)}
+          </label>
+        </div>
+      ))}
     </FilterInputContainer>
   )
 }
 
-export default FilterInputs
+export default React.memo(FilterInputs)

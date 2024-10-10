@@ -23,10 +23,16 @@ export interface InvoiceState {
     deleting: boolean
   }
   selectedStatus: string[]
+  lastFetchedStatus: string[]
   isFormOpen: boolean
   isEditing: boolean
   isCacheValid: boolean
   invoiceForm: InvoiceOrbit
+}
+
+interface FetchInvoicesResponse {
+  invoices: InvoiceOrbit[]
+  fetchedStatus: string[]
 }
 
 const initialState: InvoiceState = {
@@ -40,37 +46,58 @@ const initialState: InvoiceState = {
     deleting: false,
   },
   selectedStatus: [],
+  lastFetchedStatus: [],
   isFormOpen: false,
   isEditing: false,
   isCacheValid: false,
   invoiceForm: emptyInvoice,
 }
 
-export const fetchInvoices = createAsyncThunk(
-  'invoices/fetchAll',
-  async (token: string, { getState, rejectWithValue }) => {
-    const { invoice } = getState() as { invoice: InvoiceState }
+//Fetch All Invoices
+export const fetchInvoices = createAsyncThunk<
+  FetchInvoicesResponse,
+  string,
+  { state: { invoice: InvoiceState } }
+>('invoices/fetchAll', async (token: string, { getState, rejectWithValue }) => {
+  const { invoice } = getState() as { invoice: InvoiceState }
 
-    if (
-      invoice.isCacheValid &&
-      invoice.invoices.length > 0 &&
-      invoice.selectedStatus.length === 0
-    ) {
-      return invoice.invoices
-    }
+  // Skip cache if selectedStatus has changed
+  const lastFetchedStatus = invoice.lastFetchedStatus || []
+  const currentStatus = invoice.selectedStatus
+  const statusHasChanged =
+    lastFetchedStatus.length !== currentStatus.length ||
+    lastFetchedStatus.some((status) => !currentStatus.includes(status))
 
-    try {
-      const headers = getHeaders(token)
-      const response = await apiCallWithErrorHandling<InvoiceOrbit[]>(
-        (instance) => instance.get(API_URL, { headers })
-      )
-      return response.data
-    } catch (error) {
-      return rejectWithValue(handleApiError(error))
+  if (
+    invoice.isCacheValid &&
+    invoice.invoices.length > 0 &&
+    !statusHasChanged
+  ) {
+    return {
+      invoices: invoice.invoices,
+      fetchedStatus: lastFetchedStatus,
     }
   }
-)
 
+  try {
+    const headers = getHeaders(token)
+    const response = await apiCallWithErrorHandling<InvoiceOrbit[]>(
+      (instance) =>
+        instance.get(API_URL, {
+          headers,
+          params: { status: invoice.selectedStatus },
+        })
+    )
+    return {
+      invoices: response.data,
+      fetchedStatus: invoice.selectedStatus,
+    }
+  } catch (error) {
+    return rejectWithValue(handleApiError(error))
+  }
+})
+
+//Fetch Invoice With Id
 export const fetchInvoiceWithId = createAsyncThunk(
   'invoices/fetchOne',
   async ({ token, id }: { token: string; id: string }, { rejectWithValue }) => {
@@ -86,6 +113,7 @@ export const fetchInvoiceWithId = createAsyncThunk(
   }
 )
 
+//Create Invoice
 export const createInvoice = createAsyncThunk(
   'invoices/createInvoice',
   async (
@@ -107,6 +135,7 @@ export const createInvoice = createAsyncThunk(
   }
 )
 
+//Update Invoice
 export const updateInvoice = createAsyncThunk(
   'invoices/update',
   async (
@@ -126,6 +155,7 @@ export const updateInvoice = createAsyncThunk(
   }
 )
 
+//Delete Invoice
 export const deleteInvoice = createAsyncThunk(
   'invoices/delete',
   async ({ token, id }: { token: string; id: string }, { rejectWithValue }) => {
@@ -174,7 +204,8 @@ const invoiceSlice = createSlice({
       })
       .addCase(fetchInvoices.fulfilled, (state, action) => {
         state.status.fetchingAll = false
-        state.invoices = action.payload
+        state.invoices = action.payload.invoices
+        state.lastFetchedStatus = action.payload.fetchedStatus
         state.isCacheValid = true
       })
       .addCase(fetchInvoices.rejected, (state) => {
