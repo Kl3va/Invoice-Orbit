@@ -1,16 +1,15 @@
 import React, { useState } from 'react'
 //REDUX
-import { useAppDispatch, useAppSelector } from 'store/hooks'
+import { useAppDispatch } from 'store/hooks'
 import { closeInvoiceForm } from 'store/features/invoice/invoiceSlice'
 
 //NEW INVOICE TEMPLATE
-import { emptyInvoice } from 'data/mockData'
+//import { emptyInvoice } from 'data/mockData'
 
 //TYPES
 import { InvoiceOrbit } from 'types/invoiceTypes'
 
 //COMPONENTS
-import GobackButton from 'components/GobackButton/GobackButton'
 import {
   CancelButton,
   CurrencyContainer,
@@ -124,10 +123,13 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
 
   return (
     <FormInvoiceContainer>
-      <GobackFormBtnWrapper>
-        <GobackButton />
+      <GobackFormBtnWrapper
+        role='cancel-form'
+        onClick={() => dispatch(closeInvoiceForm())}
+      >
+        &times;
       </GobackFormBtnWrapper>
-      <h2>{isEditing ? 'Edit' : 'New Invoice'}</h2>
+      <h2>{isEditing ? `Edit ${invoiceForm._id}` : 'New Invoice'}</h2>
       <InvoiceFormContainer>
         <fieldset>
           <legend>Bill From</legend>

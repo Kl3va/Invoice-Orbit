@@ -145,7 +145,7 @@ export const ButtonsGroup = styled.div`
 
     &:disabled {
       opacity: 0.5;
-      cursor: text;
+      cursor: not-allowed;
       text-decoration: line-through;
     }
   }
@@ -386,4 +386,11 @@ export const GrandTotalWrapper = styled.div`
   p {
     font-size: 1.5rem;
   }
+`
+
+export const LoadingSpinnerWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 18.81rem);
 `

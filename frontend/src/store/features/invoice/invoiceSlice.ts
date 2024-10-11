@@ -146,7 +146,8 @@ export const updateInvoice = createAsyncThunk(
       const { _id: id, ...invoiceData } = invoice
       const headers = getHeaders(token)
       const response = await apiCallWithErrorHandling<InvoiceOrbit>(
-        (instance) => instance.put(`${API_URL}/${id}`, invoiceData, { headers })
+        (instance) =>
+          instance.patch(`${API_URL}/${id}`, invoiceData, { headers })
       )
       return response.data
     } catch (error) {
@@ -228,11 +229,7 @@ const invoiceSlice = createSlice({
       })
       .addCase(createInvoice.fulfilled, (state, action) => {
         state.status.creating = false
-        state.invoices.push(action.payload)
-        state.invoices.sort(
-          (a, b) =>
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        )
+        state.invoices.unshift(action.payload)
         state.isCacheValid = false
       })
       .addCase(createInvoice.rejected, (state) => {
@@ -257,6 +254,7 @@ const invoiceSlice = createSlice({
       .addCase(deleteInvoice.fulfilled, (state) => {
         state.status.deleting = false
         state.isCacheValid = false
+        state.currentInvoice = null
       })
       .addCase(deleteInvoice.rejected, (state) => {
         state.status.deleting = false

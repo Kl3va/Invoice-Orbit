@@ -55,7 +55,15 @@ export const FormInvoiceContainer = styled.div`
 `
 export const GobackFormBtnWrapper = styled.div`
   width: fit-content;
-  margin-bottom: 1.6rem;
+  margin-bottom: 1.5rem;
+  font-size: 2.2rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--color-bg-delete);
+
+  &:hover {
+    opacity: 0.8;
+  }
 
   @media ${QUERIES.mobileLarge} {
     display: none;

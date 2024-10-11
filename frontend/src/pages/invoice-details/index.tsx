@@ -1,21 +1,35 @@
+import { useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 //Redux
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { controlConfirmDeleteModal } from 'store/features/modal/modalSlice'
-import { openEditInvoiceForm } from 'store/features/invoice/invoiceSlice'
+import {
+  openEditInvoiceForm,
+  fetchInvoiceWithId,
+  updateInvoice,
+} from 'store/features/invoice/invoiceSlice'
+
+//Clerk
+import { useAuth } from '@clerk/clerk-react'
+
+//Types
+import { InvoiceOrbit } from 'types/invoiceTypes'
 
 //COMPONENTS
 import GobackButton from 'components/GobackButton/GobackButton'
-//import { ClipLoader } from 'react-spinners'
+import { ClipLoader } from 'react-spinners'
 import ConfirmDeletion from 'components/ConfirmDeletion'
 
 //Custom Hook
 import useWindow from 'hooks/useWindowWidth'
+import { useAlert } from 'hooks/useAlert'
 
 //Helper Functions
 import { formatLargeNumber, currencyLocale } from 'utils/invoiceFormatter'
+import { handleApiError } from 'utils/apiSimplify'
 
 //Mock Data
-import { mockInvoiceData } from 'data/mockData'
+//import { mockInvoiceData } from 'data/mockData'
 
 //STYLES
 import { StatusContainer } from 'components/Invoice-bar/InvoiceBarStyles'
@@ -41,23 +55,68 @@ import {
   PaymentDueWrapper,
   SentToWrapper,
   DetailPageMain,
+  LoadingSpinnerWrapper,
 } from 'pages/invoice-details/InvoiceDetailsPageStyles'
 
 const InvoiceDetailsPage = () => {
   const windowWidth = useWindow()
+  const { id } = useParams()
+  const showAlert = useAlert()
+  const { getToken } = useAuth()
   const dispatch = useAppDispatch()
 
   const { isConfirmDeleteOpen } = useAppSelector((state) => state.modal)
+  const { status, currentInvoice } = useAppSelector((state) => state.invoice)
 
   const openConfirmationModal = () => dispatch(controlConfirmDeleteModal(true))
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Get the token asynchronously
+        const token = await getToken()
+
+        // Pass the token to the fetchInvoices action
+        if (token && id) {
+          // await dispatch(fetchInvoiceWithId({token, id})).unwrap()
+        }
+      } catch (error) {
+        const apiError = handleApiError(error)
+        showAlert(apiError?.message, 'failure')
+      }
+    }
+
+    fetchData()
+  }, [id, dispatch, getToken])
 
   const openEditFormBar = () => {
     dispatch(openEditInvoiceForm())
   }
 
+  //Update Invoice status to paid
+  const updateStatusToPaid = async () => {
+    const invoice: Partial<InvoiceOrbit> = {
+      _id: currentInvoice?._id,
+      status: 'paid' as const,
+    }
+
+    try {
+      const token = await getToken()
+      if (!token) {
+        showAlert('Authentication failed', 'failure')
+        return
+      }
+
+      await dispatch(updateInvoice({ token, invoice })).unwrap()
+      showAlert('Invoice Updated Successfully!', 'success')
+    } catch (error) {
+      const apiError = handleApiError(error)
+      showAlert(apiError?.message, 'failure')
+    }
+  }
+
   return (
     <DetailPageMain>
-      {/* <ConfirmDeletion /> */}
       {isConfirmDeleteOpen && <ConfirmDeletion />}
       <section>
         <GobackWrapper>
@@ -69,128 +128,141 @@ const InvoiceDetailsPage = () => {
         <DetailsSecondary>
           <StatusBar>
             <h2>Status</h2>
-            <StatusContainer $status={mockInvoiceData.status}>
+            <StatusContainer $status={currentInvoice?.status ?? 'pending'}>
               <span></span>
-              <h4>{mockInvoiceData.status}</h4>
+              <h4>{currentInvoice?.status}</h4>
             </StatusContainer>
           </StatusBar>
 
           <ButtonsGroup>
             <button onClick={openEditFormBar}>Edit</button>
-            <button onClick={openConfirmationModal}>Delete</button>
-            <button>Mark as paid</button>
+            <button
+              onClick={openConfirmationModal}
+              disabled={status.fetchingOne}
+            >
+              Delete
+            </button>
+            <button
+              onClick={updateStatusToPaid}
+              disabled={
+                status.fetchingOne ||
+                status.updating ||
+                currentInvoice?.status === 'paid'
+              }
+            >
+              {status.updating ? (
+                <ClipLoader size={24} color='var(--color-font-normal)' />
+              ) : (
+                'Mark as paid'
+              )}
+            </button>
           </ButtonsGroup>
         </DetailsSecondary>
       </StickySection>
 
-      {/* LOADING STATE BEFORE RENDERING DETAILS */}
-      {/* <ClipLoader size={78} color='var(--color-accent-100)' /> */}
+      {status.fetchingOne ? (
+        <LoadingSpinnerWrapper>
+          <ClipLoader size={78} color='var(--color-accent-100)' />
+        </LoadingSpinnerWrapper>
+      ) : (
+        <section>
+          <DetailsPrimary>
+            <BasicInfoWrapper>
+              <BasicInfoSecondary>
+                <DescriptionWrapper>
+                  <p>
+                    <span>#</span>
+                    {currentInvoice?._id}
+                  </p>
+                  <p>{currentInvoice?.description}</p>
+                </DescriptionWrapper>
+                <UserAddressWrapper>
+                  <p>{currentInvoice?.senderAddress.street}</p>
+                  <p>{currentInvoice?.senderAddress.city}</p>
+                  <p>{currentInvoice?.senderAddress.postCode}</p>
+                  <p>{currentInvoice?.senderAddress.country}</p>
+                </UserAddressWrapper>
+              </BasicInfoSecondary>
+              <BasicInfoPrimary>
+                <div>
+                  <h2>Invoice Date</h2>
+                  <p>{currentInvoice?.createdAt}</p>
+                </div>
+                <BillToWrapper>
+                  <div>
+                    <h2>Bill To</h2>
+                    <p>{currentInvoice?.clientName}</p>
+                  </div>
+                  <div>
+                    <p>{currentInvoice?.clientAddress.street}</p>
+                    <p>{currentInvoice?.clientAddress.city}</p>
+                    <p>{currentInvoice?.clientAddress.postCode}</p>
+                    <p>{currentInvoice?.clientAddress.country}</p>
+                  </div>
+                </BillToWrapper>
+                <PaymentDueWrapper>
+                  <h2>Payment Due</h2>
+                  <p>{currentInvoice?.paymentDue}</p>
+                </PaymentDueWrapper>
+                <SentToWrapper>
+                  <h2>Sent to</h2>
+                  <p>{currentInvoice?.clientEmail}</p>
+                </SentToWrapper>
+              </BasicInfoPrimary>
+            </BasicInfoWrapper>
 
-      <section>
-        <DetailsPrimary>
-          <BasicInfoWrapper>
-            <BasicInfoSecondary>
-              <DescriptionWrapper>
+            <ItemsContainer>
+              <ItemsDetailsContainer>
+                <ItemsDetailsHeadingWrapper>
+                  <h2>Item Name</h2>
+                  <h2>QTY.</h2>
+                  <h2>Price</h2>
+                  <h2>Total</h2>
+                </ItemsDetailsHeadingWrapper>
+                {currentInvoice?.items.map((item, index) => {
+                  return (
+                    <ItemsDetailsWrapper key={index}>
+                      <p>{item.name}</p>
+                      <p>
+                        {`${item.quantity} x ${formatLargeNumber(
+                          item.price,
+                          currencyLocale[currentInvoice?.currency],
+                          currentInvoice?.currency
+                        )}`}
+                      </p>
+                      <p>{item.quantity}</p>
+                      <p>
+                        {formatLargeNumber(
+                          item.price,
+                          currencyLocale[currentInvoice?.currency],
+                          currentInvoice?.currency
+                        )}
+                      </p>
+                      <p>
+                        {formatLargeNumber(
+                          item.total,
+                          currencyLocale[currentInvoice?.currency],
+                          currentInvoice?.currency
+                        )}
+                      </p>
+                    </ItemsDetailsWrapper>
+                  )
+                })}
+              </ItemsDetailsContainer>
+              <GrandTotalWrapper>
+                <h2>{windowWidth >= 400 ? 'Amount Due' : 'Grand Total'}</h2>
                 <p>
-                  <span>#</span>
-                  {mockInvoiceData._id}
+                  {formatLargeNumber(
+                    currentInvoice?.total ?? 0,
+                    currencyLocale[currentInvoice?.currency ?? 'GBP'],
+                    currentInvoice?.currency ?? 'GBP'
+                  )}
                 </p>
-                <p>{mockInvoiceData.description}</p>
-              </DescriptionWrapper>
-              <UserAddressWrapper>
-                <p>{mockInvoiceData.senderAddress.street}</p>
-                <p>{mockInvoiceData.senderAddress.city}</p>
-                <p>{mockInvoiceData.senderAddress.postCode}</p>
-                <p>{mockInvoiceData.senderAddress.country}</p>
-              </UserAddressWrapper>
-            </BasicInfoSecondary>
-            <BasicInfoPrimary>
-              <div>
-                <h2>Invoice Date</h2>
-                <p>{mockInvoiceData.createdAt}</p>
-              </div>
-              <BillToWrapper>
-                <div>
-                  <h2>Bill To</h2>
-                  <p>{mockInvoiceData.clientName}</p>
-                </div>
-                <div>
-                  <p>{mockInvoiceData.clientAddress.street}</p>
-                  <p>{mockInvoiceData.clientAddress.city}</p>
-                  <p>{mockInvoiceData.clientAddress.postCode}</p>
-                  <p>{mockInvoiceData.clientAddress.country}</p>
-                </div>
-              </BillToWrapper>
-              <PaymentDueWrapper>
-                <h2>Payment Due</h2>
-                <p>{mockInvoiceData.paymentDue}</p>
-              </PaymentDueWrapper>
-              <SentToWrapper>
-                <h2>Sent to</h2>
-                <p>{mockInvoiceData.clientEmail}</p>
-              </SentToWrapper>
-            </BasicInfoPrimary>
-          </BasicInfoWrapper>
-
-          <ItemsContainer>
-            <ItemsDetailsContainer>
-              <ItemsDetailsHeadingWrapper>
-                <h2>Item Name</h2>
-                <h2>QTY.</h2>
-                <h2>Price</h2>
-                <h2>Total</h2>
-              </ItemsDetailsHeadingWrapper>
-              {mockInvoiceData.items.map((item, index) => {
-                return (
-                  <ItemsDetailsWrapper key={index}>
-                    <p>{item.name}</p>
-                    <p>
-                      {`${item.quantity} x ${formatLargeNumber(
-                        item.price,
-                        currencyLocale[mockInvoiceData.currency],
-                        mockInvoiceData.currency
-                      )}`}
-                    </p>
-                    <p>{item.quantity}</p>
-                    <p>
-                      {formatLargeNumber(
-                        item.price,
-                        currencyLocale[mockInvoiceData.currency],
-                        mockInvoiceData.currency
-                      )}
-                    </p>
-                    <p>
-                      {formatLargeNumber(
-                        item.total,
-                        currencyLocale[mockInvoiceData.currency],
-                        mockInvoiceData.currency
-                      )}
-                    </p>
-                  </ItemsDetailsWrapper>
-                )
-              })}
-
-              {/* <ItemsDetailsWrapper>
-                <p>Email Design</p>
-                <p>2 x £ 200.00</p>
-                <p>2</p>
-                <p>£ 200.00</p>
-                <p>£ 400.00</p>
-              </ItemsDetailsWrapper> */}
-            </ItemsDetailsContainer>
-            <GrandTotalWrapper>
-              <h2>{windowWidth >= 400 ? 'Amount Due' : 'Grand Total'}</h2>
-              <p>
-                {formatLargeNumber(
-                  mockInvoiceData.total ?? 0,
-                  currencyLocale[mockInvoiceData.currency],
-                  mockInvoiceData.currency
-                )}
-              </p>
-            </GrandTotalWrapper>
-          </ItemsContainer>
-        </DetailsPrimary>
-      </section>
+              </GrandTotalWrapper>
+            </ItemsContainer>
+          </DetailsPrimary>
+        </section>
+      )}
     </DetailPageMain>
   )
 }

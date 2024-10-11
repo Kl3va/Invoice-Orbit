@@ -14,7 +14,7 @@ import { useAlert } from 'hooks/useAlert'
 //import { ClipLoader } from 'react-spinners'
 
 //MockData
-//import { mockDataArray } from 'data/mockData'
+import { mockDataArray } from 'data/mockData'
 
 //Components
 import InvoiceBar from 'components/Invoice-bar/InvoiceBar'
@@ -69,7 +69,7 @@ const Homepage = () => {
 
         // Pass the token to the fetchInvoices action
         if (token) {
-          //  dispatch(fetchInvoices(token))
+          // await dispatch(fetchInvoices(token)).unwrap()
         }
       } catch (error) {
         const apiError = handleApiError(error)
@@ -140,7 +140,7 @@ const Homepage = () => {
       <section>
         <InvoiceBarsWrapper>
           {/* Invoices from API */}
-          {/* {mockDataArray.map((data, index) => {
+          {mockDataArray.map((data, index) => {
             const { paymentDue, _id, total, clientName, status, currency } =
               data
 
@@ -157,8 +157,8 @@ const Homepage = () => {
                 }}
               />
             )
-          })} */}
-          {status.fetchingAll ? (
+          })}
+          {/* {status.fetchingAll ? (
             <SkeletonInvoiceBarList count={5} />
           ) : invoices.length === 0 ? (
             <Illustration />
@@ -181,7 +181,7 @@ const Homepage = () => {
                 />
               )
             })
-          )}
+          )} */}
         </InvoiceBarsWrapper>
       </section>
     </HomePageMain>
