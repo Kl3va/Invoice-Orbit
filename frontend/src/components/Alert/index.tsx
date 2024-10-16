@@ -78,7 +78,7 @@ const Alert = () => {
             type: alert.type,
           })
         )
-      }, 2000)
+      }, 4000)
     }
 
     return () => clearTimeout(timeout)
