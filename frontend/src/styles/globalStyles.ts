@@ -183,7 +183,11 @@ font-size: var(--font-size-small);
   }
 }
 
-input:not(:placeholder-shown):invalid:not([type="date"]) {
+// input:not(:placeholder-shown):invalid:focus:not([type="date"]) {
+//   border-color: var(--color-bg-delete);
+// }
+
+input:invalid:focus:not([type="date"]) {
   border-color: var(--color-bg-delete);
 }
 

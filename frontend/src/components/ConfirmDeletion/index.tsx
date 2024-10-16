@@ -12,7 +12,7 @@ import { useAuth } from '@clerk/clerk-react'
 import { useAlert } from 'hooks/useAlert'
 
 //Utils
-import { handleApiError } from 'utils/apiSimplify'
+import { ApiError } from 'utils/apiSimplify'
 
 //Styling
 import { ConfirmDeletionContainer } from 'components/ConfirmDeletion/ConfirmDeletionStyles'
@@ -38,12 +38,12 @@ const ConfirmDeletion = () => {
         return
       }
       await dispatch(deleteInvoice({ token, id })).unwrap()
-      showAlert(`Invoice ${id} Deleted Successfully!`, 'success')
+      showAlert(`Invoice: ${id} Deleted Successfully!`, 'success')
       closeConfirmationModal()
       navigate('/')
     } catch (error) {
-      const apiError = handleApiError(error)
-      showAlert(apiError?.message, 'failure')
+      const apiError = error as ApiError
+      showAlert(apiError.message, 'failure')
     }
   }
 

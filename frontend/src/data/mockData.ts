@@ -194,5 +194,5 @@ export const emptyInvoice: InvoiceOrbit = {
   items: [],
   status: 'pending',
   currency: 'GBP',
-  total: 0,
+  //total: 0,
 }

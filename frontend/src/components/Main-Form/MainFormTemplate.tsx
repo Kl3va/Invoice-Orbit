@@ -1,15 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import { ClipLoader } from 'react-spinners'
+import { useAuth } from '@clerk/clerk-react'
 //REDUX
-import { useAppDispatch } from 'store/hooks'
+import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { closeInvoiceForm } from 'store/features/invoice/invoiceSlice'
+import {
+  createInvoice,
+  updateInvoice,
+} from 'store/features/invoice/invoiceSlice'
 
-//NEW INVOICE TEMPLATE
-//import { emptyInvoice } from 'data/mockData'
+//Utils
+import { validateInvoice } from 'utils/validateForm'
+import { ApiError } from 'utils/apiSimplify'
 
 //TYPES
 import { InvoiceOrbit } from 'types/invoiceTypes'
 
-//COMPONENTS
+//Custom Hooks
+import { useAlert } from 'hooks/useAlert'
+
+//COMPONENT STYLES
 import {
   CancelButton,
   CurrencyContainer,
@@ -26,6 +36,7 @@ import {
   LocationContainer,
   SubmitButtonsContainer,
 } from 'components/Main-Form/MainFormTemplateStyles'
+import { formatCreateDate } from 'utils/invoiceFormatter'
 
 interface props {
   invoiceForm: InvoiceOrbit
@@ -34,11 +45,15 @@ interface props {
 
 const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
   const dispatch = useAppDispatch()
+  const formRef = useRef<HTMLFormElement>(null)
+  const showAlert = useAlert()
+  const { getToken } = useAuth()
 
-  // const { isEditing, isFormOpen, invoiceForm } = useAppSelector(
-  //   (state) => state.invoice
-  // )
+  const { status } = useAppSelector((state) => state.invoice)
 
+  const [submissionType, setSubmissionType] = useState<'draft' | 'pending'>(
+    'pending'
+  )
   const [formData, setFormData] = useState<InvoiceOrbit>(invoiceForm)
   const [items, setItems] = useState<InvoiceOrbit['items']>(
     invoiceForm.items || []
@@ -77,6 +92,8 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
       if (i === index) {
         const updatedItem = { ...item, [field]: value }
         if (field === 'quantity' || field === 'price') {
+          const numValue = typeof value === 'string' ? parseFloat(value) : value
+          updatedItem[field] = Math.max(0, numValue)
           updatedItem.total = updatedItem.quantity * updatedItem.price
         }
         return updatedItem
@@ -85,7 +102,7 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
     })
 
     setItems(updatedItems)
-    updateTotal(updatedItems)
+    // updateTotal(updatedItems)
   }
 
   const addNewItem = () => {
@@ -95,30 +112,74 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
   const removeItem = (index: number) => {
     const updatedItems = items.filter((_, i) => i !== index)
     setItems(updatedItems)
-    updateTotal(updatedItems)
+    // updateTotal(updatedItems)
   }
 
-  const updateTotal = (updatedItems: InvoiceOrbit['items']) => {
-    const newTotal = updatedItems.reduce(
-      (acc, item) => acc + (item.total || 0),
-      0
-    )
-    setFormData((prev) => ({ ...prev, total: newTotal }))
-  }
+  // const updateTotal = (updatedItems: InvoiceOrbit['items']) => {
+  //   const newTotal = updatedItems.reduce(
+  //     (acc, item) => acc + (item.total || 0),
+  //     0
+  //   )
+  //   setFormData((prev) => ({ ...prev, total: newTotal }))
+  // }
 
   // if (!isFormOpen) {
   //   return null
   // }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const data = {
-      ...formData,
-      items,
-      // status: 'pending',
-      paymentDue: formData.createdAt,
+
+    // Browser validation will automatically run since we're using a form submit
+    if (!e.currentTarget.checkValidity()) {
+      return
     }
-    console.log(data)
+
+    const { paymentDue, ...others } = formData
+    const invoice: InvoiceOrbit = {
+      ...others,
+      items,
+      paymentTerms: Number(others.paymentTerms),
+      status: isEditing ? formData.status : submissionType,
+    }
+
+    if (!validateInvoice(invoice)) {
+      showAlert('Please fill out all required fields!', 'failure')
+      return
+    }
+
+    try {
+      const token = await getToken()
+      if (!token) {
+        showAlert('Authentication Failed!', 'failure')
+        return
+      }
+      console.log(invoice)
+
+      const action = isEditing ? updateInvoice : createInvoice
+      //  const result = await dispatch(action({ token, invoice })).unwrap()
+      await dispatch(action({ token, invoice })).unwrap()
+      showAlert(
+        isEditing
+          ? `Invoice: $ Updated Successfully!`
+          : 'Invoice Created Successfully!',
+        'success'
+      )
+      dispatch(closeInvoiceForm())
+    } catch (error) {
+      const apiError = error as ApiError
+      showAlert(apiError.message, 'failure')
+    }
+  }
+
+  const triggerSubmit = (type?: 'draft' | 'pending') => {
+    if (!isEditing && type) {
+      setSubmissionType(type)
+    }
+    // Small delay to ensure submissionType is set before form submission
+    setTimeout(() => {
+      formRef.current?.requestSubmit()
+    }, 0)
   }
 
   return (
@@ -129,8 +190,8 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
       >
         &times;
       </GobackFormBtnWrapper>
-      <h2>{isEditing ? `Edit ${invoiceForm._id}` : 'New Invoice'}</h2>
-      <InvoiceFormContainer>
+      <h2>{isEditing ? `Edit: ${invoiceForm._id}` : 'New Invoice'}</h2>
+      <InvoiceFormContainer as='form' ref={formRef} onSubmit={handleSubmit}>
         <fieldset>
           <legend>Bill From</legend>
           <div>
@@ -277,7 +338,11 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
                 name='createdAt'
                 id='createdAt'
                 required
-                value={formData.createdAt}
+                value={
+                  isEditing
+                    ? formatCreateDate(formData.createdAt)
+                    : formData.createdAt
+                }
                 onChange={handleInputChange}
                 readOnly={isEditing}
               />
@@ -367,7 +432,7 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
                     type='number'
                     inputMode='numeric'
                     required
-                    placeholder='0'
+                    placeholder='1'
                     max={100000}
                     value={item.quantity}
                     onChange={(e) =>
@@ -426,18 +491,54 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
         <FormButtonsContainer>
           {isEditing ? (
             <SubmitButtonsContainer>
-              <CancelButton onClick={() => dispatch(closeInvoiceForm())}>
+              <CancelButton
+                onClick={() => dispatch(closeInvoiceForm())}
+                disabled={status.updating}
+                type='button'
+              >
                 Cancel
               </CancelButton>
-              <button>Save Changes</button>
+              <button
+                // onClick={(e) => handleSubmit(e)}
+                onClick={() => triggerSubmit()}
+                disabled={status.updating}
+                type='button'
+              >
+                {status.updating ? (
+                  <ClipLoader size={24} color='var(--color-font-normal)' />
+                ) : (
+                  'Save Changes'
+                )}
+              </button>
             </SubmitButtonsContainer>
           ) : (
             <SubmitButtonsContainer>
-              <DiscardButton onClick={() => dispatch(closeInvoiceForm())}>
+              <DiscardButton
+                onClick={() => dispatch(closeInvoiceForm())}
+                disabled={status.creating}
+                type='button'
+              >
                 Discard
               </DiscardButton>
-              <DraftButton>Save as Draft</DraftButton>
-              <button onClick={(e) => handleSubmit(e)}>Save & Send</button>
+              <DraftButton
+                // onClick={(e) => handleSubmit(e, true)}
+                onClick={() => triggerSubmit('draft')}
+                disabled={status.creating}
+                type='button'
+              >
+                Save as Draft
+              </DraftButton>
+              <button
+                onClick={() => triggerSubmit('pending')}
+                disabled={status.creating}
+                type='button'
+              >
+                {status.creating ? (
+                  <ClipLoader size={24} color='var(--color-font-normal)' />
+                ) : (
+                  'Save & Send'
+                )}
+              </button>
             </SubmitButtonsContainer>
           )}
         </FormButtonsContainer>

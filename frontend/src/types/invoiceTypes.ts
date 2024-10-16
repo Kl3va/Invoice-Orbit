@@ -15,7 +15,7 @@ export interface Item {
 export interface InvoiceOrbit {
   userId?: string
   createdAt: string
-  paymentDue: string
+  paymentDue?: string
   description: string
   paymentTerms: number
   clientName: string

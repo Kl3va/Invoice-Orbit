@@ -1,7 +1,8 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios'
+import axios, { AxiosInstance, AxiosResponse, AxiosError } from 'axios'
 
 export interface ApiError {
   message: string
+  status?: number
   [key: string]: any
 }
 
@@ -24,12 +25,29 @@ const createAxiosInstanceWithTimeout = () => {
 
 const handleApiError = (error: unknown): ApiError => {
   if (axios.isAxiosError(error)) {
-    if (error.code === 'ERR_CANCELED') {
-      return { message: 'Request timed out' }
+    const axiosError = error as AxiosError<{ message: string }>
+    if (axiosError.code === 'ERR_CANCELED') {
+      return { message: 'Request timed out. Please try again.' }
     }
-    return error.response?.data || { message: error.message }
+    if (axiosError.message === 'Network Error') {
+      return {
+        message: 'Network error. Please check your internet connection.',
+      }
+    }
+    if (axiosError.response) {
+      return {
+        message: axiosError.response.data?.message || axiosError.message,
+        status: axiosError.response.status,
+      }
+    }
+    return {
+      message: axiosError.message || 'An error occurred with the request',
+    }
   }
-  return { message: 'An unknown error occured!' }
+  if (error instanceof Error) {
+    return { message: error.message }
+  }
+  return { message: 'An unknown error occurred' }
 }
 
 const apiCallWithErrorHandling = async <T>(
@@ -40,8 +58,9 @@ const apiCallWithErrorHandling = async <T>(
     const result = await apiCall(instance)
     clearTimeout(timeoutId)
     return result
-  } finally {
+  } catch (error) {
     clearTimeout(timeoutId)
+    throw error
   }
 }
 

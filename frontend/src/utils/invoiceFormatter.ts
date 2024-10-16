@@ -11,6 +11,12 @@ const sliceStr = (str: string, isId: boolean = false) => {
   return str.length > 17 ? `${str.slice(0, 17)}...` : str
 }
 
+const formatCreateDate = (isoDate: string) => {
+  if (!isoDate) return ''
+  const date = new Date(isoDate)
+  return date.toISOString().split('T')[0] // Extracts only the yyyy-MM-dd part
+}
+
 function formatDueDate(dateString: string): string {
   const dateObject = new Date(dateString)
   const options: Intl.DateTimeFormatOptions = {
@@ -93,4 +99,10 @@ function formatLargeNumber(
   return `${currencySymbol}${billionValue}b+`
 }
 
-export { sliceStr, formatLargeNumber, formatDueDate, currencyLocale }
+export {
+  sliceStr,
+  formatLargeNumber,
+  formatDueDate,
+  currencyLocale,
+  formatCreateDate,
+}

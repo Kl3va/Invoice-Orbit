@@ -2,11 +2,15 @@ import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 //Redux
 import { useAppDispatch, useAppSelector } from 'store/hooks'
-import { controlConfirmDeleteModal } from 'store/features/modal/modalSlice'
+import {
+  controlConfirmDeleteModal,
+  controlFilterStatusModal,
+} from 'store/features/modal/modalSlice'
 import {
   openEditInvoiceForm,
   fetchInvoiceWithId,
   updateInvoice,
+  clearFetchOneError,
 } from 'store/features/invoice/invoiceSlice'
 
 //Clerk
@@ -26,7 +30,7 @@ import { useAlert } from 'hooks/useAlert'
 
 //Helper Functions
 import { formatLargeNumber, currencyLocale } from 'utils/invoiceFormatter'
-import { handleApiError } from 'utils/apiSimplify'
+import { ApiError } from 'utils/apiSimplify'
 
 //Mock Data
 //import { mockInvoiceData } from 'data/mockData'
@@ -56,6 +60,7 @@ import {
   SentToWrapper,
   DetailPageMain,
   LoadingSpinnerWrapper,
+  ErrorStatus,
 } from 'pages/invoice-details/InvoiceDetailsPageStyles'
 
 const InvoiceDetailsPage = () => {
@@ -78,15 +83,20 @@ const InvoiceDetailsPage = () => {
 
         // Pass the token to the fetchInvoices action
         if (token && id) {
-          // await dispatch(fetchInvoiceWithId({token, id})).unwrap()
+          await dispatch(fetchInvoiceWithId({ token, id })).unwrap()
         }
       } catch (error) {
-        const apiError = handleApiError(error)
-        showAlert(apiError?.message, 'failure')
+        const apiError = error as ApiError
+        showAlert(apiError.message, 'failure')
       }
     }
 
     fetchData()
+
+    return () => {
+      dispatch(clearFetchOneError())
+      dispatch(controlFilterStatusModal(false))
+    }
   }, [id, dispatch, getToken])
 
   const openEditFormBar = () => {
@@ -110,8 +120,8 @@ const InvoiceDetailsPage = () => {
       await dispatch(updateInvoice({ token, invoice })).unwrap()
       showAlert('Invoice Updated Successfully!', 'success')
     } catch (error) {
-      const apiError = handleApiError(error)
-      showAlert(apiError?.message, 'failure')
+      const apiError = error as ApiError
+      showAlert(apiError.message, 'failure')
     }
   }
 
@@ -130,7 +140,7 @@ const InvoiceDetailsPage = () => {
             <h2>Status</h2>
             <StatusContainer $status={currentInvoice?.status ?? 'pending'}>
               <span></span>
-              <h4>{currentInvoice?.status}</h4>
+              <h3>{currentInvoice?.status}</h3>
             </StatusContainer>
           </StatusBar>
 
@@ -138,7 +148,7 @@ const InvoiceDetailsPage = () => {
             <button onClick={openEditFormBar}>Edit</button>
             <button
               onClick={openConfirmationModal}
-              disabled={status.fetchingOne}
+              disabled={status.fetchingOne || status.fetchOneError !== null}
             >
               Delete
             </button>
@@ -146,6 +156,7 @@ const InvoiceDetailsPage = () => {
               onClick={updateStatusToPaid}
               disabled={
                 status.fetchingOne ||
+                status.fetchOneError !== null ||
                 status.updating ||
                 currentInvoice?.status === 'paid'
               }
@@ -164,6 +175,8 @@ const InvoiceDetailsPage = () => {
         <LoadingSpinnerWrapper>
           <ClipLoader size={78} color='var(--color-accent-100)' />
         </LoadingSpinnerWrapper>
+      ) : status.fetchOneError ? (
+        <ErrorStatus>{status.fetchOneError}</ErrorStatus>
       ) : (
         <section>
           <DetailsPrimary>
@@ -186,7 +199,10 @@ const InvoiceDetailsPage = () => {
               <BasicInfoPrimary>
                 <div>
                   <h2>Invoice Date</h2>
-                  <p>{currentInvoice?.createdAt}</p>
+                  <p>
+                    {currentInvoice &&
+                      new Date(currentInvoice.createdAt).toDateString()}
+                  </p>
                 </div>
                 <BillToWrapper>
                   <div>
@@ -202,7 +218,10 @@ const InvoiceDetailsPage = () => {
                 </BillToWrapper>
                 <PaymentDueWrapper>
                   <h2>Payment Due</h2>
-                  <p>{currentInvoice?.paymentDue}</p>
+                  <p>
+                    {currentInvoice?.paymentDue &&
+                      new Date(currentInvoice.paymentDue).toDateString()}
+                  </p>
                 </PaymentDueWrapper>
                 <SentToWrapper>
                   <h2>Sent to</h2>

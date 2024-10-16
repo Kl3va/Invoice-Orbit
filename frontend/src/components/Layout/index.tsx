@@ -15,10 +15,6 @@ const Layout = () => {
     (state) => state.invoice
   )
 
-  // const { isEditing, isFormOpen, invoiceForm } = useAppSelector(
-  //   (state) => state.invoice
-  // )
-
   return (
     <>
       <Outlet />

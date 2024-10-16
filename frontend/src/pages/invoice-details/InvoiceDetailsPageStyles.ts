@@ -394,3 +394,9 @@ export const LoadingSpinnerWrapper = styled.div`
   align-items: center;
   height: calc(100vh - 18.81rem);
 `
+export const ErrorStatus = styled.h2`
+  color: var(--color-bg-delete);
+  text-align: center;
+  font-size: clamp(1.25rem, calc(1.8vw + 1rem), 1.875rem);
+  padding-inline: 0.5rem;
+`

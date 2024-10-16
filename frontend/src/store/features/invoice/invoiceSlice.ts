@@ -7,6 +7,7 @@ import {
   apiCallWithErrorHandling,
   handleApiError,
   getHeaders,
+  ApiError,
 } from 'utils/apiSimplify'
 
 //Local Host
@@ -21,6 +22,7 @@ export interface InvoiceState {
     creating: boolean
     updating: boolean
     deleting: boolean
+    fetchOneError: null | string
   }
   selectedStatus: string[]
   lastFetchedStatus: string[]
@@ -44,6 +46,7 @@ const initialState: InvoiceState = {
     creating: false,
     updating: false,
     deleting: false,
+    fetchOneError: null,
   },
   selectedStatus: [],
   lastFetchedStatus: [],
@@ -81,15 +84,16 @@ export const fetchInvoices = createAsyncThunk<
 
   try {
     const headers = getHeaders(token)
-    const response = await apiCallWithErrorHandling<InvoiceOrbit[]>(
-      (instance) =>
-        instance.get(API_URL, {
-          headers,
-          params: { status: invoice.selectedStatus },
-        })
+    const response = await apiCallWithErrorHandling<{
+      invoices: InvoiceOrbit[]
+    }>((instance) =>
+      instance.get(API_URL, {
+        headers,
+        params: { status: invoice.selectedStatus },
+      })
     )
     return {
-      invoices: response.data,
+      invoices: response.data.invoices,
       fetchedStatus: invoice.selectedStatus,
     }
   } catch (error) {
@@ -98,15 +102,19 @@ export const fetchInvoices = createAsyncThunk<
 })
 
 //Fetch Invoice With Id
-export const fetchInvoiceWithId = createAsyncThunk(
+export const fetchInvoiceWithId = createAsyncThunk<
+  InvoiceOrbit, // Fulfilled response type (Invoice)
+  { token: string; id: string }, // Argument type
+  { rejectValue: ApiError } // Rejected response type (Error)
+>(
   'invoices/fetchOne',
   async ({ token, id }: { token: string; id: string }, { rejectWithValue }) => {
     try {
       const headers = getHeaders(token)
-      const response = await apiCallWithErrorHandling<InvoiceOrbit>(
-        (instance) => instance.get(`${API_URL}/${id}`, { headers })
-      )
-      return response.data
+      const response = await apiCallWithErrorHandling<{
+        invoice: InvoiceOrbit
+      }>((instance) => instance.get(`${API_URL}/${id}`, { headers }))
+      return response.data.invoice
     } catch (error) {
       return rejectWithValue(handleApiError(error))
     }
@@ -117,18 +125,15 @@ export const fetchInvoiceWithId = createAsyncThunk(
 export const createInvoice = createAsyncThunk(
   'invoices/createInvoice',
   async (
-    {
-      token,
-      invoiceData,
-    }: { token: string; invoiceData: Partial<InvoiceOrbit> },
+    { token, invoice }: { token: string; invoice: Partial<InvoiceOrbit> },
     { rejectWithValue }
   ) => {
     try {
       const headers = getHeaders(token)
-      const response = await apiCallWithErrorHandling<InvoiceOrbit>(
-        (instance) => instance.post(API_URL, invoiceData, { headers })
-      )
-      return response.data
+      const response = await apiCallWithErrorHandling<{
+        invoice: InvoiceOrbit
+      }>((instance) => instance.post(API_URL, invoice, { headers }))
+      return response.data.invoice
     } catch (error) {
       return rejectWithValue(handleApiError(error))
     }
@@ -145,11 +150,12 @@ export const updateInvoice = createAsyncThunk(
     try {
       const { _id: id, ...invoiceData } = invoice
       const headers = getHeaders(token)
-      const response = await apiCallWithErrorHandling<InvoiceOrbit>(
-        (instance) =>
-          instance.patch(`${API_URL}/${id}`, invoiceData, { headers })
+      const response = await apiCallWithErrorHandling<{
+        invoice: InvoiceOrbit
+      }>((instance) =>
+        instance.patch(`${API_URL}/${id}`, invoiceData, { headers })
       )
-      return response.data
+      return response.data.invoice
     } catch (error) {
       return rejectWithValue(handleApiError(error))
     }
@@ -193,6 +199,9 @@ const invoiceSlice = createSlice({
       state.isEditing = false
       state.invoiceForm = emptyInvoice
     },
+    clearFetchOneError: (state) => {
+      state.status.fetchOneError = null
+    },
     updateStatus: (state, action: PayloadAction<string[]>) => {
       state.selectedStatus = action.payload
     },
@@ -215,13 +224,18 @@ const invoiceSlice = createSlice({
       //fetching one invoice
       .addCase(fetchInvoiceWithId.pending, (state) => {
         state.status.fetchingOne = true
+        state.status.fetchOneError = null
       })
       .addCase(fetchInvoiceWithId.fulfilled, (state, action) => {
         state.status.fetchingOne = false
+        state.status.fetchOneError = null
         state.currentInvoice = action.payload
       })
-      .addCase(fetchInvoiceWithId.rejected, (state) => {
+      .addCase(fetchInvoiceWithId.rejected, (state, action) => {
         state.status.fetchingOne = false
+        state.status.fetchOneError =
+          action.payload?.message ?? 'Sorry, an error occured!'
+        state.currentInvoice = null
       })
       //Creating an invoice
       .addCase(createInvoice.pending, (state) => {
@@ -267,6 +281,7 @@ export const {
   openNewInvoiceForm,
   closeInvoiceForm,
   updateStatus,
+  clearFetchOneError,
 } = invoiceSlice.actions
 
 export default invoiceSlice.reducer

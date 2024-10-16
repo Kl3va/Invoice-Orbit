@@ -51,6 +51,7 @@ export const FormInvoiceContainer = styled.div`
   h2 {
     font-size: 1.5rem;
     margin-bottom: 1.6rem;
+    word-break: break-all;
   }
 `
 export const GobackFormBtnWrapper = styled.div`

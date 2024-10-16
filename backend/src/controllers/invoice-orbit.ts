@@ -38,7 +38,7 @@ const getAllInvoices = async (
 
     //Find Invoices
     const invoices = await InvoiceOrbitModel.find(filter).sort('-createdAt')
-    res.status(StatusCodes.OK).json({ invoices, count: invoices.length })
+    res.status(StatusCodes.OK).json({ invoices })
   } catch (err) {
     next(err)
   }
@@ -92,7 +92,7 @@ const createInvoice = async (
       paymentTerms,
       paymentDue,
       items: itemsWithTotals,
-      total,
+      total: total,
       ...otherFields,
     })
 
