@@ -145,7 +145,12 @@ const InvoiceDetailsPage = () => {
           </StatusBar>
 
           <ButtonsGroup>
-            <button onClick={openEditFormBar}>Edit</button>
+            <button
+              onClick={openEditFormBar}
+              disabled={currentInvoice?.status === 'paid'}
+            >
+              Edit
+            </button>
             <button
               onClick={openConfirmationModal}
               disabled={status.fetchingOne || status.fetchOneError !== null}

@@ -19,7 +19,7 @@ export interface InvoiceState {
   status: {
     fetchingAll: boolean
     fetchingOne: boolean
-    creating: boolean
+    creating: 'draft' | 'pending' | null
     updating: boolean
     deleting: boolean
     fetchOneError: null | string
@@ -43,7 +43,7 @@ const initialState: InvoiceState = {
   status: {
     fetchingAll: false,
     fetchingOne: false,
-    creating: false,
+    creating: null,
     updating: false,
     deleting: false,
     fetchOneError: null,
@@ -238,16 +238,21 @@ const invoiceSlice = createSlice({
         state.currentInvoice = null
       })
       //Creating an invoice
-      .addCase(createInvoice.pending, (state) => {
-        state.status.creating = true
+      .addCase(createInvoice.pending, (state, action) => {
+        const invoiceStatus = action.meta.arg.invoice.status
+        if (invoiceStatus === 'draft' || invoiceStatus === 'pending') {
+          state.status.creating = invoiceStatus
+        } else {
+          state.status.creating = null // Reset or leave creating as null for other statuses
+        }
       })
       .addCase(createInvoice.fulfilled, (state, action) => {
-        state.status.creating = false
+        state.status.creating = null
         state.invoices.unshift(action.payload)
         state.isCacheValid = false
       })
       .addCase(createInvoice.rejected, (state) => {
-        state.status.creating = false
+        state.status.creating = null
       })
       //Updating an invoice
       .addCase(updateInvoice.pending, (state) => {

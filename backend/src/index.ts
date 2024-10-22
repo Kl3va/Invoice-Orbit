@@ -5,7 +5,9 @@ import cors from 'cors'
 import helmet from 'helmet'
 import rateLimit from 'express-rate-limit'
 
-import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node'
+//import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node'
+
+import { requireAuth, clerkMiddleware } from '@clerk/express'
 
 //Database Connection
 import connectDB from './db/connect'
@@ -35,7 +37,8 @@ app.use(
 app.use(express.json())
 app.use(helmet())
 app.use(cors())
-app.use('/api/v1/invoices', ClerkExpressRequireAuth(), invoiceOrbitRouter)
+app.use(clerkMiddleware())
+app.use('/api/v1/invoices', requireAuth(), invoiceOrbitRouter)
 
 app.use(errorHandlerMiddleware)
 

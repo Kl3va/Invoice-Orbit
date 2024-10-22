@@ -135,7 +135,7 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
       return
     }
 
-    const { paymentDue, ...others } = formData
+    const { paymentDue, total, ...others } = formData
     const invoice: InvoiceOrbit = {
       ...others,
       items,
@@ -154,18 +154,18 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
         showAlert('Authentication Failed!', 'failure')
         return
       }
-      console.log(invoice)
 
       const action = isEditing ? updateInvoice : createInvoice
-      //  const result = await dispatch(action({ token, invoice })).unwrap()
-      await dispatch(action({ token, invoice })).unwrap()
+      // const action = updateInvoice
+      const result = await dispatch(action({ token, invoice })).unwrap()
       showAlert(
         isEditing
-          ? `Invoice: $ Updated Successfully!`
+          ? `Invoice: ${result._id} Updated Successfully!`
           : 'Invoice Created Successfully!',
         'success'
       )
       dispatch(closeInvoiceForm())
+      // console.log(invoice)
     } catch (error) {
       const apiError = error as ApiError
       showAlert(apiError.message, 'failure')
@@ -515,7 +515,9 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
             <SubmitButtonsContainer>
               <DiscardButton
                 onClick={() => dispatch(closeInvoiceForm())}
-                disabled={status.creating}
+                disabled={
+                  status.creating === 'draft' || status.creating === 'pending'
+                }
                 type='button'
               >
                 Discard
@@ -523,17 +525,25 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
               <DraftButton
                 // onClick={(e) => handleSubmit(e, true)}
                 onClick={() => triggerSubmit('draft')}
-                disabled={status.creating}
+                disabled={
+                  status.creating === 'draft' || status.creating === 'pending'
+                }
                 type='button'
               >
-                Save as Draft
+                {status.creating === 'draft' ? (
+                  <ClipLoader size={24} color='var(--color-font-normal)' />
+                ) : (
+                  'Save as Draft'
+                )}
               </DraftButton>
               <button
                 onClick={() => triggerSubmit('pending')}
-                disabled={status.creating}
+                disabled={
+                  status.creating === 'draft' || status.creating === 'pending'
+                }
                 type='button'
               >
-                {status.creating ? (
+                {status.creating === 'pending' ? (
                   <ClipLoader size={24} color='var(--color-font-normal)' />
                 ) : (
                   'Save & Send'

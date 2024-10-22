@@ -27,4 +27,5 @@ export interface InvoiceOrbit {
   currency: 'NGN' | 'USD' | 'GBP' | 'EUR'
   total?: number
   _id?: string
+  __v?: number
 }
