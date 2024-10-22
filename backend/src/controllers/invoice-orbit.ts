@@ -1,12 +1,15 @@
 import { Response, Request, NextFunction } from 'express'
 //import { RequireAuthProp } from '@clerk/clerk-sdk-node'
 import { AuthObject } from '@clerk/express'
+import { z } from 'zod'
 import { StatusCodes } from 'http-status-codes'
 import { InvoiceOrbitModel, Item, InvoiceOrbit } from '../schema/invoice-orbit'
 import {
   calculateDueDate,
   calculateItemTotal,
   calculateTotal,
+  InvoiceDataSchema,
+  processInvoiceUpdate,
 } from '../helpers/invoice-orbit'
 
 type AuthenticatedRequest = Request & { auth: AuthObject }
@@ -77,13 +80,14 @@ const createInvoice = async (
   next: NextFunction
 ) => {
   try {
-    const { createdAt, paymentTerms, items, ...otherFields } = req.body
+    const validatedData = await InvoiceDataSchema.parseAsync(req.body)
+    const { createdAt, paymentTerms, items, ...otherFields } = validatedData
     const userId = (req as Request & { auth: AuthObject }).auth.userId
 
     // Calculate each total for items
-    const itemsWithTotals = items.map((item: Item) => ({
+    const itemsWithTotals = items.map((item: Omit<Item, 'total'>) => ({
       ...item,
-      total: calculateItemTotal(item),
+      total: item.quantity * item.price,
     }))
 
     // calculate the total
@@ -136,6 +140,7 @@ const deleteInvoice = async (
   }
 }
 
+//Update Invoice
 const updateInvoice = async (
   req: Request,
   res: Response,
@@ -147,6 +152,9 @@ const updateInvoice = async (
       body,
     } = req
     const userId = (req as Request & { auth: AuthObject }).auth.userId
+
+    // Validate the input data
+    await InvoiceDataSchema.partial().parseAsync(body)
 
     // Find the existing invoice
     const existingInvoice = await InvoiceOrbitModel.findOne({
@@ -160,42 +168,45 @@ const updateInvoice = async (
     }
 
     // Create a new object for the updated invoice
-    const updatedInvoiceData: Partial<InvoiceOrbit> = {
-      ...existingInvoice.toObject(),
-    }
+    // const updatedInvoiceData: Partial<InvoiceOrbit> = {
+    //   ...existingInvoice.toObject(),
+    // }
 
-    // Update fields
-    Object.keys(body).forEach((key) => {
-      const typedKey = key as keyof InvoiceOrbit
+    // // Update fields
+    // Object.keys(body).forEach((key) => {
+    //   const typedKey = key as keyof InvoiceOrbit
 
-      if (typedKey === 'items') {
-        // Recalculate items totals
-        const newItems = (body.items as Item[]).map((item) => ({
-          ...item,
-          total: calculateItemTotal(item),
-        }))
-        updatedInvoiceData.items = newItems
-        updatedInvoiceData.total = calculateTotal(newItems)
-      } else if (typedKey === 'createdAt' || typedKey === 'paymentTerms') {
-        // Update payment due date if either createdAt or paymentTerms changes
-        const newCreatedAt =
-          typedKey === 'createdAt'
-            ? new Date(body.createdAt as string)
-            : existingInvoice.createdAt
-        const newPaymentTerms =
-          typedKey === 'paymentTerms'
-            ? (body.paymentTerms as number)
-            : existingInvoice.paymentTerms
+    //   if (typedKey === 'items') {
+    //     // Recalculate items totals
+    //     const newItems = (body.items as Item[]).map((item) => ({
+    //       ...item,
+    //       total: calculateItemTotal(item),
+    //     }))
+    //     updatedInvoiceData.items = newItems
+    //     updatedInvoiceData.total = calculateTotal(newItems)
+    //   } else if (typedKey === 'createdAt' || typedKey === 'paymentTerms') {
+    //     // Update payment due date if either createdAt or paymentTerms changes
+    //     const newCreatedAt =
+    //       typedKey === 'createdAt'
+    //         ? new Date(body.createdAt as string)
+    //         : existingInvoice.createdAt
+    //     const newPaymentTerms =
+    //       typedKey === 'paymentTerms'
+    //         ? (body.paymentTerms as number)
+    //         : existingInvoice.paymentTerms
 
-        updatedInvoiceData.paymentDue = calculateDueDate(
-          newCreatedAt,
-          newPaymentTerms
-        )
-        updatedInvoiceData[typedKey] = body[typedKey]
-      } else {
-        updatedInvoiceData[typedKey] = body[typedKey]
-      }
-    })
+    //     updatedInvoiceData.paymentDue = calculateDueDate(
+    //       newCreatedAt,
+    //       newPaymentTerms
+    //     )
+    //     updatedInvoiceData[typedKey] = body[typedKey]
+    //   } else {
+    //     updatedInvoiceData[typedKey] = body[typedKey]
+    //   }
+    // })
+
+    // Process the update data
+    const updatedInvoiceData = processInvoiceUpdate(body, existingInvoice)
 
     // Update the invoice with the new data
     const updatedInvoice = await InvoiceOrbitModel.findOneAndUpdate(

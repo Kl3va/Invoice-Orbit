@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { Document, Types } from 'mongoose'
 
 interface Address {
   street: string
@@ -28,8 +28,10 @@ interface InvoiceOrbit {
   items: Item[]
   currency: 'NGN' | 'USD' | 'GBP' | 'EUR'
   total: number
-  _id: string
+  //_id: string
 }
+
+interface InvoiceDocument extends Document<Types.ObjectId>, InvoiceOrbit {}
 
 const addressSchema = new mongoose.Schema(
   {
@@ -51,7 +53,7 @@ const itemSchema = new mongoose.Schema(
   { _id: false }
 )
 
-const invoiceOrbitSchema = new mongoose.Schema<InvoiceOrbit>({
+const invoiceOrbitSchema = new mongoose.Schema<InvoiceDocument>({
   userId: { type: String, required: true },
   createdAt: { type: Date, required: true },
   paymentDue: { type: Date, required: true },
@@ -75,9 +77,9 @@ const invoiceOrbitSchema = new mongoose.Schema<InvoiceOrbit>({
   total: { type: Number, required: true },
 })
 
-const InvoiceOrbitModel = mongoose.model<InvoiceOrbit>(
+const InvoiceOrbitModel = mongoose.model<InvoiceDocument>(
   'InvoiceOrbit',
   invoiceOrbitSchema
 )
 
-export { InvoiceOrbit, InvoiceOrbitModel, Item }
+export { InvoiceOrbit, InvoiceOrbitModel, Item, InvoiceDocument }

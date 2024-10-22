@@ -139,9 +139,11 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
     const invoice: InvoiceOrbit = {
       ...others,
       items,
+      createdAt: new Date(others.createdAt).toISOString(),
       paymentTerms: Number(others.paymentTerms),
       status: isEditing ? formData.status : submissionType,
     }
+    //console.log(invoice.createdAt)
 
     if (!validateInvoice(invoice)) {
       showAlert('Please fill out all required fields!', 'failure')
@@ -158,6 +160,7 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
       const action = isEditing ? updateInvoice : createInvoice
       // const action = updateInvoice
       const result = await dispatch(action({ token, invoice })).unwrap()
+
       showAlert(
         isEditing
           ? `Invoice: ${result._id} Updated Successfully!`
