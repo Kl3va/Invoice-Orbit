@@ -81,6 +81,8 @@ const Homepage = () => {
     }
   }, [searchParams, dispatch, getToken])
 
+  console.log(invoices)
+
   return (
     <HomePageMain>
       <section>

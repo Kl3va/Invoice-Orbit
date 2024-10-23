@@ -15,6 +15,7 @@ import PrivateRoute from 'components/PrivateRoutes'
 import Layout from 'components/Layout'
 import Navbar from 'components/Navbar/Navbar'
 import InvoiceDetailsPage from 'pages/invoice-details'
+import Analytics from 'pages/analytics'
 
 function App() {
   const [themeSwitch, setThemeSwitch] = useState(false)
@@ -38,7 +39,7 @@ function App() {
               <Route index element={<Homepage />} />
               <Route path='/invoices/:id' element={<InvoiceDetailsPage />} />
             </Route>
-            <Route path='/analytics' element={<h1>Hello</h1>} />
+            <Route path='/analytics' element={<Analytics />} />
           </Route>
 
           <Route path='*' element={<NotFound />} />
