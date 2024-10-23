@@ -38,6 +38,22 @@ export const ThemeWrapper = styled.div`
     height: 100%;
   }
 `
+export const MainIconsWrapper = styled.div`
+  display: flex;
+  gap: 1.5rem;
+  // align-items: center;
+  // width: 100%;
+  // padding-right: 1.62rem;
+
+  a {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  @media ${QUERIES.tablet} {
+    flex-direction: column;
+  }
+`
 
 export const LogoContainer = styled.div<{ $isactive: boolean }>`
   width: 4.5rem;

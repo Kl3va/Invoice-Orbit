@@ -11,6 +11,7 @@ import {
   fetchInvoiceWithId,
   updateInvoice,
   clearFetchOneError,
+  closeInvoiceForm,
 } from 'store/features/invoice/invoiceSlice'
 
 //Clerk
@@ -95,6 +96,7 @@ const InvoiceDetailsPage = () => {
 
     return () => {
       dispatch(clearFetchOneError())
+      dispatch(closeInvoiceForm())
       dispatch(controlFilterStatusModal(false))
     }
   }, [id, dispatch, getToken])

@@ -38,13 +38,10 @@ function App() {
               <Route index element={<Homepage />} />
               <Route path='/invoices/:id' element={<InvoiceDetailsPage />} />
             </Route>
+            <Route path='/analytics' element={<h1>Hello</h1>} />
           </Route>
 
           <Route path='*' element={<NotFound />} />
-          {/* <Route
-            path='*'
-            element={<h1>HELLOHSDLHSSSSSSSSSSSSSSSSSSSSSSSJHJSHHHHHBK.V</h1>}
-          /> */}
         </Routes>
       </Router>
     </ThemeProvider>

@@ -8,6 +8,7 @@ import {
   openNewInvoiceForm,
   updateStatus,
   fetchInvoices,
+  closeInvoiceForm,
 } from 'store/features/invoice/invoiceSlice'
 import { useAlert } from 'hooks/useAlert'
 
@@ -74,6 +75,10 @@ const Homepage = () => {
     }
 
     fetchData()
+
+    return () => {
+      dispatch(closeInvoiceForm())
+    }
   }, [searchParams, dispatch, getToken])
 
   return (
