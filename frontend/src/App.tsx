@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 //PAGES
 import Homepage from 'pages/home'
 import Auth from 'pages/auth'
+import NotFound from 'pages/not-found'
 
 //COMPONENTS
 import PrivateRoute from 'components/PrivateRoutes'
@@ -38,6 +39,12 @@ function App() {
               <Route path='/invoices/:id' element={<InvoiceDetailsPage />} />
             </Route>
           </Route>
+
+          <Route path='*' element={<NotFound />} />
+          {/* <Route
+            path='*'
+            element={<h1>HELLOHSDLHSSSSSSSSSSSSSSSSSSSSSSSJHJSHHHHHBK.V</h1>}
+          /> */}
         </Routes>
       </Router>
     </ThemeProvider>
