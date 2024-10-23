@@ -5,7 +5,7 @@ import {
   SignInButton,
   // useAuth,
 } from '@clerk/clerk-react'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 import {
   AuthBtnGroup,
   AuthContainer,
@@ -16,6 +16,8 @@ import {
 } from 'pages/auth/AuthStyles'
 
 const Auth = () => {
+  const location = useLocation()
+  const from = location.state?.from || '/'
   //const { getToken } = useAuth()
 
   // const displayToken = async () => {
@@ -58,7 +60,7 @@ const Auth = () => {
 
       <SignedIn>
         {/* <button onClick={displayToken}>Get Token</button> */}
-        <Navigate to='/' />
+        <Navigate to={from} replace />
       </SignedIn>
     </AuthMain>
   )
