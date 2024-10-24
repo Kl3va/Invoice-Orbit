@@ -34,28 +34,28 @@ import {
   CardHeading,
 } from 'pages/analytics/AnalyticsStyles'
 
-const pendingInvoicesData = [
-  { client: 'Client A', pendingAmount: 5000 },
-  { client: 'Client B', pendingAmount: 3500 },
-  { client: 'Client C', pendingAmount: 7200 },
-  { client: 'Client D', pendingAmount: 2800 },
-  { client: 'Client E', pendingAmount: 6100 },
-]
+// const pendingInvoicesData = [
+//   { client: 'Client A', pendingAmount: 5000 },
+//   { client: 'Client B', pendingAmount: 3500 },
+//   { client: 'Client C', pendingAmount: 7200 },
+//   { client: 'Client D', pendingAmount: 2800 },
+//   { client: 'Client E', pendingAmount: 6100 },
+// ]
 
-const data = [
-  { month: 'Jan', revenue: 4000 },
-  { month: 'Feb', revenue: 3000 },
-  { month: 'Mar', revenue: 2000 },
-  { month: 'Apr', revenue: 2780 },
-  { month: 'May', revenue: 1890 },
-  { month: 'Jun', revenue: 2390 },
-]
+// const lineData = [
+//   { month: 'Jan', revenue: 4000 },
+//   { month: 'Feb', revenue: 3000 },
+//   { month: 'Mar', revenue: 2000 },
+//   { month: 'Apr', revenue: 2780 },
+//   { month: 'May', revenue: 1890 },
+//   { month: 'Jun', revenue: 2390 },
+// ]
 
-const pieData = [
-  { name: 'paid', value: 400 },
-  { name: 'pending', value: 300 },
-  { name: 'draft', value: 200 },
-]
+// const pieData = [
+//   { name: 'paid', value: 400 },
+//   { name: 'pending', value: 300 },
+//   { name: 'draft', value: 200 },
+// ]
 
 const Analytics = () => {
   const { getToken } = useAuth()
@@ -86,6 +86,46 @@ const Analytics = () => {
 
     fetchData()
   }, [dispatch, getToken])
+
+  const pendingInvoicesData = invoices
+    .filter((invoice) => invoice.status === 'pending')
+    .map((invoice) => ({
+      client: invoice.clientName,
+      pendingAmount: invoice.total,
+    }))
+
+  const getRevenueData = () => {
+    const paidInvoices = invoices.filter((invoice) => invoice.status === 'paid')
+    const monthlyRevenue: { [key: string]: number } = {}
+
+    paidInvoices.forEach((invoice) => {
+      const month = new Date(invoice.createdAt).toLocaleString('default', {
+        month: 'short',
+      })
+      monthlyRevenue[month] =
+        (monthlyRevenue[month] || 0) + (invoice.total ?? 0)
+    })
+
+    return Object.entries(monthlyRevenue).map(([month, revenue]) => ({
+      month,
+      revenue,
+    }))
+  }
+
+  const getPieData = () => {
+    const statusCount = invoices.reduce((acc, invoice) => {
+      acc[invoice.status] = (acc[invoice.status] || 0) + 1
+      return acc
+    }, {} as { [key: string]: number })
+
+    return Object.entries(statusCount).map(([name, value]) => ({
+      name,
+      value,
+    }))
+  }
+
+  const revenueData = getRevenueData()
+  const pieData = getPieData()
 
   if (status.fetchingAll)
     return (
@@ -127,7 +167,7 @@ const Analytics = () => {
 
             <CardContent>
               <ResponsiveContainer width='100%' height={300}>
-                <LineChart data={data}>
+                <LineChart data={revenueData}>
                   <CartesianGrid strokeDasharray='3 3' />
                   <XAxis dataKey='month' />
                   <YAxis />

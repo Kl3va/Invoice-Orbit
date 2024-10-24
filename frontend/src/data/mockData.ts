@@ -1,5 +1,7 @@
 import { InvoiceOrbit } from 'types/invoiceTypes'
 
+export const pieColors = ['#33D69F', '#FF8F00', 'var(--color-font-900)']
+
 export const mockInvoiceData: InvoiceOrbit = {
   _id: 'RT3080',
   userId: 'dghhk576847',
