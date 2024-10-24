@@ -143,44 +143,50 @@ const Analytics = () => {
         <CardsWrapper>
           <Card>
             <CardHeading>Pending Invoices by Client</CardHeading>
-
-            <CardContent>
-              <ResponsiveContainer width='100%' height={300}>
-                <BarChart data={pendingInvoicesData}>
-                  <CartesianGrid strokeDasharray='3 3' />
-                  <XAxis dataKey='client' />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar
-                    dataKey='pendingAmount'
-                    fill='var(--color-accent-100)'
-                    name='Pending Status'
-                  />
-                </BarChart>
-              </ResponsiveContainer>
-            </CardContent>
+            {pendingInvoicesData.length === 0 ? (
+              <h3>No revenue generated!</h3>
+            ) : (
+              <CardContent>
+                <ResponsiveContainer width='100%' height={300}>
+                  <BarChart data={pendingInvoicesData}>
+                    <CartesianGrid strokeDasharray='3 3' />
+                    <XAxis dataKey='client' />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar
+                      dataKey='pendingAmount'
+                      fill='var(--color-accent-100)'
+                      name='Pending Status'
+                    />
+                  </BarChart>
+                </ResponsiveContainer>
+              </CardContent>
+            )}
           </Card>
 
           <Card>
             <CardHeading>Revenue Trend</CardHeading>
-
-            <CardContent>
-              <ResponsiveContainer width='100%' height={300}>
-                <LineChart data={revenueData}>
-                  <CartesianGrid strokeDasharray='3 3' />
-                  <XAxis dataKey='month' />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line
-                    type='monotone'
-                    dataKey='revenue'
-                    stroke='var(--color-accent-100)'
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </CardContent>
+            {revenueData.length === 0 ? (
+              <h3>No revenue generated!</h3>
+            ) : (
+              <CardContent>
+                <ResponsiveContainer width='100%' height={300}>
+                  <LineChart data={revenueData}>
+                    <CartesianGrid strokeDasharray='3 3' />
+                    <XAxis dataKey='month' />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line
+                      type='monotone'
+                      dataKey='revenue'
+                      stroke='var(--color-accent-100)'
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </CardContent>
+            )}
           </Card>
 
           <Card>
