@@ -11,6 +11,12 @@ export const AnalyticsMain = styled.main`
   }
 `
 
+export const NoDataHeading = styled.h1`
+  text-align: center;
+  font-size: clamp(1.45rem, calc(1.8vw + 1rem), 2rem);
+  margin-block: 6rem;
+`
+
 export const AnalyticsContainer = styled.div`
   width: 100%;
   width: min(87.2%, 70rem);

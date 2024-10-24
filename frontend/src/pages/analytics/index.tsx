@@ -9,6 +9,7 @@ import {
   fetchInvoices,
 } from 'store/features/invoice/invoiceSlice'
 import { useAlert } from 'hooks/useAlert'
+import { pieColors } from 'data/mockData'
 
 import {
   BarChart,
@@ -23,6 +24,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  Cell,
 } from 'recharts'
 
 import {
@@ -32,6 +34,7 @@ import {
   CardContent,
   Card,
   CardHeading,
+  NoDataHeading,
 } from 'pages/analytics/AnalyticsStyles'
 
 // const pendingInvoicesData = [
@@ -134,7 +137,8 @@ const Analytics = () => {
       </LoadingSpinnerWrapper>
     )
 
-  if (invoices.length === 0) return <h1>No Data Found</h1>
+  if (invoices.length === 0)
+    return <NoDataHeading>No Data Found!</NoDataHeading>
 
   return (
     <AnalyticsMain>
@@ -144,7 +148,7 @@ const Analytics = () => {
           <Card>
             <CardHeading>Pending Invoices by Client</CardHeading>
             {pendingInvoicesData.length === 0 ? (
-              <h3>No revenue generated!</h3>
+              <h3>No pending invoices available</h3>
             ) : (
               <CardContent>
                 <ResponsiveContainer width='100%' height={300}>
@@ -195,7 +199,21 @@ const Analytics = () => {
             <CardContent>
               <ResponsiveContainer width='100%' height={300}>
                 <PieChart>
-                  <Pie dataKey='value' data={pieData} fill='#8884d8' label />
+                  <Pie
+                    dataKey='value'
+                    data={pieData}
+                    fill='var(--color-accent-100)'
+                    label={({ name, percent }) =>
+                      `${name} ${(percent * 100).toFixed(0)}%`
+                    }
+                  >
+                    {pieData.map((_, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={pieColors[index % pieColors.length]}
+                      />
+                    ))}
+                  </Pie>
                   <Tooltip />
                 </PieChart>
               </ResponsiveContainer>
