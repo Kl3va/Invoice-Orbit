@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useAuth } from '@clerk/clerk-react'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { ApiError } from 'utils/apiSimplify'
@@ -97,7 +97,7 @@ const Analytics = () => {
       pendingAmount: invoice.total,
     }))
 
-  const getRevenueData = () => {
+  const revenueData = useMemo(() => {
     const paidInvoices = invoices.filter((invoice) => invoice.status === 'paid')
     const monthlyRevenue: { [key: string]: number } = {}
 
@@ -113,7 +113,7 @@ const Analytics = () => {
       month,
       revenue,
     }))
-  }
+  }, [invoices])
 
   const getPieData = () => {
     const statusCount = invoices.reduce((acc, invoice) => {
@@ -127,7 +127,7 @@ const Analytics = () => {
     }))
   }
 
-  const revenueData = getRevenueData()
+  //const revenueData = getRevenueData()
   const pieData = getPieData()
 
   if (status.fetchingAll)
