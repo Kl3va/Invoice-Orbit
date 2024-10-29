@@ -1,7 +1,6 @@
 import { Response, Request, NextFunction } from 'express'
 //import { RequireAuthProp } from '@clerk/clerk-sdk-node'
 import { AuthObject } from '@clerk/express'
-import { z } from 'zod'
 import { StatusCodes } from 'http-status-codes'
 import { InvoiceOrbitModel, Item, InvoiceOrbit } from '../schema/invoice-orbit'
 import {
@@ -11,8 +10,6 @@ import {
   InvoiceDataSchema,
   processInvoiceUpdate,
 } from '../utils/invoiceFormatter'
-
-type AuthenticatedRequest = Request & { auth: AuthObject }
 
 //Get All Invoices for user
 const getAllInvoices = async (
@@ -166,44 +163,6 @@ const updateInvoice = async (
         .status(StatusCodes.NOT_FOUND)
         .json({ message: `No invoice with id: ${invoiceId}` })
     }
-
-    // Create a new object for the updated invoice
-    // const updatedInvoiceData: Partial<InvoiceOrbit> = {
-    //   ...existingInvoice.toObject(),
-    // }
-
-    // // Update fields
-    // Object.keys(body).forEach((key) => {
-    //   const typedKey = key as keyof InvoiceOrbit
-
-    //   if (typedKey === 'items') {
-    //     // Recalculate items totals
-    //     const newItems = (body.items as Item[]).map((item) => ({
-    //       ...item,
-    //       total: calculateItemTotal(item),
-    //     }))
-    //     updatedInvoiceData.items = newItems
-    //     updatedInvoiceData.total = calculateTotal(newItems)
-    //   } else if (typedKey === 'createdAt' || typedKey === 'paymentTerms') {
-    //     // Update payment due date if either createdAt or paymentTerms changes
-    //     const newCreatedAt =
-    //       typedKey === 'createdAt'
-    //         ? new Date(body.createdAt as string)
-    //         : existingInvoice.createdAt
-    //     const newPaymentTerms =
-    //       typedKey === 'paymentTerms'
-    //         ? (body.paymentTerms as number)
-    //         : existingInvoice.paymentTerms
-
-    //     updatedInvoiceData.paymentDue = calculateDueDate(
-    //       newCreatedAt,
-    //       newPaymentTerms
-    //     )
-    //     updatedInvoiceData[typedKey] = body[typedKey]
-    //   } else {
-    //     updatedInvoiceData[typedKey] = body[typedKey]
-    //   }
-    // })
 
     // Process the update data
     const updatedInvoiceData = processInvoiceUpdate(body, existingInvoice)
