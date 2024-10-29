@@ -10,7 +10,7 @@ import {
   calculateTotal,
   InvoiceDataSchema,
   processInvoiceUpdate,
-} from '../helpers/invoice-orbit'
+} from '../utils/invoiceFormatter'
 
 type AuthenticatedRequest = Request & { auth: AuthObject }
 
