@@ -72,6 +72,7 @@ const Analytics = () => {
     const fetchData = async () => {
       try {
         const token = await getToken()
+        console.log(token)
         // Update status in the redux state
         if (lastFetchedStatus.length > 0) {
           dispatch(updateStatus([]))

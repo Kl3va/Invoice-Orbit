@@ -9,10 +9,10 @@ import {
   updateInvoice,
 } from '../controllers/invoice-orbit'
 
-router.route('/').get(getAllInvoices).post(createInvoice)
+router.route('/analytics').get(getAnalytics)
 
 router.route('/:id').get(getInvoice).patch(updateInvoice).delete(deleteInvoice)
 
-router.route('/analytics').get(getAnalytics)
+router.route('/').get(getAllInvoices).post(createInvoice)
 
 export default router

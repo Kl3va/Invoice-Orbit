@@ -1,6 +1,8 @@
 import { logger } from '../utils/logger'
 import axios from 'axios'
 import NodeCache from 'node-cache'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const CACHE_DURATION = 7 * 24 * 24 * 60
 
@@ -10,21 +12,19 @@ const cache = new NodeCache({
 })
 
 const CACHE_KEY = 'exchangeRates'
-const EXCHANGE_RATE_APIKEY = process.env.EXCHANGE_RATE_API_KEY || 'key'
+const EXCHANGE_RATE_APIKEY = process.env.EXCHANGE_RATE_API_KEY
+if (!EXCHANGE_RATE_APIKEY) {
+  throw new Error('EXCHANGE_RATE_API_KEY environment variable is not set')
+}
 
 interface ExchangeRates {
   [key: string]: number
 }
 
-interface ExchangeApiResponse {
-  conversion_rates: ExchangeRates
-  time_last_update_utc: string
-}
-
 class ExchangeRateService {
   private async fetchFreshRates(): Promise<ExchangeRates> {
     try {
-      const response = await axios.get<ExchangeApiResponse>(
+      const response = await axios.get(
         `https://v6.exchangerate-api.com/v6/${EXCHANGE_RATE_APIKEY}/latest/USD`
       )
 
