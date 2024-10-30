@@ -25,7 +25,12 @@ export const AnalyticsContainer = styled.div`
   h1 {
     font-size: clamp(1.25rem, calc(1.8vw + 1rem), 1.875rem);
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  & > p {
+    text-align: center;
+    margin-bottom: 1rem;
   }
 `
 export const CardsWrapper = styled.div`
