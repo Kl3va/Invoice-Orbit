@@ -55,7 +55,6 @@ const Homepage = () => {
       try {
         // Get the token asynchronously
         const token = await getToken()
-        // console.log(token)
 
         // Get status from search params
         const statusParam = searchParams.get('status')
@@ -80,8 +79,6 @@ const Homepage = () => {
       dispatch(closeInvoiceForm())
     }
   }, [searchParams, dispatch, getToken])
-
-  console.log(invoices)
 
   return (
     <HomePageMain>

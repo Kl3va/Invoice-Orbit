@@ -33,8 +33,10 @@ const getAnalytics = async (
               invoice.currency,
               rates
             ),
-            originalAmount: invoice.total,
-            originalCurrency: invoice.currency,
+            originalAmount: exchangeRateService.formatCurrency(
+              invoice.total,
+              invoice.currency
+            ),
           }
         } catch (error) {
           logger.warn(
@@ -109,11 +111,11 @@ const getAnalytics = async (
       pendingInvoices,
       revenueByMonth,
       statusDistribution: statusData,
-      metadata: {
-        lastUpdated: new Date().toISOString(),
-        baseCurrency: 'USD',
-        exchangeRatesStatus: cacheStats.hasCache ? 'cached' : 'fresh',
-      },
+      // metadata: {
+      //   lastUpdated: new Date().toISOString(),
+      //   baseCurrency: 'USD',
+      //   exchangeRatesStatus: cacheStats.hasCache ? 'cached' : 'fresh',
+      // },
     }
 
     res.status(StatusCodes.OK).json(analytics)

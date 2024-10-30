@@ -99,8 +99,17 @@ function formatLargeNumber(
   return `${currencySymbol}${billionValue}b+`
 }
 
+const formatCurrency = (amount: number, currency: string = 'USD') => {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency,
+    minimumFractionDigits: 2,
+  }).format(amount)
+}
+
 export {
   sliceStr,
+  formatCurrency,
   formatLargeNumber,
   formatDueDate,
   currencyLocale,

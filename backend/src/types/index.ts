@@ -2,8 +2,8 @@ export interface AnalyticsResponse {
   pendingInvoices: {
     client: string
     pendingAmount: number
-    originalAmount: number
-    originalCurrency: string
+    originalAmount: string
+    // originalCurrency: string
   }[]
   revenueByMonth: {
     month: string
@@ -13,9 +13,9 @@ export interface AnalyticsResponse {
     name: string
     value: number
   }[]
-  metadata: {
-    lastUpdated: string
-    baseCurrency: string
-    exchangeRatesStatus: string
-  }
+  // metadata: {
+  //   lastUpdated: string
+  //   baseCurrency: string
+  //   exchangeRatesStatus: string
+  // }
 }
