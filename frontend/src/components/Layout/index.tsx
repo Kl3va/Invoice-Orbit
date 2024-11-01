@@ -20,7 +20,6 @@ const Layout = () => {
       <Outlet />
       {isFormOpen ? (
         <MainFormTemplate
-          // invoiceForm={isEditing && invoiceForm ? invoiceForm : emptyInvoice}
           invoiceForm={invoiceForm}
           key={invoiceForm?._id ?? 'new'}
           isEditing={isEditing}
