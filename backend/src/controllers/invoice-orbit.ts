@@ -10,6 +10,7 @@ import {
   InvoiceDataSchema,
   processInvoiceUpdate,
 } from '../utils/invoiceFormatter'
+import { isValidObjectId } from 'mongoose'
 
 //Get All Invoices for user
 const getAllInvoices = async (
@@ -52,10 +53,14 @@ const getAllInvoices = async (
 //Get Single Invoice
 const getInvoice = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const {
-      params: { id: invoiceId },
-    } = req
     const userId = (req as Request & { auth: AuthObject }).auth.userId
+    const invoiceId = req.params.id
+
+    if (!isValidObjectId(invoiceId)) {
+      res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: `Invalid Invoice ID` })
+    }
 
     const invoice = await InvoiceOrbitModel.findOne({ _id: invoiceId, userId })
     if (!invoice) {
@@ -117,10 +122,15 @@ const deleteInvoice = async (
   next: NextFunction
 ) => {
   try {
-    const {
-      params: { id: invoiceId },
-    } = req
     const userId = (req as Request & { auth: AuthObject }).auth.userId
+    const invoiceId = req.params.id
+
+    if (!isValidObjectId(invoiceId)) {
+      res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: `Invalid Invoice ID` })
+    }
+
     const invoice = await InvoiceOrbitModel.findByIdAndDelete({
       _id: invoiceId,
       userId,
@@ -149,6 +159,13 @@ const updateInvoice = async (
       body,
     } = req
     const userId = (req as Request & { auth: AuthObject }).auth.userId
+
+    //Validate id params
+    if (!isValidObjectId(invoiceId)) {
+      res
+        .status(StatusCodes.BAD_REQUEST)
+        .json({ message: `Invalid Invoice ID` })
+    }
 
     // Validate the input data
     await InvoiceDataSchema.partial().parseAsync(body)
