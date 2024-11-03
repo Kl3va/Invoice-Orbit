@@ -107,4 +107,17 @@ describe('HomePage', () => {
       )
     })
   })
+
+  it('opens new invoice form when new invoice button is clicked', async () => {
+    renderHomepage()
+
+    const button = screen.getByText(/New/i)
+    fireEvent.click(button)
+
+    await waitFor(() => {
+      expect(mockDispatch).toHaveBeenCalledWith(
+        expect.objectContaining({ type: 'invoice/openNewInvoiceForm' })
+      )
+    })
+  })
 })
