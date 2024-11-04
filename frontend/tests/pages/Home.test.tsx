@@ -149,7 +149,7 @@ describe('HomePage', () => {
     })
   })
 
-  it('shows skeleton loader when fetching invoices', async () => {
+  it('shows skeleton loader when fetching invoices', () => {
     // Override the default mock for this specific test
     mockSelectorFn = (selector: (state: RootState) => unknown) =>
       selector({
@@ -170,7 +170,7 @@ describe('HomePage', () => {
     })
   })
 
-  it('shows illustration when invoice is empty', async () => {
+  it('shows illustration when invoice is empty', () => {
     mockSelectorFn = (selector: (state: RootState) => unknown) =>
       selector({
         invoice: {
