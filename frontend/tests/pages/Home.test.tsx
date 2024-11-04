@@ -11,8 +11,32 @@ import { configureStore } from '@reduxjs/toolkit'
 import { mockInvoiceData } from 'data/mockData'
 import { RootState } from 'store/store'
 
+interface TestState {
+  invoice: {
+    invoices: any[]
+    status: { fetchingAll: boolean }
+    isFormOpen: boolean
+  }
+  modal: {
+    isFilterStatusOpen: boolean
+  }
+}
+
 // Mock dispatch to track actions
 const mockDispatch = vi.fn()
+
+// Create mock selector function
+let mockSelectorFn = (selector: (state: RootState) => unknown) =>
+  selector({
+    invoice: {
+      invoices: [mockInvoiceData],
+      status: { fetchingAll: false },
+      isFormOpen: false,
+    },
+    modal: {
+      isFilterStatusOpen: false,
+    },
+  } as TestState as unknown as RootState)
 
 //Mock clerkdev hooks
 vi.mock('@clerk/clerk-react', () => ({
@@ -34,16 +58,7 @@ vi.mock('@clerk/clerk-react', () => ({
 vi.mock('store/hooks', () => ({
   useAppDispatch: () => mockDispatch,
   useAppSelector: (selector: (state: RootState) => unknown) =>
-    selector({
-      invoice: {
-        invoices: [mockInvoiceData],
-        status: { fetchingAll: false },
-        isFormOpen: false,
-      },
-      modal: {
-        isFilterStatusOpen: false,
-      },
-    } as RootState),
+    mockSelectorFn(selector),
 }))
 
 // Mock useAlert hook
@@ -74,6 +89,19 @@ describe('HomePage', () => {
 
   beforeEach(() => {
     mockDispatch.mockClear() // Clear mock calls before each test
+
+    //Reset mockSelectorFn
+    mockSelectorFn = (selector: (state: RootState) => unknown) =>
+      selector({
+        invoice: {
+          invoices: [mockInvoiceData],
+          status: { fetchingAll: false },
+          isFormOpen: false,
+        },
+        modal: {
+          isFilterStatusOpen: false,
+        },
+      } as TestState as unknown as RootState)
   })
 
   // Test cases
@@ -119,5 +147,43 @@ describe('HomePage', () => {
         expect.objectContaining({ type: 'invoice/openNewInvoiceForm' })
       )
     })
+  })
+
+  it('shows skeleton loader when fetching invoices', async () => {
+    // Override the default mock for this specific test
+    mockSelectorFn = (selector: (state: RootState) => unknown) =>
+      selector({
+        invoice: {
+          invoices: [],
+          status: { fetchingAll: true },
+          isFormOpen: false,
+        },
+        modal: {
+          isFilterStatusOpen: false,
+        },
+      } as TestState as unknown as RootState)
+
+    renderHomepage()
+    const skeletonDivs = screen.getAllByTestId('skeleton-loader')
+    skeletonDivs.forEach((div) => {
+      expect(div).toBeInTheDocument()
+    })
+  })
+
+  it('shows illustration when invoice is empty', async () => {
+    mockSelectorFn = (selector: (state: RootState) => unknown) =>
+      selector({
+        invoice: {
+          invoices: [],
+          status: { fetchingAll: false },
+          isFormOpen: false,
+        },
+        modal: {
+          isFilterStatusOpen: false,
+        },
+      } as TestState as unknown as RootState)
+
+    renderHomepage()
+    expect(screen.getByTestId('illustration')).toBeInTheDocument()
   })
 })

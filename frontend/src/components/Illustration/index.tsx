@@ -26,7 +26,7 @@ const IllustrationWrapper = styled.div`
 
 const Illustration = () => {
   return (
-    <IllustrationWrapper>
+    <IllustrationWrapper data-testid='illustration'>
       <img src={IllustrationEmpty} alt='illustration for no invoice' />
       <h2>There is nothing here</h2>
       <p>

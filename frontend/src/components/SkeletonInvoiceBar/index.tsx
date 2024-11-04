@@ -107,7 +107,7 @@ const SkeletonArrow = styled(SkeletonLine)`
 
 const SkeletonInvoiceBar = () => {
   return (
-    <SkeletonWrapper>
+    <SkeletonWrapper data-testid='skeleton-loader'>
       <SkeletonID />
       <SkeletonName />
       <SkeletonDueDate />
