@@ -198,7 +198,7 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
         <fieldset>
           <legend>Bill From</legend>
           <div>
-            <label>Street Address</label>
+            <label htmlFor='senderAddress.street'>Street Address</label>
             <input
               type='text'
               name='senderAddress.street'
@@ -211,7 +211,7 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
           </div>
           <LocationContainer>
             <div>
-              <label>City</label>
+              <label htmlFor='senderAddress.city'>City</label>
               <input
                 type='text'
                 name='senderAddress.city'
@@ -223,7 +223,7 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
               />
             </div>
             <div>
-              <label>Post Code</label>
+              <label htmlFor='senderAddress.postCode'>Post Code</label>
               <input
                 type='text'
                 placeholder='E1 AFB'
@@ -236,7 +236,7 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
               />
             </div>
             <div>
-              <label htmlFor=''>Country</label>
+              <label htmlFor='senderAddress.country'>Country</label>
               <input
                 type='text'
                 placeholder='UK'
@@ -254,7 +254,7 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
         <fieldset>
           <legend>Bill To</legend>
           <div>
-            <label>Client's Name</label>
+            <label htmlFor='clientName'>Client's Name</label>
             <input
               type='text'
               placeholder='Michael Scott'
@@ -267,7 +267,7 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
             />
           </div>
           <div>
-            <label>Client's Email</label>
+            <label htmlFor='clientEmail'>Client's Email</label>
             <input
               type='email'
               placeholder='mscott@gmail.com'
@@ -279,7 +279,7 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
             />
           </div>
           <div>
-            <label>Street Address</label>
+            <label htmlFor='clientAddress.street'>Street Address</label>
             <input
               type='text'
               name='clientAddress.street'
@@ -292,7 +292,7 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
           </div>
           <LocationContainer>
             <div>
-              <label>City</label>
+              <label htmlFor='clientAddress.city'>City</label>
               <input
                 type='text'
                 name='clientAddress.city'
@@ -304,7 +304,7 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
               />
             </div>
             <div>
-              <label>Post Code</label>
+              <label htmlFor='clientAddress.postCode'>Post Code</label>
               <input
                 type='text'
                 name='clientAddress.postCode'
@@ -317,7 +317,7 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
               />
             </div>
             <div>
-              <label>Country</label>
+              <label htmlFor='clientAddress.country'>Country</label>
               <input
                 type='text'
                 name='clientAddress.country'
@@ -335,7 +335,7 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
         <fieldset>
           <DateAndTermsContainer>
             <div>
-              <label>Invoice Date</label>
+              <label htmlFor='createdAt'>Invoice Date</label>
               <input
                 type='date'
                 name='createdAt'
@@ -351,7 +351,7 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
               />
             </div>
             <div>
-              <label>Payment Terms</label>
+              <label htmlFor='paymentTerms'>Payment Terms</label>
               <select
                 name='paymentTerms'
                 id='paymentTerms'
@@ -371,7 +371,7 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
           </DateAndTermsContainer>
 
           <div>
-            <label>Project/Description</label>
+            <label htmlFor='description'>Project/Description</label>
             <input
               type='text'
               name='description'
@@ -384,7 +384,7 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
           </div>
 
           <CurrencyContainer>
-            <label>Currency</label>
+            <label htmlFor='currency'>Currency</label>
             <select
               name='currency'
               id='currency'
@@ -416,9 +416,10 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
             return (
               <ListContainer key={index}>
                 <div>
-                  <label>Item Name</label>
+                  <label htmlFor='item-name'>Item Name</label>
                   <input
                     type='text'
+                    id='item-name'
                     value={item.name}
                     onChange={(e) =>
                       handleItemChange(index, 'name', e.target.value)
