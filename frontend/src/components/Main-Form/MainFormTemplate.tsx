@@ -431,9 +431,10 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
                 </div>
 
                 <div>
-                  <label>Qty.</label>
+                  <label htmlFor='qty'>Qty.</label>
                   <input
                     type='number'
+                    id='qty'
                     inputMode='numeric'
                     required
                     placeholder='1'
@@ -450,9 +451,10 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
                 </div>
 
                 <div>
-                  <label>Price</label>
+                  <label htmlFor='price'>Price</label>
                   <input
                     type='number'
+                    id='price'
                     inputMode='numeric'
                     step='0.01'
                     required
