@@ -1,11 +1,9 @@
 import { Response, Request, NextFunction } from 'express'
-//import { RequireAuthProp } from '@clerk/clerk-sdk-node'
 import { AuthObject } from '@clerk/express'
 import { StatusCodes } from 'http-status-codes'
-import { InvoiceOrbitModel, Item, InvoiceOrbit } from '../schema/invoice-orbit'
+import { InvoiceOrbitModel, Item } from '../schema/invoice-orbit'
 import {
   calculateDueDate,
-  calculateItemTotal,
   calculateTotal,
   InvoiceDataSchema,
   processInvoiceUpdate,
@@ -20,7 +18,7 @@ const getAllInvoices = async (
 ) => {
   try {
     const { status } = req.query
-    // const userId = (req as RequireAuthProp<Request>).auth.userId
+
     const userId = (req as Request & { auth: AuthObject }).auth.userId
     // const userId = req.auth.userId
 

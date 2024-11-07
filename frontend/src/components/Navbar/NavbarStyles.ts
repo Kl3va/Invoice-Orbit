@@ -41,9 +41,6 @@ export const ThemeWrapper = styled.div`
 export const MainIconsWrapper = styled.div`
   display: flex;
   gap: 1.5rem;
-  // align-items: center;
-  // width: 100%;
-  // padding-right: 1.62rem;
 
   a {
     width: 1.25rem;

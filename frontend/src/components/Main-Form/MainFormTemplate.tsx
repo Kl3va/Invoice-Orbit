@@ -102,7 +102,6 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
     })
 
     setItems(updatedItems)
-    // updateTotal(updatedItems)
   }
 
   const addNewItem = () => {
@@ -112,20 +111,7 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
   const removeItem = (index: number) => {
     const updatedItems = items.filter((_, i) => i !== index)
     setItems(updatedItems)
-    // updateTotal(updatedItems)
   }
-
-  // const updateTotal = (updatedItems: InvoiceOrbit['items']) => {
-  //   const newTotal = updatedItems.reduce(
-  //     (acc, item) => acc + (item.total || 0),
-  //     0
-  //   )
-  //   setFormData((prev) => ({ ...prev, total: newTotal }))
-  // }
-
-  // if (!isFormOpen) {
-  //   return null
-  // }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -158,7 +144,6 @@ const MainFormTemplate = ({ isEditing, invoiceForm }: props) => {
       }
 
       const action = isEditing ? updateInvoice : createInvoice
-      // const action = updateInvoice
       const result = await dispatch(action({ token, invoice })).unwrap()
 
       showAlert(

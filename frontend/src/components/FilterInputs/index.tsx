@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 import React from 'react'
 import { useEffect } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from 'store/hooks'
 import { updateStatus } from 'store/features/invoice/invoiceSlice'
 import { QUERIES } from 'styles/mediaQueries'
@@ -83,7 +83,6 @@ export const InputCheckbox = styled.input`
 const FilterInputs = () => {
   const dispatch = useAppDispatch()
   const [searchParams, setSearchParams] = useSearchParams()
-  const navigate = useNavigate()
   const { selectedStatus } = useAppSelector((state) => state.invoice)
 
   const handleCheckboxChange = (status: string) => {
@@ -93,15 +92,6 @@ const FilterInputs = () => {
 
     dispatch(updateStatus(newSelectedStatus))
   }
-
-  // useEffect(() => {
-  //   const params = new URLSearchParams()
-  //   if (selectedStatus.length > 0) {
-  //     params.set('status', selectedStatus.join(','))
-  //   }
-  //   // Update the URL
-  //   navigate({ search: params.toString() })
-  // }, [selectedStatus, navigate])
 
   useEffect(() => {
     const newSearchParams = new URLSearchParams(searchParams)
@@ -114,42 +104,6 @@ const FilterInputs = () => {
 
     setSearchParams(newSearchParams)
   }, [selectedStatus, setSearchParams])
-
-  //   return (
-  //     <FilterInputContainer>
-  //       <div>
-  //         <InputCheckbox
-  //           type='checkbox'
-  //           name='draft'
-  //           id='draft'
-  //           checked={selectedStatus.includes('draft')}
-  //           onChange={() => handleCheckboxChange('draft')}
-  //         />
-  //         <label>Draft</label>
-  //       </div>
-  //       <div>
-  //         <InputCheckbox
-  //           type='checkbox'
-  //           name='pending'
-  //           id='pending'
-  //           checked={selectedStatus.includes('pending')}
-  //           onChange={() => handleCheckboxChange('pending')}
-  //         />
-  //         <label>Pending</label>
-  //       </div>
-  //       <div>
-  //         <InputCheckbox
-  //           type='checkbox'
-  //           name='paid'
-  //           id='paid'
-  //           checked={selectedStatus.includes('paid')}
-  //           onChange={() => handleCheckboxChange('paid')}
-  //         />
-  //         <label>Paid</label>
-  //       </div>
-  //     </FilterInputContainer>
-  //   )
-  // }
 
   return (
     <FilterInputContainer>

@@ -5,8 +5,6 @@ import cors from 'cors'
 import helmet from 'helmet'
 import rateLimit from 'express-rate-limit'
 
-//import { ClerkExpressRequireAuth } from '@clerk/clerk-sdk-node'
-
 import { requireAuth, clerkMiddleware } from '@clerk/express'
 
 //Database Connection
@@ -44,7 +42,7 @@ app.use(errorHandlerMiddleware)
 
 const mongoURI = process.env.MONGO_URI || 'default mongodb uri'
 
-//Connect to db and spin server
+//Connect to db and spin up server
 const spin = async () => {
   try {
     await connectDB(mongoURI)

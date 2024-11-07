@@ -4,8 +4,6 @@ import ConfirmationBg from 'components/Background/ConfirmationBg'
 import MainFormTemplate from 'components/Main-Form/MainFormTemplate'
 import Alert from 'components/Alert'
 
-//import { emptyInvoice, mockInvoiceData } from 'data/mockData'
-
 //REDUX
 import { useAppSelector } from 'store/hooks'
 

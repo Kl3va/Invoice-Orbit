@@ -111,11 +111,6 @@ const getAnalytics = async (
       pendingInvoices,
       revenueByMonth,
       statusDistribution: statusData,
-      // metadata: {
-      //   lastUpdated: new Date().toISOString(),
-      //   baseCurrency: 'USD',
-      //   exchangeRatesStatus: cacheStats.hasCache ? 'cached' : 'fresh',
-      // },
     }
 
     res.status(StatusCodes.OK).json(analytics)
