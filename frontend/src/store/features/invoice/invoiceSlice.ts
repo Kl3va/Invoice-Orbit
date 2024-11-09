@@ -11,7 +11,8 @@ import {
 } from 'utils/apiSimplify'
 
 //Local Host
-const API_URL = 'http://localhost:3001/api/v1/invoices'
+//const API_URL = 'http://localhost:3001/api/v1/invoices'
+const API_URL = import.meta.env.VITE_API_URL
 
 export interface InvoiceState {
   invoices: InvoiceOrbit[]

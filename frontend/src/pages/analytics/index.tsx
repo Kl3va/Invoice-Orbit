@@ -37,7 +37,7 @@ import {
   NoDataHeading,
 } from 'pages/analytics/AnalyticsStyles'
 
-const API_URL = 'http://localhost:3001/api/v1/invoices/analytics'
+const API_URL = import.meta.env.VITE_API_URL
 
 const Analytics = () => {
   const { getToken } = useAuth()
@@ -61,7 +61,7 @@ const Analytics = () => {
         }
         const headers = getHeaders(token)
         const response = await apiCallWithErrorHandling((instance) =>
-          instance.get(API_URL, {
+          instance.get(`${API_URL}/analytics`, {
             headers,
           })
         )
