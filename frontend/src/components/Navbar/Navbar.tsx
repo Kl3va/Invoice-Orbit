@@ -39,10 +39,10 @@ const Navbar = ({ themeSwitch, toggleTheme }: NavbarProps) => {
         <ThemeWrapper>
           <LogoContainer $isactive={isFormOpen}>
             {isFormOpen ? (
-              <img src={logo} alt='logo' />
+              <img src={logo} alt='logo' rel='preload' />
             ) : (
               <Link to='/'>
-                <img src={logo} alt='logo' />
+                <img src={logo} alt='logo' rel='preload' />
               </Link>
             )}
           </LogoContainer>

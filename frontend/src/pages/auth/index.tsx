@@ -3,7 +3,6 @@ import {
   SignedOut,
   SignUpButton,
   SignInButton,
-  // useAuth,
 } from '@clerk/clerk-react'
 import { Navigate, useLocation } from 'react-router-dom'
 import {
@@ -18,12 +17,6 @@ import {
 const Auth = () => {
   const location = useLocation()
   const from = location.state?.from || '/'
-  //const { getToken } = useAuth()
-
-  // const displayToken = async () => {
-  //   const token = await getToken()
-  //   console.log('Your token:', token)
-  // }
 
   return (
     <AuthMain>
@@ -59,7 +52,6 @@ const Auth = () => {
       </SignedOut>
 
       <SignedIn>
-        {/* <button onClick={displayToken}>Get Token</button> */}
         <Navigate to={from} replace />
       </SignedIn>
     </AuthMain>

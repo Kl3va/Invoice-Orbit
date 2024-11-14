@@ -9,6 +9,7 @@ services:
     environment:
       - VITE_API_URL=${API_URL}
       - VITE_CLERK_PUBLISHABLE_KEY=${CLERK_PUBLISHABLE_KEY}
+      - CHOKIDAR_USEPOLLING=true
     volumes:
       - ./frontend:/app
       - /app/node_modules

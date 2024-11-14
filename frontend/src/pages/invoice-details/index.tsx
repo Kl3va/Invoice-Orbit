@@ -37,7 +37,7 @@ import { ApiError } from 'utils/apiSimplify'
 //import { mockInvoiceData } from 'data/mockData'
 
 //STYLES
-import { StatusContainer } from 'components/Invoice-bar/InvoiceBarStyles'
+import { StatusContainer } from 'components/InvoiceBar/InvoiceBarStyles'
 
 import {
   BasicInfoPrimary,

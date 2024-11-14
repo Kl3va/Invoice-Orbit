@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom'
 //COMPONENTS
 import ConfirmationBg from 'components/Background/ConfirmationBg'
-import MainFormTemplate from 'components/Main-Form/MainFormTemplate'
+import MainFormTemplate from 'components/MainForm/MainFormTemplate'
 import Alert from 'components/Alert'
 
 //REDUX

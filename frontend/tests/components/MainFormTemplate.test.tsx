@@ -8,7 +8,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import invoiceReducer, {
   closeInvoiceForm,
 } from 'store/features/invoice/invoiceSlice'
-import MainFormTemplate from 'components/Main-Form/MainFormTemplate'
+import MainFormTemplate from 'components/MainForm/MainFormTemplate'
 import { createInvoice } from 'store/features/invoice/invoiceSlice'
 
 //initiate dispatch action

@@ -5,7 +5,7 @@ import {
   InvoiceDueDate,
   InvoiceName,
   InvoicePrice,
-} from 'components/Invoice-bar/InvoiceBarStyles'
+} from 'components/InvoiceBar/InvoiceBarStyles'
 import { Link } from 'react-router-dom'
 
 //Utils

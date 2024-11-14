@@ -13,7 +13,7 @@ import {
 import { useAlert } from 'hooks/useAlert'
 
 //Components
-import InvoiceBar from 'components/Invoice-bar/InvoiceBar'
+import InvoiceBar from 'components/InvoiceBar/InvoiceBar'
 import FilterInputs from 'components/FilterInputs'
 import { SkeletonInvoiceBarList } from 'components/SkeletonInvoiceBar'
 import Illustration from 'components/Illustration'

@@ -57,6 +57,11 @@ export const LogoContainer = styled.div<{ $isactive: boolean }>`
   aspect-ratio: 1 / 1;
   cursor: ${({ $isactive }) => ($isactive ? 'text' : 'pointer')};
 
+  img {
+  width: 100%;
+  height: 100%;
+  }
+
   @media ${QUERIES.tablet} {
     width: 6.44rem;
   }

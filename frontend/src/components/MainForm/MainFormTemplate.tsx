@@ -35,7 +35,7 @@ import {
   ListContainer,
   LocationContainer,
   SubmitButtonsContainer,
-} from 'components/Main-Form/MainFormTemplateStyles'
+} from 'components/MainForm/MainFormTemplateStyles'
 import { formatCreateDate } from 'utils/invoiceFormatter'
 
 interface props {
