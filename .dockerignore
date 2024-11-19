@@ -1,5 +1,0 @@
-# .dockerignore in root
-.env
-.git
-node_modules
-.DS_Store

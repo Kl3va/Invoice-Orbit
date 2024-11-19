@@ -1,6 +1,0 @@
-# .gitignore in root
-.env
-.DS_Store
-node_modules/
-backend/Dockerfile
-frontend/Dockerfile
