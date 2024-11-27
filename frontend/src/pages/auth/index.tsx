@@ -1,9 +1,4 @@
-import {
-  SignedIn,
-  SignedOut,
-  SignUpButton,
-  SignInButton,
-} from '@clerk/clerk-react'
+import { SignedIn, SignUpButton, SignInButton } from '@clerk/clerk-react'
 import { Navigate, useLocation } from 'react-router-dom'
 import {
   AuthBtnGroup,
