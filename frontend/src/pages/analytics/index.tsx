@@ -5,8 +5,6 @@ import {
   ApiError,
 } from 'utils/apiSimplify'
 import { useAuth } from '@clerk/clerk-react'
-import { LoadingSpinnerWrapper } from 'pages/invoice-details/InvoiceDetailsPageStyles'
-import { ClipLoader } from 'react-spinners'
 import { useAlert } from 'hooks/useAlert'
 import { pieColors } from 'data/mockData'
 import { formatCurrency } from 'utils/invoiceFormatter'
@@ -36,6 +34,7 @@ import {
   CardHeading,
   NoDataHeading,
 } from 'pages/analytics/AnalyticsStyles'
+import CenteredSpinner from 'components/CenteredSpinner'
 
 const API_URL = import.meta.env.VITE_API_URL
 
@@ -107,11 +106,7 @@ const Analytics = () => {
   }
 
   if (loading) {
-    return (
-      <LoadingSpinnerWrapper>
-        <ClipLoader size={78} color='var(--color-accent-100)' />
-      </LoadingSpinnerWrapper>
-    )
+    return <CenteredSpinner />
   }
 
   if (error !== null) {

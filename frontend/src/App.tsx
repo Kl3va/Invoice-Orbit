@@ -4,7 +4,6 @@ import { GlobalStyles } from 'styles/globalStyles'
 import { darkTheme, lightTheme } from 'styles/theme'
 import { ThemeProvider } from 'styled-components'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { ClipLoader } from 'react-spinners'
 
 //PAGES
 const Homepage = lazy(() => import('pages/home'))
@@ -16,8 +15,8 @@ const InvoiceDetailsPage = lazy(() => import('pages/invoice-details'))
 //COMPONENTS
 import PrivateRoute from 'components/PrivateRoutes'
 import Layout from 'components/Layout'
-import { LoadingSpinnerWrapper } from 'pages/invoice-details/InvoiceDetailsPageStyles'
 import Navbar from 'components/Navbar/Navbar'
+import CenteredSpinner from 'components/CenteredSpinner'
 
 function App() {
   const [themeSwitch, setThemeSwitch] = useState(false)
@@ -31,13 +30,7 @@ function App() {
       <GlobalStyles />
       <Router>
         <Navbar toggleTheme={toggleTheme} themeSwitch={themeSwitch} />
-        <Suspense
-          fallback={
-            <LoadingSpinnerWrapper>
-              <ClipLoader size={78} color='var(--color-accent-100)' />
-            </LoadingSpinnerWrapper>
-          }
-        >
+        <Suspense fallback={<CenteredSpinner />}>
           <Routes>
             <Route path='/auth' element={<Auth />} />
 

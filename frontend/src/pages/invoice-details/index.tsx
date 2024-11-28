@@ -33,9 +33,6 @@ import { useAlert } from 'hooks/useAlert'
 import { formatLargeNumber, currencyLocale } from 'utils/invoiceFormatter'
 import { ApiError } from 'utils/apiSimplify'
 
-//Mock Data
-//import { mockInvoiceData } from 'data/mockData'
-
 //STYLES
 import { StatusContainer } from 'components/InvoiceBar/InvoiceBarStyles'
 
@@ -60,9 +57,9 @@ import {
   PaymentDueWrapper,
   SentToWrapper,
   DetailPageMain,
-  LoadingSpinnerWrapper,
   ErrorStatus,
 } from 'pages/invoice-details/InvoiceDetailsPageStyles'
+import CenteredSpinner from 'components/CenteredSpinner'
 
 const InvoiceDetailsPage = () => {
   const windowWidth = useWindow()
@@ -179,9 +176,7 @@ const InvoiceDetailsPage = () => {
       </StickySection>
 
       {status.fetchingOne ? (
-        <LoadingSpinnerWrapper>
-          <ClipLoader size={78} color='var(--color-accent-100)' />
-        </LoadingSpinnerWrapper>
+        <CenteredSpinner />
       ) : status.fetchOneError ? (
         <ErrorStatus>{status.fetchOneError}</ErrorStatus>
       ) : (
