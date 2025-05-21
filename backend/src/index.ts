@@ -16,6 +16,9 @@ import invoiceOrbitRouter from './routes/invoice-orbit'
 //Error handler Middleware
 import errorHandlerMiddleware from './middleware/error-handler'
 
+//Health Check Controller
+import { getHealth } from './controllers/invoiceHealth'
+
 dotenv.config()
 
 const app: Express = express()
@@ -32,6 +35,9 @@ app.use(
     // store: ... , // Redis, Memcached, etc. See below.
   })
 )
+
+app.get('/health', getHealth)
+
 app.use(express.json())
 app.use(helmet())
 app.use(cors())
