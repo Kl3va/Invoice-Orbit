@@ -48,7 +48,7 @@ const getAllInvoices = async (
   }
 }
 
-//Get Single Invoice
+//Get Single Invoices
 const getInvoice = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userId = (req as Request & { auth: AuthObject }).auth.userId
